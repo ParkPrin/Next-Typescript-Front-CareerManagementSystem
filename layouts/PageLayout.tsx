@@ -1,5 +1,4 @@
 import React, { ReactNode } from 'react'
-import { NextPageContext } from 'next'
 import { MenuList } from '../interfaces/menulist'
 import {sampleUserData} from '../utils/menu-sample-data'
 
@@ -89,7 +88,6 @@ export interface LayoutProps extends WithStyles<typeof useStyles> {
     children?: ReactNode
     title?: string
     theme?: string
-    menuLists: MenuList[]
 }
 
 export interface LayoutState {
@@ -98,12 +96,6 @@ export interface LayoutState {
 
 
 class PageLayout extends React.Component<LayoutProps, {}> {
-    static async getInitialProps({ req }: NextPageContext) {
-        const menuLists: MenuList[] = sampleUserData;
-        const from = (req) ? 'server' : 'client';
-        console.log(from);
-        return { props : {menuLists}}
-    }
 
     state:LayoutState = {
         open:false

@@ -75,3 +75,22 @@ README.md : 프로젝트 메뉴얼 정보
 tsconfig.json : typescript 사용에 대한 규칙정의 
 
 ```
+
+## 개발환경별 실행 명령어
+
+```
+1) 개발서버 환경
+$ next dev
+OR
+$ yarn run dev
+
+2) 운영 환경
+$ next build
+then 
+$ next start
+
+3) 스테이징 환경
+$ next build
+OR
+$ yarn run build
+```
