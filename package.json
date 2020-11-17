@@ -1,5 +1,5 @@
 {
-  "name": "Next-Typescript-Front-CareerSystem",
+  "name": "Next-Typescript-Front-CareerManagementSystem",
   "version": "1.0.0",
   "main": "index.js",
   "repository": "https://github.com/ParkPrin/Next-Typescript-Front-CareerSystem.git",
@@ -13,13 +13,15 @@
     "@types/react-dom": "^16.9.9",
     "next": "^10.0.1",
     "react": "^17.0.1",
-    "react-dom": "^17.0.1",
-    "typescript": "^4.0.5"
+    "react-dom": "^17.0.1"
   },
   "scripts": {
     "dev": "next",
     "build": "next build",
     "start": "next start",
     "type-check": "tsc"
+  },
+  "devDependencies": {
+    "typescript": "^4.0.5"
   }
 }
