@@ -132,7 +132,7 @@ class PageLayout extends React.Component<LayoutProps, {}> {
                 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" />
                 <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
             </Head>
-            <header>
+
             <CssBaseline />
             <AppBar
               position="fixed"
@@ -151,7 +151,7 @@ class PageLayout extends React.Component<LayoutProps, {}> {
                   <MenuIcon />
                 </IconButton>
                 <Typography variant="h6" noWrap>
-                  Persistent drawer
+                    {process.env.NEXT_PROJECT_NAME_KR}
                 </Typography>
               </Toolbar>
             </AppBar>
@@ -187,19 +187,8 @@ class PageLayout extends React.Component<LayoutProps, {}> {
                 ))}
               </List>
             </Drawer>
-            </header>     
-            <main
-              className={clsx(classes.content, {
-                [classes.contentShift]: this.state.open,
-              })}
-            >
-              <div className={classes.drawerHeader} />
-              {children}
-            </main>
-            <footer>
-                <hr />
-                <span>I'm here to stay (Footer)</span>
-            </footer>
+          <div className={classes.drawerHeader} />
+          {children}
           </div>
         )
     }

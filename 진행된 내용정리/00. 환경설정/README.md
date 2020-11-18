@@ -7,8 +7,10 @@
 https://gist.github.com/SeonHyungJo/f93fd203f7dc5bb3657437a1cad29c48 참조하면 도움이 됨
 3. 의존성 추가: 프로젝트에서 사용하는 라이브러리 추가(의존성 추가)
 4. 실행스크립트를 package.json에 추가함
-5. 환경변수 다루는 파일저장: .env
-6. 디렉토리 구조 생성
+5. 프로젝트 구조 생성
+6. ESLint, Prettier 설정
+7. 오류관련 의존성 처리
+8. API 관련 의존성 처리
 
 ### 명령어 모음
 ```
@@ -93,4 +95,90 @@ $ next start
 $ next build
 OR
 $ yarn run build
+```
+
+## ESLint, Prettier 설정
+
+[참조페이지: [Next.js] 프로젝트 기초 세팅하기 - ESLint, Prettier 는 필수!](https://velog.io/@mayinjanuary/Next.js-%EC%84%B8%ED%8C%85%ED%95%98%EA%B8%B0-ESLint-Prettier-%EC%84%A4%EC%A0%95)
+
+eslint-plugin-import : ES6 의 import/export syntax 체크, 파일 경로나 import 이름을 잘못 입력하는지 여부를 체크해주는 lint 플러그인<br>
+eslint-plugin-jsx-a11y : 리액트 element 의 접근성 이슈를 짚어 lint 해주는 플러그인. 예를 들자면 interactive 하지 않은 엘리먼트에 click 핸들러가 달려 있다.<br>
+eslint-plugin-react : 리액트 규칙들을 추가해주는 플러그인<br>
+eslint-plugin-import : 리액트 hooks 규칙들을 추가해 주는 플러그인<br>
+
+```
+yarn add -D eslint eslint-config-airbnb eslint-plugin-import eslint-plugin-jsx-a11y eslint-plugin-react eslint-plugin-react-hooks
+```
+
+eslint-config-prettier : ESLint의 formatting 관련 설정 중 Prettier와 충돌하는 부분을 비활성화 Prettier 에서 문법 관련된 ESlint 규칙을 사용하지 않게 되기 때문에 ESLint 는 자바스크립트 문법을 담당하고, 코드 스타일 정리는 Prettier 가 담당<br>
+eslint-plugin-prettier : 원하는 형식의 formatting 을 설정<br>
+
+```
+yarn add -D babel-eslint eslint-plugin-babel 
+```
+
+babel-eslint : Babel 이 서포트해주는 코드에 ESLint 를 적용할 수 있도록. 한마디로, ES6 이상의 자바스크립트, flow type 등의 feature 를 지원. ESLint 만 깔 경우, ES6 / JSX / 객체 rest, spread 까지의 문법만 지원<br>
+eslint-plugin-babel : 더 많은, 실험중인 feature 까지 지원해주는 플러그인. babel-eslint 를 보완<br>
+
+```
+yarn add -D babel-eslint eslint-plugin-babel 
+```
+
+.eslintrc.json
+
+```
+{
+  "env": {
+    "browser": true,
+    "es6": true,
+    "node": true
+  },
+  "parser": "babel-eslint",
+  "extends": [
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "airbnb",
+    "plugin:prettier/recommended"
+  ],
+  "settings": {
+    "react": {
+      "version": "detect"
+    }
+  },
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "ecmaVersion": 2018,
+    "sourceType": "module"
+  },
+  "plugins": ["react", "react-hooks", "prettier"],
+  "rules": {
+    "react/react-in-jsx-scope": 0,
+    "react/prefer-stateless-function": 0,
+    "react/jsx-filename-extension": 0,
+    "react/jsx-one-expression-per-line": 0,
+    "no-nested-ternary": 0
+  }
+}
+```
+
+"env" : 활성화하고싶은 환경을 설정. 현재 브라우저, node, es6 환경이 활성화되어 있다.<br>
+"parser" : parser 를 설정. 설정하지 않을 경우 Espree가 기본 parser 로 설정. 보통 Espree, Babel-ESLint, @typescript-eslint/parser 을 사용함 (참고)<br>
+"extends" : extension 파트. 이 extension 파트에 Prettier 를 꼭 추가해야 Prettier 를 사용할 수 있다. Airbnb 설정을 사용하기로 했으니 Airbnb 도 추가함.<br>
+"rules" : 필요한 설정, 필요없는 설정을 관리하는 파트 1은 사용, 0은 사용하지 않음. ESLint 를 사용하다 별로 필요는 없는데 영 성가시게 하는 ESLint 에러가 있다면 0 으로 설정해 비활성화함. 2~4번째 줄은 eslint-config-prettier 을 위한 설정임<br>
+
+
+## 오류관련 의존성 처리
+
+1, mage Optimization 오류 처리
+
+```
+yarn add sharp
+```
+
+## API 관련 의존성 처리
+
+```
+yarn add cookie
 ```
