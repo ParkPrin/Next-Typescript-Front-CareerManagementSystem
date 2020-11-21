@@ -24,11 +24,19 @@ import HomeIcon from '@material-ui/icons/Home';
 import AccountBoxIcon from '@material-ui/icons/AccountBox';
 import FolderSharedIcon from '@material-ui/icons/FolderShared';
 
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
+import Badge from '@material-ui/core/Badge';
+import MailIcon from '@material-ui/icons/Mail';
+import NotificationsIcon from '@material-ui/icons/Notifications';
+import AccountCircle from '@material-ui/icons/AccountCircle';
+import MoreIcon from '@material-ui/icons/MoreVert';
+
 const drawerWidth = 240;
 
 const useStyles = (theme: Theme) =>
     createStyles({
-        root: {
+          root: {
             display: 'flex',
           },
           appBar: {
@@ -83,6 +91,21 @@ const useStyles = (theme: Theme) =>
             }),
             marginLeft: 0,
           },
+          grow: {
+              flexGrow: 1,
+          },
+          sectionDesktop: {
+            display: 'none',
+            [theme.breakpoints.up('md')]: {
+                display: 'flex',
+            },
+          },
+          sectionMobile: {
+              display: 'flex',
+              [theme.breakpoints.up('md')]: {
+                  display: 'none',
+              },
+          },
     });
 
 export interface LayoutProps extends WithStyles<typeof useStyles> {
@@ -92,19 +115,35 @@ export interface LayoutProps extends WithStyles<typeof useStyles> {
 }
 
 export interface LayoutState {
-    open : boolean
+    open : boolean,
+    anchorEl : HTMLElement | null
+    mobileMoreAnchorEl : HTMLElement | null
 }
 
 
 class PageMaue extends React.Component<LayoutProps, {}> {
 
     state:LayoutState = {
-        open:false
+        open:false,
+        anchorEl: null,
+        mobileMoreAnchorEl: null
     }
 
     setOpen(input:boolean){
         this.setState({
             open: input
+        })
+    }
+
+    setAnchorEl(input:HTMLElement | null){
+        this.setState({
+            anchorEl : input
+        })
+    }
+
+    setMobileMoreAnchorEl(input:HTMLElement | null){
+        this.setState({
+            mobileMoreAnchorEl : input
         })
     }
 
@@ -115,14 +154,94 @@ class PageMaue extends React.Component<LayoutProps, {}> {
     handleDrawerClose = () => {
         this.setOpen(false);
     };
+    isMenuOpen = () => {
+        return Boolean(this.state.anchorEl) ? true : false;
+    }
+
+    isMobileMenuOpen = () => {
+        return Boolean(this.state.mobileMoreAnchorEl) ? true : false;
+    }
+
+    handleProfileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
+        this.setAnchorEl(event.currentTarget);
+    };
+
+    handleMobileMenuClose = () => {
+        this.setMobileMoreAnchorEl(null);
+    };
+
+    handleMenuClose = () => {
+        this.setAnchorEl(null);
+        this.handleMobileMenuClose();
+    };
+
+    handleMobileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
+        this.setMobileMoreAnchorEl(event.currentTarget);
+    };
 
 
     render() {
+        const mobileMenuId = 'primary-search-account-menu-mobile';
+        const menuId = 'primary-search-account-menu';
         const ListItemLink = (props:any) => {
             return <ListItem button component="a" {...props} />;
         }
         const {classes, children, title} = this.props;
         const menuLists: MenuList[] = sampleUserData;
+        const renderMenu = (
+            <Menu
+                anchorEl={this.state.anchorEl}
+                anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+                id={menuId}
+                keepMounted
+                transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+                open={this.isMenuOpen()}
+                onClose={this.handleMenuClose}
+            >
+                <MenuItem onClick={this.handleMenuClose}>Profile</MenuItem>
+                <MenuItem onClick={this.handleMenuClose}>My account</MenuItem>
+            </Menu>
+        );
+
+        const renderMobileMenu = (
+            <Menu
+                anchorEl={this.state.mobileMoreAnchorEl}
+                anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+                id={mobileMenuId}
+                keepMounted
+                transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+                open={this.isMobileMenuOpen()}
+                onClose={this.handleMobileMenuClose}
+            >
+                <MenuItem>
+                    <IconButton aria-label="show 4 new mails" color="inherit">
+                        <Badge badgeContent={4} color="secondary">
+                            <MailIcon />
+                        </Badge>
+                    </IconButton>
+                    <p>Messages</p>
+                </MenuItem>
+                <MenuItem>
+                    <IconButton aria-label="show 11 new notifications" color="inherit">
+                        <Badge badgeContent={11} color="secondary">
+                            <NotificationsIcon />
+                        </Badge>
+                    </IconButton>
+                    <p>Notifications</p>
+                </MenuItem>
+                <MenuItem onClick={this.handleProfileMenuOpen}>
+                    <IconButton
+                        aria-label="account of current user"
+                        aria-controls="primary-search-account-menu"
+                        aria-haspopup="true"
+                        color="inherit"
+                    >
+                        <AccountCircle />
+                    </IconButton>
+                    <p>Profile</p>
+                </MenuItem>
+            </Menu>
+        );
 
         return (
         <div className={classes.root} style={{backgroundColor:"#FFFFFF"}}>
@@ -154,8 +273,46 @@ class PageMaue extends React.Component<LayoutProps, {}> {
                 <Typography variant="h6" noWrap>
                     {process.env.NEXT_PROJECT_NAME_KR}
                 </Typography>
+
+                  <div className={classes.grow} />
+                  <div className={classes.sectionDesktop}>
+                      <IconButton aria-label="show 4 new mails" color="inherit">
+                          <Badge badgeContent={4} color="secondary">
+                              <MailIcon />
+                          </Badge>
+                      </IconButton>
+                      <IconButton aria-label="show 17 new notifications" color="inherit">
+                          <Badge badgeContent={17} color="secondary">
+                              <NotificationsIcon />
+                          </Badge>
+                      </IconButton>
+                      <IconButton
+                          edge="end"
+                          aria-label="account of current user"
+                          aria-controls={menuId}
+                          aria-haspopup="true"
+                          onClick={this.handleProfileMenuOpen}
+                          color="inherit"
+                      >
+                          <AccountCircle />
+                      </IconButton>
+                  </div>
+                  <div className={classes.sectionMobile}>
+                      <IconButton
+                          aria-label="show more"
+                          aria-controls={mobileMenuId}
+                          aria-haspopup="true"
+                          onClick={this.handleMobileMenuOpen}
+                          color="inherit"
+                      >
+                          <MoreIcon />
+                      </IconButton>
+                  </div>
+
               </Toolbar>
             </AppBar>
+            {renderMobileMenu}
+            {renderMenu}
             <Drawer
               className={classes.drawer}
               variant="persistent"
