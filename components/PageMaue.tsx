@@ -31,6 +31,7 @@ import MailIcon from '@material-ui/icons/Mail';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import MoreIcon from '@material-ui/icons/MoreVert';
+import NoSsr from '@material-ui/core/NoSsr';
 
 const drawerWidth = 240;
 
@@ -109,7 +110,7 @@ const useStyles = (theme: Theme) =>
     });
 
 export interface LayoutProps extends WithStyles<typeof useStyles> {
-    children?: ReactNode
+    children?: ReactNode | undefined
     title?: string
     theme?: string
 }
@@ -243,6 +244,8 @@ class PageMaue extends React.Component<LayoutProps, {}> {
             </Menu>
         );
 
+        console.log('no ssr: ' + children == undefined? true : false)
+        console.log(children)
         return (
         <div className={classes.root} style={{backgroundColor:"#FFFFFF"}}>
             <Head>
@@ -254,6 +257,7 @@ class PageMaue extends React.Component<LayoutProps, {}> {
             </Head>
 
             <CssBaseline />
+            <NoSsr defer={children? true : false}>
             <AppBar
               position="fixed"
               className={clsx(classes.appBar, {
@@ -345,9 +349,11 @@ class PageMaue extends React.Component<LayoutProps, {}> {
                 ))}
               </List>
             </Drawer>
+
             <div style={{width: "1200px"}} >
                 {children}
             </div>
+            </NoSsr>
           </div>
 
         )
