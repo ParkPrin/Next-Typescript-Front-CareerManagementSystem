@@ -7,10 +7,13 @@ import {Theme} from "@material-ui/core/styles/createMuiTheme";
 import Typography from '@material-ui/core/Typography';
 import Image from 'next/image'
 import Grid from '@material-ui/core/Grid';
+import initExecute from "../utils/InitExecuteMethod";
+import {InitExecuteValiable} from "../interfaces/initExecuteValiable";
+import { NextPageContext } from 'next'
 
 const useStyles = (theme: Theme) =>
     createStyles({
-        root: {
+        IndexRoot: {
             ...theme.typography.button,
             backgroundColor: theme.palette.background.paper,
             padding: theme.spacing(1),
@@ -25,21 +28,27 @@ const useStyles = (theme: Theme) =>
         },
     });
 
-export interface IndexPageProps extends WithStyles<typeof useStyles> {}
+export interface IndexPageProps extends WithStyles<typeof useStyles> {
+    initExecuteValiable: InitExecuteValiable
+}
 
 class IndexPage extends React.Component<IndexPageProps, {}> {
+    static async getInitialProps({ req }: NextPageContext) {
+        const initExecuteValiable = await initExecute(req);
+        return {initExecuteValiable}
+    }
 
     render() {
-        const {classes} = this.props;
+        const {classes, initExecuteValiable} = this.props;
 
         return (
 
-        <PageLayout title={process.env.NEXT_PROJECT_NAME}>
+        <PageLayout title={process.env.NEXT_PROJECT_NAME} initExecuteValiable={initExecuteValiable}>
             <div>
                 <header style={{marginTop:"20%"}}>
 
                 </header>
-                <div className={this.props.classes.root}>
+                <div className={this.props.classes.IndexRoot}>
                     <main>
                         <Container maxWidth="lg">
                             <Typography variant="h2" gutterBottom>

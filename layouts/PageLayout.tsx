@@ -1,17 +1,19 @@
 import PageMaue  from '../components/PageMaue'
 import React, {ReactNode} from 'react'
 import Head from "next/head";
+import {InitExecuteValiable} from "../interfaces/initExecuteValiable";
 
 export interface LayoutProps {
     children?: ReactNode
     title?: string
+    initExecuteValiable: InitExecuteValiable
 }
 
 class PageLayout extends React.Component<LayoutProps> {
 
 
     render() {
-        const {title, children} = this.props
+        const {title, children, initExecuteValiable} = this.props
 
         return (
             <div>
@@ -24,7 +26,7 @@ class PageLayout extends React.Component<LayoutProps> {
 
                 </header>
                 <main>
-                    <PageMaue title={title}>
+                    <PageMaue title={title} initExecuteValiable={initExecuteValiable}>
                         {children}
                     </PageMaue>
                 </main>

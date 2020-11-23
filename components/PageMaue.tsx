@@ -1,6 +1,4 @@
 import React, { ReactNode } from 'react'
-import { MenuList } from '../interfaces/menulist'
-import {sampleUserData} from '../utils/menu-sample-data'
 
 import Head from 'next/head'
 import { createStyles, WithStyles, withStyles} from '@material-ui/core/styles';
@@ -32,14 +30,13 @@ import NotificationsIcon from '@material-ui/icons/Notifications';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import NoSsr from '@material-ui/core/NoSsr';
+import {InitExecuteValiable} from "../interfaces/initExecuteValiable";
+import {MenuList} from "../interfaces/menulist";
 
 const drawerWidth = 240;
 
 const useStyles = (theme: Theme) =>
     createStyles({
-          root: {
-            display: 'flex',
-          },
           appBar: {
             transition: theme.transitions.create(['margin', 'width'], {
               easing: theme.transitions.easing.sharp,
@@ -112,7 +109,7 @@ const useStyles = (theme: Theme) =>
 export interface LayoutProps extends WithStyles<typeof useStyles> {
     children?: ReactNode | undefined
     title?: string
-    theme?: string
+    initExecuteValiable: InitExecuteValiable
 }
 
 export interface LayoutState {
@@ -187,8 +184,9 @@ class PageMaue extends React.Component<LayoutProps, {}> {
         const ListItemLink = (props:any) => {
             return <ListItem button component="a" {...props} />;
         }
-        const {classes, children, title} = this.props;
-        const menuLists: MenuList[] = sampleUserData;
+        const {classes, children, title, initExecuteValiable} = this.props;
+        let menuList:MenuList[] = initExecuteValiable.menuList;
+        const from = initExecuteValiable.isSever;
         const renderMenu = (
             <Menu
                 anchorEl={this.state.anchorEl}
@@ -244,10 +242,8 @@ class PageMaue extends React.Component<LayoutProps, {}> {
             </Menu>
         );
 
-        console.log('no ssr: ' + children == undefined? true : false)
-        console.log(children)
         return (
-        <div className={classes.root} style={{backgroundColor:"#FFFFFF"}}>
+        <div style={{backgroundColor:"#FFFFFF", display: 'flex'}}>
             <Head>
                 <title>{title}</title>
                 <meta charSet="utf-8" />
@@ -257,7 +253,7 @@ class PageMaue extends React.Component<LayoutProps, {}> {
             </Head>
 
             <CssBaseline />
-            <NoSsr defer={children? true : false}>
+            <NoSsr defer={from}>
             <AppBar
               position="fixed"
               className={clsx(classes.appBar, {
@@ -333,20 +329,24 @@ class PageMaue extends React.Component<LayoutProps, {}> {
               </div>
               <Divider />
               <List>
-                {menuLists.map((item, index) => (
-                  <ListItemLink
-                      key={index}
-                      href={item.url}
-                  >
-                    <ListItemIcon>
-                        {item.iconName === "Home" ? <HomeIcon /> :
-                            item.iconName === "Profile"?  <AccountBoxIcon /> :
-                                item.iconName === "Share" ? <FolderSharedIcon /> : <InboxIcon />}
+                  {menuList != [] &&
+                  <div>
+                      {menuList.map((item, index) => (
+                          <ListItemLink
+                              key={index}
+                              href={item.url}
+                          >
+                              <ListItemIcon>
+                                  {item.iconName === "Home" ? <HomeIcon/> :
+                                      item.iconName === "Profile" ? <AccountBoxIcon/> :
+                                          item.iconName === "Share" ? <FolderSharedIcon/> : <InboxIcon/>}
 
-                    </ListItemIcon>
-                    <ListItemText primary={item.name} />
-                  </ListItemLink>
-                ))}
+                              </ListItemIcon>
+                              <ListItemText primary={item.name}/>
+                          </ListItemLink>
+                      ))}
+                  </div>
+                  }
               </List>
             </Drawer>
 
