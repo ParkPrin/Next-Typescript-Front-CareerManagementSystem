@@ -1,6 +1,8 @@
-import {MenuList} from "../menulist";
+import {PageMenuItem} from "../menuitem";
 
 export type InitExecuteValiable = {
     isSever : boolean
-    menuList : MenuList[]
+    menuList : PageMenuItem[]
+    title : string | undefined
+    redirectUrl : string
 }

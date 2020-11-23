@@ -7,6 +7,7 @@ import initExecute from "../../utils/InitExecuteMethod";
 import {InitExecuteValiable} from "../../interfaces/initExecuteValiable";
 import {NextPageContext} from "next";
 
+
 const useStyles = (theme: Theme) =>
     createStyles({
         profileRoot: {
@@ -24,21 +25,24 @@ const useStyles = (theme: Theme) =>
         },
     });
 
-export interface IndexPageProps extends WithStyles<typeof useStyles> {
+
+export interface IndexPageProps extends WithStyles<typeof useStyles>{
     initExecuteValiable: InitExecuteValiable
 }
 
 class Index extends React.Component<IndexPageProps, {}> {
+
     static async getInitialProps({ req }: NextPageContext) {
         const initExecuteValiable = await initExecute(req);
         return {initExecuteValiable}
     }
+
     render() {
+
         const {initExecuteValiable} = this.props;
-
+        //if (initExecuteValiable.redirectUrl !== "/")
         return (
-
-        <PageLayout title={process.env.NEXT_PROJECT_NAME} initExecuteValiable={initExecuteValiable}>
+        <PageLayout title={initExecuteValiable.title} initExecuteValiable={initExecuteValiable}>
             <div>
                 <header style={{marginTop:"20%"}}>
 

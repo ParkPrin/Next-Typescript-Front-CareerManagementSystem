@@ -31,7 +31,7 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import NoSsr from '@material-ui/core/NoSsr';
 import {InitExecuteValiable} from "../interfaces/initExecuteValiable";
-import {MenuList} from "../interfaces/menulist";
+import {PageMenuItem} from "../interfaces/menuitem";
 
 const drawerWidth = 240;
 
@@ -184,8 +184,8 @@ class PageMaue extends React.Component<LayoutProps, {}> {
         const ListItemLink = (props:any) => {
             return <ListItem button component="a" {...props} />;
         }
-        const {classes, children, title, initExecuteValiable} = this.props;
-        let menuList:MenuList[] = initExecuteValiable.menuList;
+        const {classes, children, initExecuteValiable} = this.props;
+        let menuList:PageMenuItem[] = initExecuteValiable.menuList;
         const from = initExecuteValiable.isSever;
         const renderMenu = (
             <Menu
@@ -245,7 +245,7 @@ class PageMaue extends React.Component<LayoutProps, {}> {
         return (
         <div style={{backgroundColor:"#FFFFFF", display: 'flex'}}>
             <Head>
-                <title>{title}</title>
+                <title>{process.env.NEXT_PROJECT_NAME}</title>
                 <meta charSet="utf-8" />
                 <meta name="viewport" content="initial-scale=1.0, width=device-width" />
                 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" />
@@ -271,7 +271,7 @@ class PageMaue extends React.Component<LayoutProps, {}> {
                   <MenuIcon />
                 </IconButton>
                 <Typography variant="h6" noWrap>
-                    {process.env.NEXT_PROJECT_NAME_KR}
+                    {initExecuteValiable.title}
                 </Typography>
 
                   <div className={classes.grow} />
