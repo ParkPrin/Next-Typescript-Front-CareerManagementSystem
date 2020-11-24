@@ -9,8 +9,13 @@ export default async function initExecute(req: IncomingMessage | undefined) {
         menuList : [],
         title : process.env.NEXT_PROJECT_NAME_KR,
         redirectUrl : "",
-        isLogin : true
+        isLogin : true,
+        isDevice: false
     };
+    const isMobileView = (req? req.headers['user-agent'] :navigator.userAgent)?.match(
+        /Android|BlackBerry|iPhone|iPad|iPod|Opera Mini|IEMobile|WPDesktop/i
+    )
+    initApiList.isDevice = isMobileView ? true : false;
     const res = await fetch('http://localhost:3000/api/menu');
     initApiList.menuList = await res.json();
     const pageMenuItems:PageMenuItem[] = getMenuSelect(req, initApiList);

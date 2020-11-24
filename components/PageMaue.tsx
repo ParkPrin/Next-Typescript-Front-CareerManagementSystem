@@ -62,6 +62,9 @@ const useStyles = (theme: Theme) =>
             width: drawerWidth,
             flexShrink: 0,
           },
+          drawerDevice: {
+            flexShrink: 0,
+          },
           drawerPaper: {
             width: drawerWidth,
             backgroundColor: "F7F7F7",
@@ -323,7 +326,7 @@ class PageMaue extends React.Component<LayoutProps, {}> {
                     </div>
                 }
             <Drawer
-              className={classes.drawer}
+              className={initExecuteValiable.isDevice ? classes.drawerDevice : classes.drawer }
               variant="persistent"
               anchor="left"
               open={this.state.open}

@@ -6,4 +6,5 @@ export type InitExecuteValiable = {
     title : string | undefined
     redirectUrl : string
     isLogin : boolean
+    isDevice : boolean
 }
