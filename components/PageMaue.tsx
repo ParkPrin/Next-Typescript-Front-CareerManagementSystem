@@ -27,11 +27,12 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Badge from '@material-ui/core/Badge';
 import MailIcon from '@material-ui/icons/Mail';
 import NotificationsIcon from '@material-ui/icons/Notifications';
-import AccountCircle from '@material-ui/icons/AccountCircle';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import NoSsr from '@material-ui/core/NoSsr';
 import {InitExecuteValiable} from "../interfaces/initExecuteValiable";
 import {PageMenuItem} from "../interfaces/menuitem";
+
+import Avatar from '@material-ui/core/Avatar';
 
 const drawerWidth = 240;
 
@@ -187,6 +188,7 @@ class PageMaue extends React.Component<LayoutProps, {}> {
         const {classes, children, initExecuteValiable} = this.props;
         let menuList:PageMenuItem[] = initExecuteValiable.menuList;
         const from = initExecuteValiable.isSever;
+        const isLogin = initExecuteValiable.isLogin;
         const renderMenu = (
             <Menu
                 anchorEl={this.state.anchorEl}
@@ -235,7 +237,7 @@ class PageMaue extends React.Component<LayoutProps, {}> {
                         aria-haspopup="true"
                         color="inherit"
                     >
-                        <AccountCircle />
+                        <Avatar alt="Remy Sharp" src="/profile/parkprin.jpeg" />
                     </IconButton>
                     <p>Profile</p>
                 </MenuItem>
@@ -275,44 +277,51 @@ class PageMaue extends React.Component<LayoutProps, {}> {
                 </Typography>
 
                   <div className={classes.grow} />
-                  <div className={classes.sectionDesktop}>
-                      <IconButton aria-label="show 4 new mails" color="inherit">
-                          <Badge badgeContent={4} color="secondary">
-                              <MailIcon />
-                          </Badge>
-                      </IconButton>
-                      <IconButton aria-label="show 17 new notifications" color="inherit">
-                          <Badge badgeContent={17} color="secondary">
-                              <NotificationsIcon />
-                          </Badge>
-                      </IconButton>
-                      <IconButton
-                          edge="end"
-                          aria-label="account of current user"
-                          aria-controls={menuId}
-                          aria-haspopup="true"
-                          onClick={this.handleProfileMenuOpen}
-                          color="inherit"
-                      >
-                          <AccountCircle />
-                      </IconButton>
+                  {isLogin &&
+                  <div>
+                      <div className={classes.sectionDesktop}>
+                          <IconButton aria-label="show 4 new mails" color="inherit">
+                              <Badge badgeContent={4} color="secondary">
+                                  <MailIcon />
+                              </Badge>
+                          </IconButton>
+                          <IconButton aria-label="show 17 new notifications" color="inherit">
+                              <Badge badgeContent={17} color="secondary">
+                                  <NotificationsIcon />
+                              </Badge>
+                          </IconButton>
+                          <IconButton
+                              edge="end"
+                              aria-label="account of current user"
+                              aria-controls={menuId}
+                              aria-haspopup="true"
+                              onClick={this.handleProfileMenuOpen}
+                              color="inherit"
+                          >
+                              <Avatar alt="Remy Sharp" src="/profile/parkprin.jpeg" />
+                          </IconButton>
+                      </div>
+                      <div className={classes.sectionMobile}>
+                          <IconButton
+                              aria-label="show more"
+                              aria-controls={mobileMenuId}
+                              aria-haspopup="true"
+                              onClick={this.handleMobileMenuOpen}
+                              color="inherit"
+                          >
+                              <MoreIcon />
+                          </IconButton>
+                      </div>
                   </div>
-                  <div className={classes.sectionMobile}>
-                      <IconButton
-                          aria-label="show more"
-                          aria-controls={mobileMenuId}
-                          aria-haspopup="true"
-                          onClick={this.handleMobileMenuOpen}
-                          color="inherit"
-                      >
-                          <MoreIcon />
-                      </IconButton>
-                  </div>
-
+                }
               </Toolbar>
             </AppBar>
-            {renderMobileMenu}
-            {renderMenu}
+                {isLogin &&
+                    <div>
+                        {renderMobileMenu}
+                        {renderMenu}
+                    </div>
+                }
             <Drawer
               className={classes.drawer}
               variant="persistent"

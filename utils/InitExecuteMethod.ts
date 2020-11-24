@@ -3,13 +3,13 @@ import {IncomingMessage} from "http";
 import {PageMenuItem} from "../interfaces/menuitem";
 
 
-
 export default async function initExecute(req: IncomingMessage | undefined) {
     let initApiList:InitExecuteValiable = {
         isSever : true,
         menuList : [],
         title : process.env.NEXT_PROJECT_NAME_KR,
-        redirectUrl : ""
+        redirectUrl : "",
+        isLogin : true
     };
     const res = await fetch('http://localhost:3000/api/menu');
     initApiList.menuList = await res.json();

@@ -5,4 +5,5 @@ export type InitExecuteValiable = {
     menuList : PageMenuItem[]
     title : string | undefined
     redirectUrl : string
+    isLogin : boolean
 }
