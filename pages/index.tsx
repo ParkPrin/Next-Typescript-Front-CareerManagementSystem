@@ -26,6 +26,9 @@ const useStyles = (theme: Theme) =>
             textAlign: 'center',
             color: theme.palette.text.secondary,
         },
+        titleFont : {
+            fontFamily:"Raleway"
+        }
     });
 
 export interface IndexPageProps extends WithStyles<typeof useStyles> {
@@ -34,6 +37,7 @@ export interface IndexPageProps extends WithStyles<typeof useStyles> {
 
 class IndexPage extends React.Component<IndexPageProps, {}> {
     static async getInitialProps({ req }: NextPageContext) {
+        console.log(req?.headers.cookie)
         const initExecuteValiable = await initExecute(req);
         return {initExecuteValiable}
     }
@@ -178,7 +182,7 @@ class IndexPage extends React.Component<IndexPageProps, {}> {
                             :
                             <div>
                                 <Container maxWidth="lg">
-                                    <Typography variant="h2" gutterBottom>
+                                    <Typography variant="h2" gutterBottom className={classes.titleFont}>
                                         당신의 이력 관리를 시작하세요
                                     </Typography>
                                     <Typography variant="body1" gutterBottom>

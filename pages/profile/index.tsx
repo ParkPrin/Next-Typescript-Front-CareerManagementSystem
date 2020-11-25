@@ -8,6 +8,7 @@ import {InitExecuteValiable} from "../../interfaces/initExecuteValiable";
 import {NextPageContext} from "next";
 import Container from "@material-ui/core/Container";
 import Card from '@material-ui/core/Card';
+import CardHeader from '@material-ui/core/CardHeader';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
@@ -156,16 +157,81 @@ class Index extends React.Component<IndexPageProps, {}> {
                                                 <MenuItem value={30}>제목</MenuItem>
                                             </Select>
                                         </FormControl>
-                                        <Fab size="small" color="secondary" aria-label="edit" style={{float:"right"}} onClick={this.addExecute}>
-                                            <AddIcon />
-                                        </Fab>
+                                        <IconButton  href={"./profile/write"}  style={{float:"right"}} >
+                                            <Fab size="small" color="secondary" aria-label="edit" >
+                                                <AddIcon />
+                                            </Fab>
+                                        </IconButton>
                                     </div>
+                                    {initExecuteValiable.isDevice ?
+                                        <div><Card className={classes.cardRoot} >
+                                            <CardActionArea>
+                                                <CardHeader
+                                                    title="이력서 제목"
+                                                    subheader="2020년 11월 25일"
+                                                />
+                                                <CardMedia
+                                                    component="img"
+                                                    alt="Contemplative Reptile"
+                                                    height="200"
+                                                    image="profile/parkprin.jpeg"
+                                                    title="Contemplative Reptile"
+                                                    style={{position: "relative", zIndex:0}}
+                                                />
 
+                                                <CardContent>
+                                                    <Typography variant="body2" color="textSecondary" component="p">
+                                                        경력 5년차
+                                                    </Typography>
+                                                    <Typography variant="body2" color="textSecondary" component="p">
+                                                        연봉: 5000
+                                                    </Typography>
+                                                    <Typography variant="body2" color="textSecondary" component="p">
+                                                        Lizards are a widespread group of squamate reptiles, with over 6,000 species, ranging
+                                                        across all continents except Antarctica
+                                                    </Typography>
+                                                </CardContent>
+                                            </CardActionArea>
 
-                                    <Grid container spacing={3} >
-                                        <Grid item xs={4}>
+                                            <CardActions>
+                                                <div>
+                                                    <IconButton
+                                                        aria-label="more"
+                                                        aria-controls="long-menu"
+                                                        aria-haspopup="true"
+                                                        onClick={this.handleClick}
+                                                        style={{float:"right", position:"relative"}}
+                                                    >
+                                                        <MoreVertIcon />
+                                                    </IconButton>
+                                                    <Menu
+                                                        id="long-menu"
+                                                        anchorEl={this.state.anchorEl}
+                                                        keepMounted
+                                                        open={Boolean(this.state.anchorEl)}
+                                                        onClose={this.handleClose}
+                                                        PaperProps={{
+                                                            style: {
+                                                                maxHeight: ITEM_HEIGHT * 4.5,
+                                                                width: '20ch',
+                                                            },
+                                                        }}
+                                                    >
+                                                        {options.map((option) => (
+                                                            <MenuItem key={option} onClick={this.handleClose}>
+                                                                {option}
+                                                            </MenuItem>
+                                                        ))}
+                                                    </Menu>
+                                                </div>
+                                            </CardActions>
+                                        </Card>
                                             <Card className={classes.cardRoot} >
                                                 <CardActionArea>
+                                                    <CardHeader
+                                                        title="이력서 제목"
+                                                        subheader="2020년 11월 25일"
+                                                    />
                                                     <CardMedia
                                                         component="img"
                                                         alt="Contemplative Reptile"
@@ -176,8 +242,11 @@ class Index extends React.Component<IndexPageProps, {}> {
                                                     />
 
                                                     <CardContent>
-                                                        <Typography gutterBottom variant="h5" component="h2">
-                                                            Lizard
+                                                        <Typography variant="body2" color="textSecondary" component="p">
+                                                            경력 5년차
+                                                        </Typography>
+                                                        <Typography variant="body2" color="textSecondary" component="p">
+                                                            연봉: 5000
                                                         </Typography>
                                                         <Typography variant="body2" color="textSecondary" component="p">
                                                             Lizards are a widespread group of squamate reptiles, with over 6,000 species, ranging
@@ -219,20 +288,27 @@ class Index extends React.Component<IndexPageProps, {}> {
                                                     </div>
                                                 </CardActions>
                                             </Card>
-                                        </Grid>
-                                        <Grid item xs={4}>
-                                            <Card className={classes.cardRoot}>
+                                            <Card className={classes.cardRoot} >
                                                 <CardActionArea>
+                                                    <CardHeader
+                                                        title="이력서 제목"
+                                                        subheader="2020년 11월 25일"
+                                                    />
                                                     <CardMedia
                                                         component="img"
                                                         alt="Contemplative Reptile"
                                                         height="200"
                                                         image="profile/parkprin.jpeg"
                                                         title="Contemplative Reptile"
+                                                        style={{position: "relative", zIndex:0}}
                                                     />
+
                                                     <CardContent>
-                                                        <Typography gutterBottom variant="h5" component="h2">
-                                                            Lizard
+                                                        <Typography variant="body2" color="textSecondary" component="p">
+                                                            경력 5년차
+                                                        </Typography>
+                                                        <Typography variant="body2" color="textSecondary" component="p">
+                                                            연봉: 5000
                                                         </Typography>
                                                         <Typography variant="body2" color="textSecondary" component="p">
                                                             Lizards are a widespread group of squamate reptiles, with over 6,000 species, ranging
@@ -240,6 +316,7 @@ class Index extends React.Component<IndexPageProps, {}> {
                                                         </Typography>
                                                     </CardContent>
                                                 </CardActionArea>
+
                                                 <CardActions>
                                                     <div>
                                                         <IconButton
@@ -272,65 +349,208 @@ class Index extends React.Component<IndexPageProps, {}> {
                                                         </Menu>
                                                     </div>
                                                 </CardActions>
-                                            </Card>
-                                        </Grid>
-                                        <Grid item xs={4}>
-                                            <Card className={classes.cardRoot}>
-                                                <CardActionArea>
-                                                    <CardMedia
-                                                        component="img"
-                                                        alt="Contemplative Reptile"
-                                                        height="200"
-                                                        image="profile/parkprin.jpeg"
-                                                        title="Contemplative Reptile"
-                                                    />
-                                                    <CardContent>
-                                                        <Typography gutterBottom variant="h5" component="h2">
-                                                            Lizard
-                                                        </Typography>
-                                                        <Typography variant="body2" color="textSecondary" component="p">
-                                                            Lizards are a widespread group of squamate reptiles, with over 6,000 species, ranging
-                                                            across all continents except Antarctica
-                                                        </Typography>
-                                                    </CardContent>
-                                                </CardActionArea>
-                                                <CardActions>
-                                                    <div>
-                                                        <IconButton
-                                                            aria-label="more"
-                                                            aria-controls="long-menu"
-                                                            aria-haspopup="true"
-                                                            onClick={this.handleClick}
-                                                            style={{float:"right", position:"relative"}}
-                                                        >
-                                                            <MoreVertIcon />
-                                                        </IconButton>
-                                                        <Menu
-                                                            id="long-menu"
-                                                            anchorEl={this.state.anchorEl}
-                                                            keepMounted
-                                                            open={Boolean(this.state.anchorEl)}
-                                                            onClose={this.handleClose}
-                                                            PaperProps={{
-                                                                style: {
-                                                                    maxHeight: ITEM_HEIGHT * 4.5,
-                                                                    width: '20ch',
-                                                                },
-                                                            }}
-                                                        >
-                                                            {options.map((option) => (
-                                                                <MenuItem key={option} onClick={this.handleClose}>
-                                                                    {option}
-                                                                </MenuItem>
-                                                            ))}
-                                                        </Menu>
-                                                    </div>
-                                                </CardActions>
-                                            </Card>
-                                        </Grid>
-                                    </Grid>
+                                            </Card></div>
+                                        :
+                                        <div>
+                                            <Grid container spacing={3} >
+                                                <Grid item xs={4}>
+                                                    <Card className={classes.cardRoot} >
+                                                        <CardActionArea>
+                                                            <CardHeader
+                                                                title="이력서 제목"
+                                                                subheader="2020년 11월 25일"
+                                                            />
+                                                            <CardMedia
+                                                                component="img"
+                                                                alt="Contemplative Reptile"
+                                                                height="200"
+                                                                image="profile/parkprin.jpeg"
+                                                                title="Contemplative Reptile"
+                                                                style={{position: "relative", zIndex:0}}
+                                                            />
+
+                                                            <CardContent>
+                                                                <Typography variant="body2" color="textSecondary" component="p">
+                                                                    경력 5년차
+                                                                </Typography>
+                                                                <Typography variant="body2" color="textSecondary" component="p">
+                                                                    연봉: 5000
+                                                                </Typography>
+                                                                <Typography variant="body2" color="textSecondary" component="p">
+                                                                    Lizards are a widespread group of squamate reptiles, with over 6,000 species, ranging
+                                                                    across all continents except Antarctica
+                                                                </Typography>
+                                                            </CardContent>
+                                                        </CardActionArea>
+
+                                                        <CardActions>
+                                                            <div>
+                                                                <IconButton
+                                                                    aria-label="more"
+                                                                    aria-controls="long-menu"
+                                                                    aria-haspopup="true"
+                                                                    onClick={this.handleClick}
+                                                                    style={{float:"right", position:"relative"}}
+                                                                >
+                                                                    <MoreVertIcon />
+                                                                </IconButton>
+                                                                <Menu
+                                                                    id="long-menu"
+                                                                    anchorEl={this.state.anchorEl}
+                                                                    keepMounted
+                                                                    open={Boolean(this.state.anchorEl)}
+                                                                    onClose={this.handleClose}
+                                                                    PaperProps={{
+                                                                        style: {
+                                                                            maxHeight: ITEM_HEIGHT * 4.5,
+                                                                            width: '20ch',
+                                                                        },
+                                                                    }}
+                                                                >
+                                                                    {options.map((option) => (
+                                                                        <MenuItem key={option} onClick={this.handleClose}>
+                                                                            {option}
+                                                                        </MenuItem>
+                                                                    ))}
+                                                                </Menu>
+                                                            </div>
+                                                        </CardActions>
+                                                    </Card>
+                                                </Grid>
+                                                <Grid item xs={4}>
+                                                    <Card className={classes.cardRoot} >
+                                                        <CardActionArea>
+                                                            <CardHeader
+                                                                title="이력서 제목"
+                                                                subheader="2020년 11월 25일"
+                                                            />
+                                                            <CardMedia
+                                                                component="img"
+                                                                alt="Contemplative Reptile"
+                                                                height="200"
+                                                                image="profile/parkprin.jpeg"
+                                                                title="Contemplative Reptile"
+                                                                style={{position: "relative", zIndex:0}}
+                                                            />
+
+                                                            <CardContent>
+                                                                <Typography variant="body2" color="textSecondary" component="p">
+                                                                    경력 5년차
+                                                                </Typography>
+                                                                <Typography variant="body2" color="textSecondary" component="p">
+                                                                    연봉: 5000
+                                                                </Typography>
+                                                                <Typography variant="body2" color="textSecondary" component="p">
+                                                                    Lizards are a widespread group of squamate reptiles, with over 6,000 species, ranging
+                                                                    across all continents except Antarctica
+                                                                </Typography>
+                                                            </CardContent>
+                                                        </CardActionArea>
+
+                                                        <CardActions>
+                                                            <div>
+                                                                <IconButton
+                                                                    aria-label="more"
+                                                                    aria-controls="long-menu"
+                                                                    aria-haspopup="true"
+                                                                    onClick={this.handleClick}
+                                                                    style={{float:"right", position:"relative"}}
+                                                                >
+                                                                    <MoreVertIcon />
+                                                                </IconButton>
+                                                                <Menu
+                                                                    id="long-menu"
+                                                                    anchorEl={this.state.anchorEl}
+                                                                    keepMounted
+                                                                    open={Boolean(this.state.anchorEl)}
+                                                                    onClose={this.handleClose}
+                                                                    PaperProps={{
+                                                                        style: {
+                                                                            maxHeight: ITEM_HEIGHT * 4.5,
+                                                                            width: '20ch',
+                                                                        },
+                                                                    }}
+                                                                >
+                                                                    {options.map((option) => (
+                                                                        <MenuItem key={option} onClick={this.handleClose}>
+                                                                            {option}
+                                                                        </MenuItem>
+                                                                    ))}
+                                                                </Menu>
+                                                            </div>
+                                                        </CardActions>
+                                                    </Card>
+                                                </Grid>
+                                                <Grid item xs={4}>
+                                                    <Card className={classes.cardRoot} >
+                                                        <CardActionArea>
+                                                            <CardHeader
+                                                                title="이력서 제목"
+                                                                subheader="2020년 11월 25일"
+                                                            />
+                                                            <CardMedia
+                                                                component="img"
+                                                                alt="Contemplative Reptile"
+                                                                height="200"
+                                                                image="profile/parkprin.jpeg"
+                                                                title="Contemplative Reptile"
+                                                                style={{position: "relative", zIndex:0}}
+                                                            />
+
+                                                            <CardContent>
+                                                                <Typography variant="body2" color="textSecondary" component="p">
+                                                                    경력 5년차
+                                                                </Typography>
+                                                                <Typography variant="body2" color="textSecondary" component="p">
+                                                                    연봉: 5000
+                                                                </Typography>
+                                                                <Typography variant="body2" color="textSecondary" component="p">
+                                                                    Lizards are a widespread group of squamate reptiles, with over 6,000 species, ranging
+                                                                    across all continents except Antarctica
+                                                                </Typography>
+                                                            </CardContent>
+                                                        </CardActionArea>
+
+                                                        <CardActions>
+                                                            <div>
+                                                                <IconButton
+                                                                    aria-label="more"
+                                                                    aria-controls="long-menu"
+                                                                    aria-haspopup="true"
+                                                                    onClick={this.handleClick}
+                                                                    style={{float:"right", position:"relative"}}
+                                                                >
+                                                                    <MoreVertIcon />
+                                                                </IconButton>
+                                                                <Menu
+                                                                    id="long-menu"
+                                                                    anchorEl={this.state.anchorEl}
+                                                                    keepMounted
+                                                                    open={Boolean(this.state.anchorEl)}
+                                                                    onClose={this.handleClose}
+                                                                    PaperProps={{
+                                                                        style: {
+                                                                            maxHeight: ITEM_HEIGHT * 4.5,
+                                                                            width: '20ch',
+                                                                        },
+                                                                    }}
+                                                                >
+                                                                    {options.map((option) => (
+                                                                        <MenuItem key={option} onClick={this.handleClose}>
+                                                                            {option}
+                                                                        </MenuItem>
+                                                                    ))}
+                                                                </Menu>
+                                                            </div>
+                                                        </CardActions>
+                                                    </Card>
+                                                </Grid>
+                                            </Grid>
+                                        </div>
+                                    }
                                 </div>
                             </Container>
+
                         </main>
                     </div>
                 </div>
