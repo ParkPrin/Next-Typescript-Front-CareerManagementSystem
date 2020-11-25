@@ -136,7 +136,139 @@ class Index extends React.Component<IndexPageProps, {}> {
                             {initExecuteValiable.isDevice ?
                                 <div>
                                     <Container style={{border:"1px solid #ecf0f1", borderWidth:"1px", borderRadius:"25px"}} >
+                                        <div className={classes.tabsRoot}>
+                                            <AppBar position="static">
+                                                <Tabs value={this.state.value} onChange={handleChange} aria-label="simple tabs example">
+                                                    <Tab label="기본인적사항" {...a11yProps(0)} />
+                                                    <Tab label="학력사항" {...a11yProps(1)} />
+                                                    <Tab label="어학/자격/활동내역" {...a11yProps(2)} />
+                                                    <Tab label="경력사항" {...a11yProps(3)} />
+                                                    <Tab label="자기소개서" {...a11yProps(4)} />
+                                                </Tabs>
+                                            </AppBar>
+                                            <TabPanel value={this.state.value} index={0}>
 
+                                                <div className="w3-container">
+                                                    <h3>인적사항</h3>
+                                                    <table className="w3-table w3-bordered" style={{borderTop: "solid"}}>
+                                                        <tr>
+                                                            <th rowSpan={3} style={{verticalAlign : "middle", width: "200px" }}>성명*</th>
+                                                            <td style={{paddingLeft : "15px"}}>한글*</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td style={{paddingLeft : "15px"}}>영어*</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td style={{paddingLeft : "15px"}}>한문</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>성별*</th>
+                                                            <td style={{paddingLeft : "15px"}}></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>생년월일*</th>
+                                                            <td style={{paddingLeft : "15px"}}></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>자택번호*</th>
+                                                            <td style={{paddingLeft : "15px"}}></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>휴대폰 번호</th>
+                                                            <td style={{paddingLeft : "15px"}}></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>이메일</th>
+                                                            <td style={{paddingLeft : "15px"}}></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th rowSpan={2} style={{verticalAlign : "middle"}}>주소*</th>
+                                                            <td style={{paddingLeft : "15px"}}></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td style={{paddingLeft : "15px"}}></td>
+                                                        </tr>
+                                                    </table>
+                                                </div>
+
+                                                <div className="w3-container" style={{marginTop: "30px"}}>
+                                                    <h3>병역사항</h3>
+                                                    <table className="w3-table w3-bordered" style={{borderTop: "solid"}}>
+                                                        <tr>
+                                                            <th>군필여부</th>
+                                                            <td style={{paddingLeft : "15px"}}></td>
+                                                            <th>군별코드</th>
+                                                            <td style={{paddingLeft : "15px"}}></td>
+                                                            <th>계급</th>
+                                                            <td style={{paddingLeft : "15px"}}></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>복무기간</th>
+                                                            <td colSpan={5} style={{paddingLeft : "15px"}}></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>총기간</th>
+                                                            <td colSpan={5} style={{paddingLeft : "15px"}}></td>
+                                                        </tr>
+                                                    </table>
+                                                </div>
+
+                                                <div className="w3-container" style={{marginTop: "30px"}}>
+                                                    <h3>병역사항</h3>
+                                                    <table className="w3-table w3-bordered" style={{borderTop: "solid"}}>
+                                                        <tr>
+                                                            <th>보훈유형</th>
+                                                            <td style={{paddingLeft : "15px"}}></td>
+                                                            <th>보훈대상자와의관계</th>
+                                                            <td style={{paddingLeft : "15px"}}></td>
+                                                            <th>보훈등록번호</th>
+                                                            <td style={{paddingLeft : "15px"}}></td>
+                                                        </tr>
+                                                    </table>
+                                                </div>
+
+                                                <div className="w3-container" style={{marginTop: "30px"}}>
+                                                    <h3>장애사항</h3>
+                                                    <table className="w3-table w3-bordered" style={{borderTop: "solid"}}>
+                                                        <tr>
+                                                            <th>장애유형</th>
+                                                            <td style={{paddingLeft : "15px"}}></td>
+                                                            <th>장애등급</th>
+                                                            <td style={{paddingLeft : "15px"}}></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>인정일</th>
+                                                            <td colSpan={3} style={{paddingLeft : "15px"}}></td>
+                                                        </tr>
+                                                    </table>
+                                                </div>
+
+                                            </TabPanel>
+                                            <TabPanel value={this.state.value} index={1}>
+                                                <div className="w3-container" style={{marginTop: "30px"}}>
+                                                    <h3>고등학교</h3>
+                                                    <table className="w3-table w3-bordered" style={{borderTop: "solid"}}>
+                                                        <tr>
+                                                            <th>학교명</th>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>복무기간</th>
+                                                            <td colSpan={3}></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>총기간</th>
+                                                            <td colSpan={3}></td>
+                                                        </tr>
+                                                    </table>
+                                                </div>
+                                            </TabPanel>
+                                            <TabPanel value={this.state.value} index={2}>
+                                                Item Three
+                                            </TabPanel>
+                                        </div>
                                     </Container>
                                 </div>
                                 :
@@ -153,12 +285,123 @@ class Index extends React.Component<IndexPageProps, {}> {
                                                 </Tabs>
                                             </AppBar>
                                             <TabPanel value={this.state.value} index={0}>
-                                                <Container >
 
-                                                </Container>
+                                                <div className="w3-container">
+                                                    <h3>인적사항</h3>
+                                                    <table className="w3-table w3-bordered" style={{borderTop: "solid"}}>
+                                                        <tr>
+                                                            <th rowSpan={3} style={{verticalAlign : "middle", width: "200px" }}>성명*</th>
+                                                            <td style={{paddingLeft : "15px"}}>한글*</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td style={{paddingLeft : "15px"}}>영어*</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td style={{paddingLeft : "15px"}}>한문</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>성별*</th>
+                                                            <td style={{paddingLeft : "15px"}}></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>생년월일*</th>
+                                                            <td style={{paddingLeft : "15px"}}></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>자택번호*</th>
+                                                            <td style={{paddingLeft : "15px"}}></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>휴대폰 번호</th>
+                                                            <td style={{paddingLeft : "15px"}}></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>이메일</th>
+                                                            <td style={{paddingLeft : "15px"}}></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th rowSpan={2} style={{verticalAlign : "middle"}}>주소*</th>
+                                                            <td style={{paddingLeft : "15px"}}></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td style={{paddingLeft : "15px"}}></td>
+                                                        </tr>
+                                                    </table>
+                                                </div>
+
+                                                <div className="w3-container" style={{marginTop: "30px"}}>
+                                                    <h3>병역사항</h3>
+                                                    <table className="w3-table w3-bordered" style={{borderTop: "solid"}}>
+                                                        <tr>
+                                                            <th>군필여부</th>
+                                                            <td style={{paddingLeft : "15px"}}></td>
+                                                            <th>군별코드</th>
+                                                            <td style={{paddingLeft : "15px"}}></td>
+                                                            <th>계급</th>
+                                                            <td style={{paddingLeft : "15px"}}></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>복무기간</th>
+                                                            <td colSpan={5} style={{paddingLeft : "15px"}}></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>총기간</th>
+                                                            <td colSpan={5} style={{paddingLeft : "15px"}}></td>
+                                                        </tr>
+                                                    </table>
+                                                </div>
+
+                                                <div className="w3-container" style={{marginTop: "30px"}}>
+                                                    <h3>병역사항</h3>
+                                                    <table className="w3-table w3-bordered" style={{borderTop: "solid"}}>
+                                                        <tr>
+                                                            <th>보훈유형</th>
+                                                            <td style={{paddingLeft : "15px"}}></td>
+                                                            <th>보훈대상자와의관계</th>
+                                                            <td style={{paddingLeft : "15px"}}></td>
+                                                            <th>보훈등록번호</th>
+                                                            <td style={{paddingLeft : "15px"}}></td>
+                                                        </tr>
+                                                    </table>
+                                                </div>
+
+                                                <div className="w3-container" style={{marginTop: "30px"}}>
+                                                    <h3>장애사항</h3>
+                                                    <table className="w3-table w3-bordered" style={{borderTop: "solid"}}>
+                                                        <tr>
+                                                            <th>장애유형</th>
+                                                            <td style={{paddingLeft : "15px"}}></td>
+                                                            <th>장애등급</th>
+                                                            <td style={{paddingLeft : "15px"}}></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>인정일</th>
+                                                            <td colSpan={3} style={{paddingLeft : "15px"}}></td>
+                                                        </tr>
+                                                    </table>
+                                                </div>
+
                                             </TabPanel>
                                             <TabPanel value={this.state.value} index={1}>
-                                                Item Two
+                                                <div className="w3-container" style={{marginTop: "30px"}}>
+                                                    <h3>고등학교</h3>
+                                                    <table className="w3-table w3-bordered" style={{borderTop: "solid"}}>
+                                                        <tr>
+                                                            <th>학교명</th>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>복무기간</th>
+                                                            <td colSpan={3}></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>총기간</th>
+                                                            <td colSpan={3}></td>
+                                                        </tr>
+                                                    </table>
+                                                </div>
                                             </TabPanel>
                                             <TabPanel value={this.state.value} index={2}>
                                                 Item Three
