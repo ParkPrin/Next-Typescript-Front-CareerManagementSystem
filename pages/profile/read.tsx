@@ -12,10 +12,6 @@ import Typography from '@material-ui/core/Typography';
 import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
-import Radio from '@material-ui/core/Radio';
-import RadioGroup from '@material-ui/core/RadioGroup';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import TextField from '@material-ui/core/TextField';
 
 export interface WrtieState {
     value : number
@@ -63,11 +59,6 @@ const useStyles = (theme: Theme) =>
             flexGrow: 1,
             backgroundColor: theme.palette.background.paper,
         },
-        textField: {
-            marginLeft: theme.spacing(1),
-            marginRight: theme.spacing(1),
-            width: 200,
-        },
     });
 
 export interface IndexPageProps extends WithStyles<typeof useStyles>{
@@ -76,7 +67,7 @@ export interface IndexPageProps extends WithStyles<typeof useStyles>{
 
 class Index extends React.Component<IndexPageProps, {}> {
     state:WrtieState = {
-        value: 0,
+        value: 4,
     }
 
     setValue(input:number){
@@ -84,6 +75,7 @@ class Index extends React.Component<IndexPageProps, {}> {
             value : input
         })
     }
+
 
 
     static async getInitialProps({ req, res }: NextPageContext) {
@@ -165,61 +157,44 @@ class Index extends React.Component<IndexPageProps, {}> {
                                                     <table className="w3-table w3-bordered" style={{borderTop: "solid"}}>
                                                         <tr>
                                                             <th rowSpan={3} style={{verticalAlign : "middle", width: "130px" }}>성명*</th>
-                                                            <td style={{paddingLeft : "15px"}}> <TextField id="kr_name" label="한글*" error={false} helperText="" /></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td style={{paddingLeft : "15px"}}><TextField id="en_name" label="영어*" error={false} helperText="" /></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td style={{paddingLeft : "15px"}}><TextField id="ch_name" label="한문" /></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <th style={{verticalAlign: "middle"}}>성별*</th>
-                                                            <td style={{paddingLeft : "15px", marginTop: "10px", verticalAlign: "middle"}}>
-                                                                <RadioGroup row aria-label="position" name="position" defaultValue="M">
-                                                                    <FormControlLabel value="M" control={<Radio color="primary" />} label="남" labelPlacement="start" />
-                                                                    <FormControlLabel value="F" control={<Radio color="primary" />} label="여" labelPlacement="start" />
-                                                                </RadioGroup>
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <th style={{verticalAlign: "middle"}} >생년월일*</th>
-                                                            <td style={{paddingLeft : "15px", marginTop: "10px", verticalAlign: "middle"}}>
-                                                                <RadioGroup row aria-label="position" name="position" defaultValue="S">
-                                                                    <FormControlLabel value="S" control={<Radio color="primary" />} label="양력" labelPlacement="start" />
-                                                                    <FormControlLabel value="M" control={<Radio color="primary" />} label="음력" labelPlacement="start" />
-                                                                    <TextField
-                                                                        style={{paddingTop: "5px", paddingLeft: "5px"}}
-                                                                        id="date"
-                                                                        type="date"
-                                                                        defaultValue="YYYY-MM-dd"
-                                                                        className={classes.textField}
-                                                                        InputLabelProps={{
-                                                                            shrink: true,
-                                                                        }}
-                                                                    />
-                                                                </RadioGroup>
+                                                            <td style={{paddingLeft : "15px"}}>한글*</td>
+                                                            <td rowSpan={3} style={{width: "120px", height: "150px"}}>
+                                                                <div style={{marginTop: "50px", marginLeft: "30px"}}><button>사진업로드</button></div>
 
                                                             </td>
                                                         </tr>
                                                         <tr>
-                                                            <th style={{verticalAlign: "middle"}}>자택번호*</th>
-                                                            <td style={{paddingLeft : "15px"}}><TextField id="en_name" label="영어*" error={false} helperText="" /></td>
+                                                            <td style={{paddingLeft : "15px"}}>영어*</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td style={{paddingLeft : "15px"}}>한문</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>성별*</th>
+                                                            <td colSpan={2} style={{paddingLeft : "15px"}}></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>생년월일*</th>
+                                                            <td colSpan={2} style={{paddingLeft : "15px"}}></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>자택번호*</th>
+                                                            <td colSpan={2} style={{paddingLeft : "15px"}}></td>
                                                         </tr>
                                                         <tr>
                                                             <th>휴대폰 번호</th>
-                                                            <td style={{paddingLeft : "15px"}}></td>
+                                                            <td colSpan={2} style={{paddingLeft : "15px"}}></td>
                                                         </tr>
                                                         <tr>
                                                             <th>이메일</th>
-                                                            <td style={{paddingLeft : "15px"}}></td>
+                                                            <td colSpan={2} style={{paddingLeft : "15px"}}></td>
                                                         </tr>
                                                         <tr>
                                                             <th rowSpan={2} style={{verticalAlign : "middle"}}>주소*</th>
-                                                            <td style={{paddingLeft : "15px"}}></td>
+                                                            <td colSpan={2} style={{paddingLeft : "15px"}}></td>
                                                         </tr>
                                                         <tr>
-                                                            <td style={{paddingLeft : "15px"}}></td>
+                                                            <td colSpan={2} style={{paddingLeft : "15px"}}></td>
                                                         </tr>
                                                     </table>
                                                 </div>
