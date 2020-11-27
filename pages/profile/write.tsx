@@ -16,9 +16,19 @@ import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import TextField from '@material-ui/core/TextField';
+import FormControl from '@material-ui/core/FormControl';
+import MenuItem from '@material-ui/core/MenuItem';
+import Select from '@material-ui/core/Select';
+
 
 export interface WrtieState {
+    ko_value : string
     value : number
+    localType : string
+    localPhone : string
+    presetPhoneNumber : string
+    cellPhone : string
+    autoFocusId : string
 }
 
 interface TabPanelProps {
@@ -74,9 +84,15 @@ export interface IndexPageProps extends WithStyles<typeof useStyles>{
     initExecuteValiable: InitExecuteValiable
 }
 
-class Index extends React.Component<IndexPageProps, {}> {
-    state:WrtieState = {
+class Index extends React.Component<IndexPageProps, WrtieState> {
+    state = {
+        ko_value : "",
         value: 0,
+        localType: '02',
+        localPhone : "",
+        presetPhoneNumber : "010",
+        cellPhone : "",
+        autoFocusId : ""
     }
 
     setValue(input:number){
@@ -85,6 +101,53 @@ class Index extends React.Component<IndexPageProps, {}> {
         })
     }
 
+    setContryPhone(input:string){
+        this.setState({
+            localType : input
+        })
+    }
+
+    changeLocalPhone = (event: React.ChangeEvent<HTMLInputElement>) => {
+
+        event.preventDefault();
+        let targetValue1 = event.target.value;
+        let saveValue1 = this.state.localPhone;
+        let addChat = targetValue1.substring(targetValue1.length-1, targetValue1.length);
+        if (saveValue1.length < targetValue1.length) if (isNaN(addChat)) return
+        if (targetValue1.length === 3 && saveValue1.length < targetValue1.length) {
+            targetValue1 = targetValue1 + "-";
+        } else if (targetValue1.length === 4 && saveValue1.length > targetValue1.length){
+            targetValue1 = targetValue1.substring(0, 3)
+        } else if (targetValue1.length >= 9){
+            return;
+        } else if (saveValue1.length === 3 && targetValue1.length === 4) {
+            targetValue1 = saveValue1 + "-" + addChat;
+        }
+        this.setState({
+            localPhone: targetValue1,
+            autoFocusId : [event.target.name]
+        })
+    };
+
+    changeCellPhone = (event: React.ChangeEvent<HTMLInputElement>) => {
+        event.preventDefault();
+        let targetValue = event.target.value;
+        let saveValue = this.state.cellPhone;
+        let addChat = targetValue.substring(targetValue.length-1, targetValue.length);
+        if (saveValue.length < targetValue.length) if (isNaN(addChat)) return
+        if (targetValue.length === 3 && saveValue.length < targetValue.length) {
+            targetValue = targetValue + "-";
+        } else if (targetValue.length === 4 && saveValue.length > targetValue.length){
+            targetValue = targetValue.substring(0, 3)
+        } else if (targetValue.length >= 9){
+            return;
+        } else if (saveValue.length === 3 && targetValue.length === 4) {
+            targetValue = saveValue + "-" + addChat;
+        }
+        this.setState({
+            cellPhone : targetValue
+        })
+    }
 
     static async getInitialProps({ req, res }: NextPageContext) {
         const initExecuteValiable = await initExecute(req);
@@ -101,10 +164,21 @@ class Index extends React.Component<IndexPageProps, {}> {
     render() {
         const {classes, initExecuteValiable} = this.props;
 
-        const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
-            console.log(event)
+        const changeValue = (event: React.ChangeEvent<{}>, newValue: number) => {
+            console.log(event.target);
             this.setValue(newValue);
         };
+
+        const changeContryPhone = (event: React.ChangeEvent<{ value: unknown }>) => {
+            this.setContryPhone(event.target.value as string);
+        };
+
+        const changePresetPhoneNum = (event: React.ChangeEvent<{ value: unknown }>) => {
+            this.setState({
+                presetPhoneNumber : event.target.value as string
+            })
+        };
+
         const TabPanel = (props: TabPanelProps) => {
             const { children, value, index, ...other } = props;
 
@@ -150,7 +224,7 @@ class Index extends React.Component<IndexPageProps, {}> {
                                     <Container style={{border:"1px solid #ecf0f1", borderWidth:"1px", borderRadius:"25px"}} >
                                         <div className={classes.tabsRoot}>
                                             <AppBar position="static">
-                                                <Tabs value={this.state.value} onChange={handleChange} aria-label="simple tabs example">
+                                                <Tabs value={this.state.value} onChange={changeValue} aria-label="simple tabs example">
                                                     <Tab label="기본인적사항" {...a11yProps(0)} />
                                                     <Tab label="학력사항" {...a11yProps(1)} />
                                                     <Tab label="어학/자격/활동내역" {...a11yProps(2)} />
@@ -176,7 +250,7 @@ class Index extends React.Component<IndexPageProps, {}> {
                                                         <tr>
                                                             <th style={{verticalAlign: "middle"}}>성별*</th>
                                                             <td style={{paddingLeft : "15px", marginTop: "10px", verticalAlign: "middle"}}>
-                                                                <RadioGroup row aria-label="position" name="position" defaultValue="M">
+                                                                <RadioGroup row aria-label="gender" name="gender" id="gender" defaultValue="M">
                                                                     <FormControlLabel value="M" control={<Radio color="primary" />} label="남" labelPlacement="start" />
                                                                     <FormControlLabel value="F" control={<Radio color="primary" />} label="여" labelPlacement="start" />
                                                                 </RadioGroup>
@@ -185,9 +259,9 @@ class Index extends React.Component<IndexPageProps, {}> {
                                                         <tr>
                                                             <th style={{verticalAlign: "middle"}} >생년월일*</th>
                                                             <td style={{paddingLeft : "15px", marginTop: "10px", verticalAlign: "middle"}}>
-                                                                <RadioGroup row aria-label="position" name="position" defaultValue="S">
+                                                                <RadioGroup row aria-label="birthType" name="birthType" id="birthType" defaultValue="S">
                                                                     <FormControlLabel value="S" control={<Radio color="primary" />} label="양력" labelPlacement="start" />
-                                                                    <FormControlLabel value="M" control={<Radio color="primary" />} label="음력" labelPlacement="start" />
+                                                                    <FormControlLabel value="L" control={<Radio color="primary" />} label="음력" labelPlacement="start" />
                                                                     <TextField
                                                                         style={{paddingTop: "5px", paddingLeft: "5px"}}
                                                                         id="date"
@@ -204,11 +278,70 @@ class Index extends React.Component<IndexPageProps, {}> {
                                                         </tr>
                                                         <tr>
                                                             <th style={{verticalAlign: "middle"}}>자택번호*</th>
-                                                            <td style={{paddingLeft : "15px"}}><TextField id="en_name" label="영어*" error={false} helperText="" /></td>
+                                                            <td style={{paddingLeft : "15px"}}>
+                                                                <FormControl style={{marginTop: "16px", marginRight: "10px"}}>
+                                                                    <Select
+                                                                        id="localType"
+                                                                        value={this.state.localType}
+                                                                        onChange={changeContryPhone}
+                                                                    >
+                                                                        <MenuItem value={"02"}>서울(02)</MenuItem>
+                                                                        <MenuItem value={"051"}>부산(051)</MenuItem>
+                                                                        <MenuItem value={"053"}>대구(053)</MenuItem>
+                                                                        <MenuItem value={"032"}>인천(032)</MenuItem>
+                                                                        <MenuItem value={"062"}>광주(062)</MenuItem>
+                                                                        <MenuItem value={"042"}>대전(042)</MenuItem>
+                                                                        <MenuItem value={"052"}>울산(052)</MenuItem>
+                                                                        <MenuItem value={"044"}>세종(044)</MenuItem>
+                                                                        <MenuItem value={"031"}>경기(031)</MenuItem>
+                                                                        <MenuItem value={"033"}>강원(033)</MenuItem>
+                                                                        <MenuItem value={"043"}>충북(043)</MenuItem>
+                                                                        <MenuItem value={"041"}>충남(041)</MenuItem>
+                                                                        <MenuItem value={"063"}>전북(063)</MenuItem>
+                                                                        <MenuItem value={"061"}>전남(061)</MenuItem>
+                                                                        <MenuItem value={"054"}>경북(054)</MenuItem>
+                                                                        <MenuItem value={"055"}>경남(055)</MenuItem>
+                                                                        <MenuItem value={"064"}>제주(064)</MenuItem>
+                                                                    </Select>
+
+                                                                </FormControl>
+                                                                <TextField
+                                                                    name="localPhone"
+                                                                    value={this.state.localPhone}
+                                                                    onChange={this.changeLocalPhone}
+
+                                                                    autoFocus={this.state.autoFocusId === "localPhone"}
+                                                                    style={{marginTop:"15px"}}
+                                                                />
+                                                            </td>
                                                         </tr>
                                                         <tr>
                                                             <th>휴대폰 번호</th>
-                                                            <td style={{paddingLeft : "15px"}}></td>
+                                                            <td style={{paddingLeft : "15px"}}>
+                                                                <FormControl style={{marginTop: "16px", marginRight: "10px"}}>
+                                                                    <Select
+                                                                        id="localType"
+                                                                        value={this.state.presetPhoneNumber}
+                                                                        onChange={changePresetPhoneNum}
+                                                                    >
+                                                                        <MenuItem value={"010"}>010</MenuItem>
+                                                                        <MenuItem value={"011"}>011</MenuItem>
+                                                                        <MenuItem value={"016"}>016</MenuItem>
+                                                                        <MenuItem value={"017"}>017</MenuItem>
+                                                                        <MenuItem value={"019"}>019</MenuItem>
+                                                                    </Select>
+
+                                                                </FormControl>
+                                                                <TextField
+                                                                    name="cellPhone"
+                                                                    value={this.state.cellPhone}
+                                                                    onChange={this.changeCellPhone}
+                                                                    id="cellPhone"
+                                                                    autoFocus={this.state.autoFocusId === "cellPhone"}
+                                                                    style={{marginTop:"15px"}}
+                                                                />
+
+                                                            </td>
                                                         </tr>
                                                         <tr>
                                                             <th>이메일</th>
