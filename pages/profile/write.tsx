@@ -19,6 +19,8 @@ import TextField from '@material-ui/core/TextField';
 import FormControl from '@material-ui/core/FormControl';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
+import Button from '@material-ui/core/Button';
+import Modal from '@material-ui/core/Modal';
 
 
 export interface WrtieState {
@@ -29,6 +31,7 @@ export interface WrtieState {
     presetPhoneNumber : string
     cellPhone : string
     autoFocusId : string
+    isModalOpen: boolean
 }
 
 interface TabPanelProps {
@@ -78,6 +81,15 @@ const useStyles = (theme: Theme) =>
             marginRight: theme.spacing(1),
             width: 200,
         },
+        addressModal: {
+            position: 'absolute',
+            width: 600,
+            height: 300,
+            backgroundColor: theme.palette.background.paper,
+            border: '2px solid #000',
+            boxShadow: theme.shadows[1],
+            padding: theme.spacing(2, 4, 3),
+        }
     });
 
 export interface IndexPageProps extends WithStyles<typeof useStyles>{
@@ -92,7 +104,8 @@ class Index extends React.Component<IndexPageProps, WrtieState> {
         localPhone : "",
         presetPhoneNumber : "010",
         cellPhone : "",
-        autoFocusId : ""
+        autoFocusId : "",
+        isModalOpen : false
     }
 
     setValue(input:number){
@@ -108,8 +121,6 @@ class Index extends React.Component<IndexPageProps, WrtieState> {
     }
 
     changeLocalPhone = (event: React.ChangeEvent<HTMLInputElement>) => {
-
-        event.preventDefault();
         let targetValue1 = event.target.value;
         let saveValue1 = this.state.localPhone;
         let addChat = targetValue1.substring(targetValue1.length-1, targetValue1.length);
@@ -125,29 +136,31 @@ class Index extends React.Component<IndexPageProps, WrtieState> {
         }
         this.setState({
             localPhone: targetValue1,
-            autoFocusId : [event.target.name]
+            autoFocusId : "localPhone"
         })
     };
 
     changeCellPhone = (event: React.ChangeEvent<HTMLInputElement>) => {
-        event.preventDefault();
         let targetValue = event.target.value;
         let saveValue = this.state.cellPhone;
         let addChat = targetValue.substring(targetValue.length-1, targetValue.length);
         if (saveValue.length < targetValue.length) if (isNaN(addChat)) return
-        if (targetValue.length === 3 && saveValue.length < targetValue.length) {
+        if (targetValue.length ===4 && saveValue.length < targetValue.length) {
             targetValue = targetValue + "-";
-        } else if (targetValue.length === 4 && saveValue.length > targetValue.length){
-            targetValue = targetValue.substring(0, 3)
-        } else if (targetValue.length >= 9){
+        } else if (targetValue.length === 5 && saveValue.length > targetValue.length){
+            targetValue = targetValue.substring(0, 4)
+        } else if (targetValue.length >= 10){
             return;
-        } else if (saveValue.length === 3 && targetValue.length === 4) {
+        } else if (saveValue.length === 4 && targetValue.length === 5) {
             targetValue = saveValue + "-" + addChat;
         }
         this.setState({
-            cellPhone : targetValue
+            cellPhone : targetValue,
+            autoFocusId : "cellPhone"
         })
     }
+
+
 
     static async getInitialProps({ req, res }: NextPageContext) {
         const initExecuteValiable = await initExecute(req);
@@ -161,8 +174,22 @@ class Index extends React.Component<IndexPageProps, WrtieState> {
     }
 
 
+
+
     render() {
         const {classes, initExecuteValiable} = this.props;
+
+        const modalOpen = () => {
+            this.setState({
+                isModalOpen : true
+            })
+        }
+
+        const modalClose = () => {
+            this.setState({
+                isModalOpen : false
+            })
+        }
 
         const changeValue = (event: React.ChangeEvent<{}>, newValue: number) => {
             console.log(event.target);
@@ -345,14 +372,60 @@ class Index extends React.Component<IndexPageProps, WrtieState> {
                                                         </tr>
                                                         <tr>
                                                             <th>이메일</th>
-                                                            <td style={{paddingLeft : "15px"}}></td>
+                                                            <td style={{paddingLeft : "15px"}}><TextField id="email" name="email" error={false} helperText="" /></td>
                                                         </tr>
                                                         <tr>
                                                             <th rowSpan={2} style={{verticalAlign : "middle"}}>주소*</th>
-                                                            <td style={{paddingLeft : "15px"}}></td>
+                                                            <td style={{paddingLeft : "15px"}}>
+                                                                <TextField id="postnum" name="postnum" label="우편번호" disabled={true} error={false} helperText="" />
+                                                                <Button variant="contained" color="primary" size="small" onClick={modalOpen} style={{marginTop: "15px", marginLeft: "10px"}} >
+                                                                    검색
+                                                                </Button>
+                                                                <Modal
+                                                                    open={this.state.isModalOpen}
+                                                                    onClose={modalClose}
+                                                                    aria-labelledby="simple-modal-title"
+                                                                    aria-describedby="simple-modal-description"
+                                                                >
+                                                                    <div style={{top: '50%', left: '50%', transform: 'translate(-50%, -50%)', paddingLeft: "0px", paddingRight: "0px"}} className={classes.addressModal}>
+                                                                        <div style={{borderBottom: "solid", borderBottomWidth: "thin"}}>
+                                                                            <Typography variant="h6" gutterBottom style={{paddingLeft: "20px", color: "#2e86de", fontWeight: "bold"}}>
+                                                                                주소 찾기
+                                                                            </Typography>
+                                                                        </div>
+                                                                        <div style={{paddingLeft: "20px", paddingRight: "20px"}}>
+                                                                            <header style={{marginTop: "20px"}}>
+                                                                                <Typography variant="body1" gutterBottom style={{fontWeight: "bold"}}>
+                                                                                    도로명주소, 건물명(아파트명), 지번주소(동,읍,면)을 입력하세요.
+                                                                                </Typography>
+                                                                                <Typography variant="body2" gutterBottom>
+                                                                                    검색 입력 예: 금하로 816, 논현동, 입장면
+                                                                                </Typography>
+                                                                            </header>
+                                                                            <main>
+                                                                                <div style={{margin: "15px" }}>
+                                                                                    <div style={{ backgroundColor: "#f5f6fa"}}>
+                                                                                        <TextField style={{marginLeft: "20px",  marginBottom: "5px"}} id="address_select" label="주소검색" error={false} helperText="도로명 주소가 검색되지 않는 경우 도로명주소안내시스템에서 확인하세요." />
+                                                                                        <Button variant="contained" color="primary"   style={{marginTop: "15px", marginLeft: "10px"}} >
+                                                                                            검색
+                                                                                        </Button>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </main>
+                                                                            <footer>
+
+                                                                            </footer>
+                                                                        </div>
+                                                                    </div>
+
+                                                                </Modal>
+                                                            </td>
                                                         </tr>
                                                         <tr>
-                                                            <td style={{paddingLeft : "15px"}}></td>
+                                                            <td style={{paddingLeft : "15px"}}>
+                                                                <TextField id="road_name_address" name="road_name_address" label="도로명 주소" disabled={true} error={false} helperText="" />
+                                                                <TextField style={{marginLeft: "10px"}} id="detail_address" name="detail_address" label="상세 주소" disabled={true} error={false} helperText="" />
+                                                            </td>
                                                         </tr>
                                                     </table>
                                                 </div>
