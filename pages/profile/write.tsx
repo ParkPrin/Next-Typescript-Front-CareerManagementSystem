@@ -32,6 +32,9 @@ export interface WrtieState {
     cellPhone : string
     autoFocusId : string
     isModalOpen: boolean
+    isMilitary : string
+    militaryType : string
+    militaryTier : string
 }
 
 interface TabPanelProps {
@@ -105,20 +108,13 @@ class Index extends React.Component<IndexPageProps, WrtieState> {
         presetPhoneNumber : "010",
         cellPhone : "",
         autoFocusId : "",
-        isModalOpen : false
+        isModalOpen : false,
+        isMilitary : "0",
+        militaryType : "0",
+        militaryTier : "0",
     }
 
-    setValue(input:number){
-        this.setState({
-            value : input
-        })
-    }
 
-    setContryPhone(input:string){
-        this.setState({
-            localType : input
-        })
-    }
 
     changeLocalPhone = (event: React.ChangeEvent<HTMLInputElement>) => {
         let targetValue1 = event.target.value;
@@ -193,18 +189,24 @@ class Index extends React.Component<IndexPageProps, WrtieState> {
 
         const changeValue = (event: React.ChangeEvent<{}>, newValue: number) => {
             console.log(event.target);
-            this.setValue(newValue);
-        };
-
-        const changeContryPhone = (event: React.ChangeEvent<{ value: unknown }>) => {
-            this.setContryPhone(event.target.value as string);
-        };
-
-        const changePresetPhoneNum = (event: React.ChangeEvent<{ value: unknown }>) => {
             this.setState({
-                presetPhoneNumber : event.target.value as string
+                value : newValue
             })
         };
+
+
+        const changeSelectValue = (event: React.ChangeEvent<{ value: unknown }>) => {
+            this.setState({
+                [event.target.name] : event.target.value as string
+            })
+        };
+
+
+        /*
+        isMilitary : "0",
+        militaryType : "0",
+        militaryTier : "0",
+         */
 
         const TabPanel = (props: TabPanelProps) => {
             const { children, value, index, ...other } = props;
@@ -291,8 +293,8 @@ class Index extends React.Component<IndexPageProps, WrtieState> {
                                                                     <FormControlLabel value="L" control={<Radio color="primary" />} label="음력" labelPlacement="start" />
                                                                     <TextField
                                                                         style={{paddingTop: "5px", paddingLeft: "5px"}}
-                                                                        id="date"
-                                                                        type="date"
+                                                                        id="birthDate"
+                                                                        type="birthDate"
                                                                         defaultValue="YYYY-MM-dd"
                                                                         className={classes.textField}
                                                                         InputLabelProps={{
@@ -309,8 +311,9 @@ class Index extends React.Component<IndexPageProps, WrtieState> {
                                                                 <FormControl style={{marginTop: "16px", marginRight: "10px"}}>
                                                                     <Select
                                                                         id="localType"
+                                                                        name="localType"
                                                                         value={this.state.localType}
-                                                                        onChange={changeContryPhone}
+                                                                        onChange={changeSelectValue}
                                                                     >
                                                                         <MenuItem value={"02"}>서울(02)</MenuItem>
                                                                         <MenuItem value={"051"}>부산(051)</MenuItem>
@@ -348,8 +351,9 @@ class Index extends React.Component<IndexPageProps, WrtieState> {
                                                                 <FormControl style={{marginTop: "16px", marginRight: "10px"}}>
                                                                     <Select
                                                                         id="localType"
+                                                                        name="localType"
                                                                         value={this.state.presetPhoneNumber}
-                                                                        onChange={changePresetPhoneNum}
+                                                                        onChange={changeSelectValue}
                                                                     >
                                                                         <MenuItem value={"010"}>010</MenuItem>
                                                                         <MenuItem value={"011"}>011</MenuItem>
@@ -434,20 +438,129 @@ class Index extends React.Component<IndexPageProps, WrtieState> {
                                                     <h3>병역사항</h3>
                                                     <table className="w3-table w3-bordered" style={{borderTop: "solid"}}>
                                                         <tr>
-                                                            <th>군필여부</th>
-                                                            <td style={{paddingLeft : "15px"}}></td>
-                                                            <th>군별코드</th>
-                                                            <td style={{paddingLeft : "15px"}}></td>
-                                                            <th>계급</th>
-                                                            <td style={{paddingLeft : "15px"}}></td>
+                                                            <th style={{verticalAlign : "middle"}} >군필여부</th>
+                                                            <td style={{paddingLeft : "15px"}}>
+                                                                <FormControl style={{marginTop: "16px", marginRight: "10px"}}>
+                                                                    <Select
+                                                                        id="isMilitary"
+                                                                        name="isMilitary"
+                                                                        value={this.state.isMilitary}
+                                                                        onChange={changeSelectValue}
+                                                                    >
+                                                                        <MenuItem value={"0"}>선택</MenuItem>
+                                                                        <MenuItem value={"1"}>필</MenuItem>
+                                                                        <MenuItem value={"2"}>미필</MenuItem>
+                                                                        <MenuItem value={"3"}>특례</MenuItem>
+                                                                        <MenuItem value={"4"}>면제</MenuItem>
+                                                                        <MenuItem value={"5"}>의가사</MenuItem>
+                                                                        <MenuItem value={"6"}>복무중</MenuItem>
+                                                                        <MenuItem value={"7"}>비대상</MenuItem>
+                                                                    </Select>
+
+                                                                </FormControl>
+                                                            </td>
+                                                            <th style={{verticalAlign : "middle"}}>군별코드</th>
+                                                            <td style={{paddingLeft : "15px"}}>
+                                                                <FormControl style={{marginTop: "16px", marginRight: "10px"}}>
+                                                                    <Select
+                                                                        id="militaryType"
+                                                                        name="militaryType"
+                                                                        value={this.state.militaryType}
+                                                                        onChange={changeSelectValue}
+                                                                    >
+                                                                        <MenuItem value={"0"}>선택</MenuItem>
+                                                                        <MenuItem value={"1"}>육군</MenuItem>
+                                                                        <MenuItem value={"2"}>해군</MenuItem>
+                                                                        <MenuItem value={"3"}>공군</MenuItem>
+                                                                        <MenuItem value={"4"}>해병</MenuItem>
+                                                                        <MenuItem value={"5"}>전경</MenuItem>
+                                                                        <MenuItem value={"6"}>방위</MenuItem>
+                                                                        <MenuItem value={"7"}>직할기관</MenuItem>
+                                                                        <MenuItem value={"8"}>공익</MenuItem>
+                                                                        <MenuItem value={"9"}>기타</MenuItem>
+                                                                        <MenuItem value={"A"}>의무경찰</MenuItem>
+                                                                    </Select>
+
+                                                                </FormControl>
+                                                            </td>
+                                                            <th style={{verticalAlign : "middle"}}>계급</th>
+                                                            <td style={{paddingLeft : "15px"}}>
+                                                                <FormControl style={{marginTop: "16px", marginRight: "10px"}}>
+                                                                    <Select
+                                                                        id="militaryTier"
+                                                                        name="militaryTier"
+                                                                        value={this.state.militaryTier}
+                                                                        onChange={changeSelectValue}
+                                                                    >
+                                                                        <MenuItem value={"0"}>선택</MenuItem>
+                                                                        <MenuItem value={"1"}>훈병</MenuItem>
+                                                                        <MenuItem value={"2"}>이병</MenuItem>
+                                                                        <MenuItem value={"3"}>일병</MenuItem>
+                                                                        <MenuItem value={"4"}>상병</MenuItem>
+                                                                        <MenuItem value={"5"}>병장</MenuItem>
+                                                                        <MenuItem value={"6"}>하사</MenuItem>
+                                                                        <MenuItem value={"7"}>중사</MenuItem>
+                                                                        <MenuItem value={"8"}>상사</MenuItem>
+                                                                        <MenuItem value={"9"}>원사</MenuItem>
+                                                                        <MenuItem value={"10"}>준위</MenuItem>
+                                                                        <MenuItem value={"11"}>소위</MenuItem>
+                                                                        <MenuItem value={"12"}>중위</MenuItem>
+                                                                        <MenuItem value={"13"}>대위</MenuItem>
+                                                                        <MenuItem value={"14"}>소령</MenuItem>
+                                                                        <MenuItem value={"15"}>중령</MenuItem>
+                                                                        <MenuItem value={"16"}>대령</MenuItem>
+                                                                        <MenuItem value={"17"}>준장</MenuItem>
+                                                                        <MenuItem value={"18"}>소장</MenuItem>
+                                                                        <MenuItem value={"19"}>중장</MenuItem>
+                                                                        <MenuItem value={"20"}>대장</MenuItem>
+                                                                        <MenuItem value={"A1"}>이경</MenuItem>
+                                                                        <MenuItem value={"A2"}>일경</MenuItem>
+                                                                        <MenuItem value={"A3"}>상경</MenuItem>
+                                                                        <MenuItem value={"A4"}>수경</MenuItem>
+                                                                        <MenuItem value={"A5"}>경장</MenuItem>
+                                                                        <MenuItem value={"A6"}>경사</MenuItem>
+                                                                        <MenuItem value={"A7"}>경위</MenuItem>
+                                                                        <MenuItem value={"A8"}>경감</MenuItem>
+                                                                        <MenuItem value={"A9"}>경정</MenuItem>
+                                                                        <MenuItem value={"A10"}>총경</MenuItem>
+                                                                    </Select>
+
+                                                                </FormControl>
+                                                            </td>
                                                         </tr>
                                                         <tr>
-                                                            <th>복무기간</th>
-                                                            <td colSpan={5} style={{paddingLeft : "15px"}}></td>
+                                                            <th style={{verticalAlign : "middle"}}>복무기간</th>
+                                                            <td colSpan={5} style={{paddingLeft : "15px"}}>
+                                                                <TextField
+                                                                    style={{paddingTop: "5px"}}
+                                                                    id="militaryStartDate"
+                                                                    name="militaryStartDate"
+                                                                    type="date"
+                                                                    defaultValue="YYYY-MM-dd"
+                                                                    helperText="복무시작일"
+                                                                    className={classes.textField}
+                                                                    InputLabelProps={{
+                                                                        shrink: true,
+                                                                    }}
+                                                                />
+                                                                <span> _ </span>
+                                                                <TextField
+                                                                    style={{paddingTop: "5px", paddingLeft: "5px"}}
+                                                                    id="militaryEndDate"
+                                                                    name="militaryEndDate"
+                                                                    type="date"
+                                                                    defaultValue="YYYY-MM-dd"
+                                                                    helperText="복무종료일"
+                                                                    className={classes.textField}
+                                                                    InputLabelProps={{
+                                                                        shrink: true,
+                                                                    }}
+                                                                />
+                                                            </td>
                                                         </tr>
                                                         <tr>
-                                                            <th>총기간</th>
-                                                            <td colSpan={5} style={{paddingLeft : "15px"}}></td>
+                                                            <th style={{verticalAlign : "middle"}}>총기간</th>
+                                                            <td colSpan={5} style={{paddingLeft : "15px"}}> <TextField id="militaryPeriod" disabled={true} value="00년 00개월" /> </td>
                                                         </tr>
                                                     </table>
                                                 </div>
