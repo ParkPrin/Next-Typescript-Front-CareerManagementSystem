@@ -35,6 +35,11 @@ export interface WrtieState {
     isMilitary : string
     militaryType : string
     militaryTier : string
+    veteransType : string
+    veteransTarget : string
+    veteransNum : string
+    obstacleType : string
+    obstacleTier : string
 }
 
 interface TabPanelProps {
@@ -112,6 +117,12 @@ class Index extends React.Component<IndexPageProps, WrtieState> {
         isMilitary : "0",
         militaryType : "0",
         militaryTier : "0",
+        veteransType : "0",
+        veteransTarget : "0",
+        veteransNum : "",
+        obstacleType : "0",
+        obstacleTier : "0"
+
     }
 
 
@@ -294,7 +305,8 @@ class Index extends React.Component<IndexPageProps, WrtieState> {
                                                                     <TextField
                                                                         style={{paddingTop: "5px", paddingLeft: "5px"}}
                                                                         id="birthDate"
-                                                                        type="birthDate"
+                                                                        name="birthDate"
+                                                                        type="date"
                                                                         defaultValue="YYYY-MM-dd"
                                                                         className={classes.textField}
                                                                         InputLabelProps={{
@@ -466,6 +478,12 @@ class Index extends React.Component<IndexPageProps, WrtieState> {
                                                                         id="militaryType"
                                                                         name="militaryType"
                                                                         value={this.state.militaryType}
+                                                                        disabled={
+                                                                            this.state.isMilitary === "0"
+                                                                            || this.state.isMilitary === "2"
+                                                                            || this.state.isMilitary === "4"
+                                                                            || this.state.isMilitary === "7"
+                                                                        }
                                                                         onChange={changeSelectValue}
                                                                     >
                                                                         <MenuItem value={"0"}>선택</MenuItem>
@@ -490,6 +508,12 @@ class Index extends React.Component<IndexPageProps, WrtieState> {
                                                                         id="militaryTier"
                                                                         name="militaryTier"
                                                                         value={this.state.militaryTier}
+                                                                        disabled={
+                                                                            this.state.isMilitary === "0"
+                                                                            || this.state.isMilitary === "2"
+                                                                            || this.state.isMilitary === "4"
+                                                                            || this.state.isMilitary === "7"
+                                                                        }
                                                                         onChange={changeSelectValue}
                                                                     >
                                                                         <MenuItem value={"0"}>선택</MenuItem>
@@ -538,6 +562,12 @@ class Index extends React.Component<IndexPageProps, WrtieState> {
                                                                     type="date"
                                                                     defaultValue="YYYY-MM-dd"
                                                                     helperText="복무시작일"
+                                                                    disabled={
+                                                                        this.state.isMilitary === "0"
+                                                                        || this.state.isMilitary === "2"
+                                                                        || this.state.isMilitary === "4"
+                                                                        || this.state.isMilitary === "7"
+                                                                    }
                                                                     className={classes.textField}
                                                                     InputLabelProps={{
                                                                         shrink: true,
@@ -551,6 +581,12 @@ class Index extends React.Component<IndexPageProps, WrtieState> {
                                                                     type="date"
                                                                     defaultValue="YYYY-MM-dd"
                                                                     helperText="복무종료일"
+                                                                    disabled={
+                                                                        this.state.isMilitary === "0"
+                                                                        || this.state.isMilitary === "2"
+                                                                        || this.state.isMilitary === "4"
+                                                                        || this.state.isMilitary === "7"
+                                                                    }
                                                                     className={classes.textField}
                                                                     InputLabelProps={{
                                                                         shrink: true,
@@ -566,15 +602,72 @@ class Index extends React.Component<IndexPageProps, WrtieState> {
                                                 </div>
 
                                                 <div className="w3-container" style={{marginTop: "30px"}}>
-                                                    <h3>병역사항</h3>
+                                                    <h3>보훈사항</h3>
                                                     <table className="w3-table w3-bordered" style={{borderTop: "solid"}}>
                                                         <tr>
-                                                            <th>보훈유형</th>
-                                                            <td style={{paddingLeft : "15px"}}></td>
-                                                            <th>보훈대상자와의관계</th>
-                                                            <td style={{paddingLeft : "15px"}}></td>
-                                                            <th>보훈등록번호</th>
-                                                            <td style={{paddingLeft : "15px"}}></td>
+                                                            <th style={{verticalAlign : "middle"}}>보훈유형</th>
+                                                            <td style={{paddingLeft : "15px"}}>
+                                                                <FormControl style={{marginTop: "16px", marginRight: "10px"}}>
+                                                                    <Select
+                                                                        id="veteransType"
+                                                                        name="veteransType"
+                                                                        value={this.state.veteransType}
+                                                                        onChange={changeSelectValue}
+                                                                    >
+                                                                        <MenuItem value={"0"}>비대상</MenuItem>
+                                                                        <MenuItem value={"1"}>순국선열</MenuItem>
+                                                                        <MenuItem value={"2"}>애국지사</MenuItem>
+                                                                        <MenuItem value={"3"}>전몰군경</MenuItem>
+                                                                        <MenuItem value={"4"}>전산군경</MenuItem>
+                                                                        <MenuItem value={"5"}>순직군경</MenuItem>
+                                                                        <MenuItem value={"6"}>공상군경</MenuItem>
+                                                                        <MenuItem value={"7"}>무공수훈자</MenuItem>
+                                                                        <MenuItem value={"8"}>보국수훈자</MenuItem>
+                                                                        <MenuItem value={"9"}>6·25 참전 재일학도 의용군인</MenuItem>
+                                                                        <MenuItem value={"10"}>4·19 혁명 사망자</MenuItem>
+                                                                        <MenuItem value={"11"}>4·19 혁명 부상자</MenuItem>
+                                                                        <MenuItem value={"12"}>4·19 혁명 공로자</MenuItem>
+                                                                        <MenuItem value={"13"}>순직공무원</MenuItem>
+                                                                        <MenuItem value={"14"}>공상공무원</MenuItem>
+                                                                        <MenuItem value={"15"}>국가사회발전 특별공로 순직/상이/공로자</MenuItem>
+                                                                    </Select>
+
+                                                                </FormControl>
+                                                            </td>
+                                                            <th style={{verticalAlign : "middle"}}>보훈대상자와의관계</th>
+                                                            <td style={{paddingLeft : "15px"}}>
+                                                                <FormControl style={{marginTop: "16px", marginRight: "10px"}}>
+                                                                    <Select
+                                                                        id="veteransTarget"
+                                                                        name="veteransTarget"
+                                                                        value={this.state.veteransTarget}
+                                                                        disabled={this.state.veteransType === "0"}
+                                                                        onChange={changeSelectValue}
+                                                                    >
+                                                                        <MenuItem value={"0"}>선택</MenuItem>
+                                                                        <MenuItem value={"1"}>본인</MenuItem>
+                                                                        <MenuItem value={"2"}>조부</MenuItem>
+                                                                        <MenuItem value={"3"}>조모</MenuItem>
+                                                                        <MenuItem value={"4"}>부</MenuItem>
+                                                                        <MenuItem value={"5"}>모</MenuItem>
+                                                                        <MenuItem value={"6"}>배우자</MenuItem>
+                                                                        <MenuItem value={"7"}>아들</MenuItem>
+                                                                        <MenuItem value={"8"}>딸</MenuItem>
+                                                                        <MenuItem value={"9"}>형제(배우자)</MenuItem>
+                                                                        <MenuItem value={"10"}>외조부</MenuItem>
+                                                                        <MenuItem value={"11"}>외조모</MenuItem>
+                                                                        <MenuItem value={"12"}>시부</MenuItem>
+                                                                        <MenuItem value={"13"}>시모</MenuItem>
+                                                                        <MenuItem value={"14"}>빙부(장인)</MenuItem>
+                                                                        <MenuItem value={"15"}>빙모(장모)</MenuItem>
+                                                                    </Select>
+
+                                                                </FormControl>
+                                                            </td>
+                                                            <th style={{verticalAlign : "middle"}}>보훈등록번호</th>
+                                                            <td style={{paddingLeft : "15px"}}>
+                                                                <TextField id="veteransNum" disabled={this.state.veteransType === "0"} />
+                                                            </td>
                                                         </tr>
                                                     </table>
                                                 </div>
@@ -583,14 +676,75 @@ class Index extends React.Component<IndexPageProps, WrtieState> {
                                                     <h3>장애사항</h3>
                                                     <table className="w3-table w3-bordered" style={{borderTop: "solid"}}>
                                                         <tr>
-                                                            <th>장애유형</th>
-                                                            <td style={{paddingLeft : "15px"}}></td>
-                                                            <th>장애등급</th>
-                                                            <td style={{paddingLeft : "15px"}}></td>
+                                                            <th style={{verticalAlign : "middle"}}>장애유형</th>
+                                                            <td style={{paddingLeft : "15px"}}>
+                                                                <FormControl style={{marginTop: "16px", marginRight: "10px"}}>
+                                                                    <Select
+                                                                        id="obstacleType"
+                                                                        name="obstacleType"
+                                                                        value={this.state.obstacleType}
+                                                                        onChange={changeSelectValue}
+                                                                    >
+                                                                        <MenuItem value={"0"}>비대상</MenuItem>
+                                                                        <MenuItem value={"1"}>지체장애</MenuItem>
+                                                                        <MenuItem value={"2"}>청각언어장애</MenuItem>
+                                                                        <MenuItem value={"3"}>시각장애</MenuItem>
+                                                                        <MenuItem value={"4"}>정신장애</MenuItem>
+                                                                        <MenuItem value={"5"}>기타</MenuItem>
+                                                                        <MenuItem value={"6"}>뇌병변장애</MenuItem>
+                                                                        <MenuItem value={"7"}>언어장애</MenuItem>
+                                                                        <MenuItem value={"8"}>안면장애</MenuItem>
+                                                                        <MenuItem value={"9"}>신장장애</MenuItem>
+                                                                        <MenuItem value={"10"}>심장장애</MenuItem>
+                                                                        <MenuItem value={"11"}>간장애</MenuItem>
+                                                                        <MenuItem value={"12"}>호흡기장애</MenuItem>
+                                                                        <MenuItem value={"13"}>장루·요루장애</MenuItem>
+                                                                        <MenuItem value={"14"}>간질장애</MenuItem>
+                                                                        <MenuItem value={"15"}>지적장애</MenuItem>
+                                                                        <MenuItem value={"16"}>자폐성장애</MenuItem>
+                                                                    </Select>
+
+                                                                </FormControl>
+                                                            </td>
+                                                            <th style={{verticalAlign : "middle"}}>장애등급</th>
+                                                            <td style={{paddingLeft : "15px"}}>
+                                                                <FormControl style={{marginTop: "16px", marginRight: "10px"}}>
+                                                                    <Select
+                                                                        id="obstacleTier"
+                                                                        name="obstacleTier"
+                                                                        value={this.state.obstacleTier}
+                                                                        disabled={this.state.obstacleType === "0"}
+                                                                        onChange={changeSelectValue}
+                                                                    >
+                                                                        <MenuItem value={"0"}>선택</MenuItem>
+                                                                        <MenuItem value={"1"}>1급</MenuItem>
+                                                                        <MenuItem value={"2"}>2급</MenuItem>
+                                                                        <MenuItem value={"3"}>3급</MenuItem>
+                                                                        <MenuItem value={"4"}>4급</MenuItem>
+                                                                        <MenuItem value={"5"}>5급</MenuItem>
+                                                                        <MenuItem value={"6"}>6급</MenuItem>
+                                                                        <MenuItem value={"7"}>7급</MenuItem>
+                                                                    </Select>
+
+                                                                </FormControl>
+                                                            </td>
                                                         </tr>
                                                         <tr>
-                                                            <th>인정일</th>
-                                                            <td colSpan={3} style={{paddingLeft : "15px"}}></td>
+                                                            <th style={{verticalAlign : "middle"}} >인정일</th>
+                                                            <td colSpan={3} style={{paddingLeft : "15px"}}>
+                                                                <TextField
+                                                                    style={{paddingTop: "5px", paddingLeft: "5px"}}
+                                                                    id="obstacleApproveDay"
+                                                                    name="obstacleApproveDay"
+                                                                    type="date"
+                                                                    defaultValue="YYYY-MM-dd"
+                                                                    disabled={this.state.obstacleType === "0"}
+                                                                    className={classes.textField}
+                                                                    InputLabelProps={{
+                                                                        shrink: true,
+                                                                    }}
+                                                                />
+                                                            </td>
                                                         </tr>
                                                     </table>
                                                 </div>
