@@ -9,7 +9,7 @@ export default async function initExecute(req: IncomingMessage | undefined) {
         menuList : [],
         title : process.env.NEXT_PROJECT_NAME_KR,
         redirectUrl : "",
-        isLogin : true,
+        isLogin : false,
         isDevice: false
     };
     const isMobileView = (req? req.headers['user-agent'] :navigator.userAgent)?.match(

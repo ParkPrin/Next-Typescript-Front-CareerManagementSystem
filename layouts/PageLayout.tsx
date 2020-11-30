@@ -1,4 +1,4 @@
-import PageMaue  from '../components/PageMaue'
+import PageMaue  from '../components/layout/PageMaue'
 import React, {ReactNode} from 'react'
 import Head from "next/head";
 import {InitExecuteValiable} from "../interfaces/initExecuteValiable";

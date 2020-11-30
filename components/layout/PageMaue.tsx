@@ -29,8 +29,8 @@ import MailIcon from '@material-ui/icons/Mail';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import NoSsr from '@material-ui/core/NoSsr';
-import {InitExecuteValiable} from "../interfaces/initExecuteValiable";
-import {PageMenuItem} from "../interfaces/menuitem";
+import {InitExecuteValiable} from "../../interfaces/initExecuteValiable";
+import {PageMenuItem} from "../../interfaces/menuitem";
 
 import Avatar from '@material-ui/core/Avatar';
 

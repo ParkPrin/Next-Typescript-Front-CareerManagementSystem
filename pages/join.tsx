@@ -49,43 +49,40 @@ class IndexPage extends React.Component<IndexPageProps, {}> {
 
                     </div>
                     : <div>
-                        <header style={{marginTop:"22%"}}>
+                        <header style={{marginTop:"15%"}}>
 
                         </header>
                         <div className={this.props.classes.IndexRoot}>
-                            <main style={{width: "500px", marginTop: "4% auto", marginLeft: "30%", marginRight: "20%", marginBottom: "20px", border:"1px solid #ecf0f1", borderWidth:"1px", borderRadius:"25px"}}>
-                                <div className="w3-row" style={{margin: "30px"}}>
-                                    <div>
-                                        <div className="w3-col s8" >
-                                            <h1>Login</h1>
-                                            <section style={{marginTop: "10%"}}>
-                                                <div>
-                                                    <TextField id="loginId" label="아이디" error={false} helperText="" />
-                                                </div>
-                                                <div>
-                                                    <TextField id="loginId" label="비밀번호" error={false} helperText="" />
-                                                </div>
-                                            </section>
-                                        </div>
-                                        <div className="w3-col s4" >
-                                            <section>
-                                                <Button variant="contained" color="primary" href={"./join"} style={{marginTop: "30px", width: "150px"}}>회원가입</Button>
-                                                <Button variant="contained" color="primary" style={{marginTop: "10px", width: "150px"}}>로그인</Button>
-                                                <Button variant="contained" color="primary" style={{marginTop: "10px", width: "150px"}}>Google 로그인</Button>
-                                                <Button variant="contained" color="primary" style={{marginTop: "10px", width: "150px"}}>Facebook 로그인</Button>
-                                                <Button variant="contained" color="primary" style={{marginTop: "10px", width: "150px"}}>Naver 로그인</Button>
-                                            </section>
-                                        </div>
+                            <main style={{width: "470px", marginTop: "4% auto", marginLeft: "30%", marginRight: "20%", marginBottom: "20px", border:"1px solid #ecf0f1", borderWidth:"1px", borderRadius:"25px"}}>
+                                <div style={{marginLeft: "30%", marginRight: "30%", marginTop: "10%"}}>
+                                    <h1>회원가입</h1>
+                                    <div style={{marginBottom: "5px"}}>
+                                        <TextField id="loginId" label="닉네임" error={false} helperText="" />
                                     </div>
-
-
+                                    <div style={{marginBottom: "5px"}}>
+                                        <TextField id="loginId" label="아이디" error={false} helperText="" />
+                                    </div>
+                                    <div style={{marginBottom: "5px"}}>
+                                        <TextField id="loginId" label="비밀번호" error={false} helperText="" />
+                                    </div>
+                                    <div style={{marginBottom: "5px"}}>
+                                        <TextField id="loginId" label="비밀번호 재입력" error={false} helperText="" />
+                                    </div>
+                                    <div style={{marginBottom: "5px"}}>
+                                        <TextField id="loginId" label="이메일" error={false} helperText="" />
+                                    </div>
+                                    <Button variant="contained" color="primary" style={{marginTop: "30px", width: "170px"}}>회원가입</Button>
                                 </div>
+
                                 <div style={{marginTop: "15%", marginBottom: "15px"}}>
-                                    <Typography variant="body2" gutterBottom style={{ marginLeft: "30%", display: "inline"}}>
+                                    <Typography variant="body2" gutterBottom style={{ marginLeft: "28%", display: "inline"}}>
                                         아이디 찾기
                                     </Typography>
                                     <Typography variant="body2" gutterBottom style={{ marginLeft: "10px", display: "inline"}}>
                                         비밀번호 찾기
+                                    </Typography>
+                                    <Typography variant="body2" component="a" gutterBottom style={{ marginLeft: "10px", display: "inline"}} href={"./login"}>
+                                        로그인
                                     </Typography>
                                 </div>
                             </main>
