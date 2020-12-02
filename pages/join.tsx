@@ -53,7 +53,7 @@ class IndexPage extends React.Component<IndexPageProps, {}> {
 
                         </header>
                         <div className={this.props.classes.IndexRoot}>
-                            <main style={{width: "470px", marginTop: "4% auto", marginLeft: "30%", marginRight: "20%", marginBottom: "20px", border:"1px solid #ecf0f1", borderWidth:"1px", borderRadius:"25px"}}>
+                            <main style={{width: "470px", marginTop: "4% auto", marginLeft: "27%", marginBottom: "20px", border:"1px solid #ecf0f1", borderWidth:"1px", borderRadius:"25px"}}>
                                 <div style={{marginLeft: "30%", marginRight: "30%", marginTop: "10%"}}>
                                     <h1>회원가입</h1>
                                     <div style={{marginBottom: "5px"}}>

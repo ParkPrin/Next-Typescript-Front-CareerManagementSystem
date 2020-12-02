@@ -49,11 +49,11 @@ class IndexPage extends React.Component<IndexPageProps, {}> {
 
                     </div>
                     : <div>
-                        <header style={{marginTop:"22%"}}>
+                        <header style={{marginTop:"20%"}}>
 
                         </header>
                         <div className={this.props.classes.IndexRoot}>
-                            <main style={{width: "500px", marginTop: "4% auto", marginLeft: "30%", marginRight: "20%", marginBottom: "20px", border:"1px solid #ecf0f1", borderWidth:"1px", borderRadius:"25px"}}>
+                            <main style={{width: "500px", marginLeft: "27%", marginBottom: "20px", border:"1px solid #ecf0f1", borderWidth:"1px", borderRadius:"25px"}}>
                                 <div className="w3-row" style={{margin: "30px"}}>
                                     <div>
                                         <div className="w3-col s8" >

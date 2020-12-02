@@ -14,6 +14,7 @@ import Modal from "@material-ui/core/Modal";
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
+import {width} from "@material-ui/system";
 
 export interface EducationHistoryState {
     isHighSchoolModal : boolean
@@ -24,6 +25,18 @@ export interface EducationHistoryState {
     collegePerfectScore : string
     autoFocusId : string
     collegeScore : string
+    isUniversityModal : boolean
+    universityGraduatedType : string
+    isUniversityMajorModal : boolean
+    isUniversityAfterMajorModal : boolean
+    universityPerfectScore : string
+    universityScore : string
+    isGraduateModal : boolean
+    graduateGraduatedType : string
+    isGraduateMajorModal : boolean
+    isGraduateAfterMajorModal : boolean
+    graduatePerfectScore : string
+    graduateScore : string
 }
 
 const useStyles = (theme: Theme) =>
@@ -57,7 +70,19 @@ class EducationHistory extends React.Component<EducationHistoryPageProps, Educat
         iscollegeMajorModal : false,
         collegePerfectScore : "0.00",
         autoFocusId : "",
-        collegeScore : ""
+        collegeScore : "",
+        isUniversityModal : false,
+        universityGraduatedType : "0",
+        isUniversityMajorModal : false,
+        isUniversityAfterMajorModal : false,
+        universityPerfectScore : "0.00",
+        universityScore : "",
+        isGraduateModal : false,
+        graduateGraduatedType : "0",
+        isGraduateMajorModal : false,
+        isGraduateAfterMajorModal : false,
+        graduatePerfectScore : "0.00",
+        graduateScore : ""
     }
 
     validationGrades = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -67,6 +92,7 @@ class EducationHistory extends React.Component<EducationHistoryPageProps, Educat
         let saveValue1 = this.state.[targetElementName];
         let addChat = targetValue1.substring(targetValue1.length - 1, targetValue1.length);
         if (isNaN(Number(addChat)) && addChat !== ".") return;
+        if (addChat === "." && targetValue1.length !== 2) return;
         if (targetValue1.length === 2 && saveValue1 > targetValue1) targetValue1 = targetValue1.substring(0, 1);
         else if (targetValue1.length === 2 && saveValue1 < targetValue1) {
             const addChat = targetValue1.substring(1, 2);
@@ -231,7 +257,7 @@ class EducationHistory extends React.Component<EducationHistoryPageProps, Educat
                                             <div style={{top: '50%', left: '50%', transform: 'translate(-50%, -50%)', paddingLeft: "0px", paddingRight: "0px"}} className={classes.addressModal}>
                                                 <div style={{borderBottom: "solid", borderBottomWidth: "thin"}}>
                                                     <Typography variant="h6" gutterBottom style={{paddingLeft: "20px", color: "#2e86de", fontWeight: "bold"}}>
-                                                        전문대학명 검색
+                                                        전문대학 검색
                                                     </Typography>
                                                 </div>
                                                 <div style={{paddingLeft: "20px", paddingRight: "20px"}}>
@@ -283,7 +309,7 @@ class EducationHistory extends React.Component<EducationHistoryPageProps, Educat
                                     <tr>
                                         <th style={{verticalAlign:"middle"}}>전공명</th>
                                         <td style={{paddingTop: "0px"}}>
-                                            <TextField id="college_major" name="college_major"  error={false} helperText="" label="전공명" disabled={true} style={{marginLeft: "20px",  }}
+                                            <TextField id="college_major" name="college_major"  error={false} helperText="" label="전공명" disabled={true}
                                                        onClick={() =>  {this.setState({iscollegeMajorModal : true})}}
                                             />
                                             <Button variant="contained" color="primary" size="small" name="college_major_search" id="college_major_search"
@@ -421,26 +447,223 @@ class EducationHistory extends React.Component<EducationHistoryPageProps, Educat
                                     <thead></thead>
                                     <tbody>
                                         <tr>
-                                            <th>학교명</th>
-                                            <td colSpan={3}></td>
+                                            <th style={{verticalAlign: "middle", width: "140px"}}>학교명</th>
+                                            <td style={{paddingTop: "0px"}}>
+                                                <RadioGroup row aria-label="universityIsDomestic" name="universityIsDomestic" id="universityIsDomestic" defaultValue="D">
+                                                    <FormControlLabel value="D" control={<Radio color="primary" />} label="국내" labelPlacement="start" style={{paddingTop: "8px"}} />
+                                                    <FormControlLabel value="1" control={<Radio color="primary" />} label="국외" labelPlacement="start" style={{paddingTop: "8px"}} />
+                                                    <TextField id="university_name" name="university_name"  error={false} helperText="" label="학교명" disabled={true} style={{marginLeft: "20px",  }}
+                                                               onClick={() =>  {this.setState({isUniversityModal : true})}}
+                                                    />
+                                                    <Button variant="contained" color="primary" size="small" name="university_search" id="university_search"
+                                                            onClick={() =>  {this.setState({isUniversityModal : true})}}
+                                                            style={{marginTop: "15px", marginLeft: "10px"}} >
+                                                        검색
+                                                    </Button>
+                                                </RadioGroup>
+                                                <Modal
+                                                    open={this.state.isUniversityModal}
+                                                    onClose={() => {this.setState({isUniversityModal : false})}}
+                                                    aria-labelledby="simple-modal-title"
+                                                    aria-describedby="simple-modal-description"
+                                                >
+                                                    <div style={{top: '50%', left: '50%', transform: 'translate(-50%, -50%)', paddingLeft: "0px", paddingRight: "0px"}} className={classes.addressModal}>
+                                                        <div style={{borderBottom: "solid", borderBottomWidth: "thin"}}>
+                                                            <Typography variant="h6" gutterBottom style={{paddingLeft: "20px", color: "#2e86de", fontWeight: "bold"}}>
+                                                                대학 검색
+                                                            </Typography>
+                                                        </div>
+                                                        <div style={{paddingLeft: "20px", paddingRight: "20px"}}>
+                                                            <header style={{marginTop: "20px"}}>
+
+                                                            </header>
+                                                            <main>
+                                                                <div style={{margin: "15px" }}>
+                                                                    <div style={{ backgroundColor: "#f5f6fa"}}>
+                                                                        <TextField style={{marginLeft: "20px",  marginBottom: "5px"}} name="university_select" id="university_select" label="대학검색" error={false} helperText="찾으시는 학교명이 없는 경우, 기타로 등록하세요" />
+                                                                        <Button variant="contained" color="primary"   style={{marginTop: "15px", marginLeft: "10px"}} >
+                                                                            검색
+                                                                        </Button>
+                                                                    </div>
+                                                                </div>
+                                                            </main>
+                                                            <footer>
+
+                                                            </footer>
+                                                        </div>
+                                                    </div>
+
+                                                </Modal>
+                                            </td>
                                         </tr>
                                         <tr>
-                                            <th>졸업구분</th>
-                                            <td colSpan={3}></td>
+                                            <th style={{verticalAlign: "middle"}}>졸업구분</th>
+                                            <td>
+                                                <FormControl style={{marginTop: "8px", marginRight: "10px"}}>
+                                                    <Select
+                                                        id="universityGraduatedType"
+                                                        name="universityGraduatedType"
+                                                        value={this.state.universityGraduatedType}
+                                                        onChange={input => {this.setState({[input.target.name] : [input.target.value]})}}
+                                                    >
+                                                        <MenuItem value={"0"}>선택</MenuItem>
+                                                        <MenuItem value={"1"}>졸업</MenuItem>
+                                                        <MenuItem value={"2"}>중퇴</MenuItem>
+                                                        <MenuItem value={"3"}>수료</MenuItem>
+                                                        <MenuItem value={"4"}>휴학중</MenuItem>
+                                                        <MenuItem value={"5"}>재학중</MenuItem>
+                                                        <MenuItem value={"6"}>졸업예정</MenuItem>
+
+                                                    </Select>
+
+                                                </FormControl>
+                                            </td>
                                         </tr>
                                         <tr>
-                                            <th>전공명</th>
-                                            <td colSpan={3}></td>
+                                            <th style={{verticalAlign: "middle"}}>전공명</th>
+                                            <td style={{paddingTop: "0px"}}>
+                                                <TextField id="university_major" name="university_major"  error={false} helperText="" label="전공명" disabled={true}
+                                                           onClick={() =>  {this.setState({isUniversityMajorModal : true})}}
+                                                />
+                                                <Button variant="contained" color="primary" size="small" name="university_major_search" id="university_major_search"
+                                                        onClick={() =>  {this.setState({isUniversityMajorModal : true})}}
+                                                        style={{marginTop: "15px", marginLeft: "10px"}} >
+                                                    검색
+                                                </Button>
+                                                <Modal
+                                                    open={this.state.isUniversityMajorModal}
+                                                    onClose={() => {this.setState({isUniversityMajorModal : false})}}
+                                                    aria-labelledby="simple-modal-title"
+                                                    aria-describedby="simple-modal-description"
+                                                >
+                                                    <div style={{top: '50%', left: '50%', transform: 'translate(-50%, -50%)', paddingLeft: "0px", paddingRight: "0px"}} className={classes.addressModal}>
+                                                        <div style={{borderBottom: "solid", borderBottomWidth: "thin"}}>
+                                                            <Typography variant="h6" gutterBottom style={{paddingLeft: "20px", color: "#2e86de", fontWeight: "bold"}}>
+                                                                전공명
+                                                            </Typography>
+                                                        </div>
+                                                        <div style={{paddingLeft: "20px", paddingRight: "20px"}}>
+                                                            <header style={{marginTop: "20px"}}>
+
+                                                            </header>
+                                                            <main>
+                                                                <div style={{margin: "15px" }}>
+                                                                    <div style={{ backgroundColor: "#f5f6fa"}}>
+                                                                        <TextField style={{marginLeft: "20px",  marginBottom: "5px"}} name="university_major" id="university_major" label="전공명" error={false} helperText="" />
+                                                                        <Button variant="contained" color="primary"   style={{marginTop: "15px", marginLeft: "10px"}} >
+                                                                            검색
+                                                                        </Button>
+                                                                    </div>
+                                                                </div>
+                                                            </main>
+                                                            <footer>
+
+                                                            </footer>
+                                                        </div>
+                                                    </div>
+
+                                                </Modal>
+                                            </td>
                                         </tr>
                                         <tr>
-                                            <th>부전공명/복수전공</th>
-                                            <td></td>
+                                            <th style={{verticalAlign: "middle"}}>부전공명/복수전공</th>
+                                            <td style={{paddingTop: "0px"}}>
+                                                <TextField id="university_after_major" name="university_after_major"  error={false} helperText="" label="부전공/복수전공" disabled={true}
+                                                           onClick={() =>  {this.setState({isUniversityAfterMajorModal : true})}}
+                                                />
+                                                <Button variant="contained" color="primary" size="small" name="university_after_major_search" id="university_after_major_search"
+                                                        onClick={() =>  {this.setState({isUniversityAfterMajorModal : true})}}
+                                                        style={{marginTop: "15px", marginLeft: "10px"}} >
+                                                    검색
+                                                </Button>
+                                                <Modal
+                                                    open={this.state.isUniversityAfterMajorModal}
+                                                    onClose={() => {this.setState({isUniversityAfterMajorModal : false})}}
+                                                    aria-labelledby="simple-modal-title"
+                                                    aria-describedby="simple-modal-description"
+                                                >
+                                                    <div style={{top: '50%', left: '50%', transform: 'translate(-50%, -50%)', paddingLeft: "0px", paddingRight: "0px"}} className={classes.addressModal}>
+                                                        <div style={{borderBottom: "solid", borderBottomWidth: "thin"}}>
+                                                            <Typography variant="h6" gutterBottom style={{paddingLeft: "20px", color: "#2e86de", fontWeight: "bold"}}>
+                                                                부전공 / 복수전공
+                                                            </Typography>
+                                                        </div>
+                                                        <div style={{paddingLeft: "20px", paddingRight: "20px"}}>
+                                                            <header style={{marginTop: "20px"}}>
+
+                                                            </header>
+                                                            <main>
+                                                                <div style={{margin: "15px" }}>
+                                                                    <div style={{ backgroundColor: "#f5f6fa"}}>
+                                                                        <TextField style={{marginLeft: "20px",  marginBottom: "5px"}} name="university_after_major" id="university_after_major" label="부전공/복수전공" error={false} helperText="" />
+                                                                        <Button variant="contained" color="primary"   style={{marginTop: "15px", marginLeft: "10px"}} >
+                                                                            검색
+                                                                        </Button>
+                                                                    </div>
+                                                                </div>
+                                                            </main>
+                                                            <footer>
+
+                                                            </footer>
+                                                        </div>
+                                                    </div>
+
+                                                </Modal>
+                                            </td>
+                                        </tr>
+                                        <tr>
                                             <th>학점</th>
-                                            <td></td>
+                                            <td>
+                                                <TextField
+                                                    id = "universityPerfectScore"
+                                                    name="universityPerfectScore"
+                                                    value={this.state.universityPerfectScore}
+                                                    onChange={this.validationGrades}
+                                                    autoFocus={this.state.autoFocusId === "universityPerfectScore"}
+                                                    style={{ width: "40px"}}
+                                                />
+                                                <Typography variant="h6" gutterBottom style={{display: "inline",
+                                                    marginLeft: "2px", marginRight: "4px" }}>
+                                                    /
+                                                </Typography>
+                                                <TextField
+                                                    id = "universityScore"
+                                                    name="universityScore"
+                                                    value={this.state.universityScore}
+                                                    onChange={this.validationGrades}
+
+                                                    autoFocus={this.state.autoFocusId === "universityScore"}
+                                                    style={{width: "40px"}}
+                                                />
+                                            </td>
                                         </tr>
                                         <tr>
-                                            <th>기간</th>
-                                            <td colSpan={3}></td>
+                                            <th style={{verticalAlign: "middle"}}>기간</th>
+                                            <td>
+                                                <TextField
+                                                    style={{paddingTop: "5px"}}
+                                                    id="universityStartDate"
+                                                    name="universityStartDate"
+                                                    type="date"
+                                                    helperText="입학일"
+                                                    className={classes.textField}
+                                                    InputLabelProps={{
+                                                        shrink: true,
+                                                    }}
+                                                />
+                                                <span> _ </span>
+                                                <TextField
+                                                    style={{paddingTop: "5px", paddingLeft: "5px"}}
+                                                    id="universityEndDate"
+                                                    name="universityEndDate"
+                                                    type="date"
+                                                    helperText="졸업일"
+                                                    className={classes.textField}
+                                                    InputLabelProps={{
+                                                        shrink: true,
+                                                    }}
+                                                />
+                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -451,6 +674,15 @@ class EducationHistory extends React.Component<EducationHistoryPageProps, Educat
                                     <Typography variant="body2" gutterBottom>
                                         *대학 편입의 경우 입학학교와 졸업학교를 모두 기재해 주세요
                                     </Typography>
+                                </div>
+                                <div style={{marginLeft: "80%", marginTop: "15px"}}>
+                                    <Button variant="contained" color="secondary" size="small" name="graduate_major_search" id="graduate_major_search" style={{marginRight: "5px"}}>
+                                        등록
+                                    </Button>
+
+                                    <Button variant="contained"  size="small" name="graduate_major_search" id="graduate_major_search">
+                                        취소
+                                    </Button>
                                 </div>
 
                             </div>
@@ -485,40 +717,208 @@ class EducationHistory extends React.Component<EducationHistoryPageProps, Educat
                                     <thead></thead>
                                     <tbody>
                                         <tr>
-                                            <th>학위구분</th>
-                                            <td colSpan={3}></td>
+                                            <th style={{verticalAlign: "middle", width: "120px"}}>학위구분</th>
+                                            <td>
+                                                <RadioGroup row aria-label="degreeType" name="degreeType" id="degreeType" defaultValue="M">
+                                                    <FormControlLabel value="M" control={<Radio color="primary" />} label="석사" labelPlacement="start" style={{paddingTop: "8px"}} />
+                                                    <FormControlLabel value="D" control={<Radio color="primary" />} label="박사" labelPlacement="start" style={{paddingTop: "8px"}} />
+                                                </RadioGroup>
+                                            </td>
                                         </tr>
                                         <tr>
-                                            <th>학교명</th>
-                                            <td colSpan={3}></td>
+                                            <th style={{verticalAlign: "middle"}}>학교명</th>
+                                            <td style={{paddingTop: "0px"}}>
+                                                <RadioGroup row aria-label="graduateIsDomestic" name="graduateIsDomestic" id="graduateIsDomestic" defaultValue="D">
+                                                    <FormControlLabel value="D" control={<Radio color="primary" />} label="국내" labelPlacement="start" style={{paddingTop: "8px"}} />
+                                                    <FormControlLabel value="1" control={<Radio color="primary" />} label="국외" labelPlacement="start" style={{paddingTop: "8px"}} />
+                                                    <TextField id="graduate_name" name="graduate_name"  error={false} helperText="" label="학교명" disabled={true} style={{marginLeft: "20px",  }}
+                                                               onClick={() =>  {this.setState({isGraduateModal : true})}}
+                                                    />
+                                                    <Button variant="contained" color="primary" size="small" name="graduate_search" id="graduate_search"
+                                                            onClick={() =>  {this.setState({isGraduateModal : true})}}
+                                                            style={{marginTop: "15px", marginLeft: "10px"}} >
+                                                        검색
+                                                    </Button>
+                                                </RadioGroup>
+                                                <Modal
+                                                    open={this.state.isGraduateModal}
+                                                    onClose={() => {this.setState({isGraduateModal : false})}}
+                                                    aria-labelledby="simple-modal-title"
+                                                    aria-describedby="simple-modal-description"
+                                                >
+                                                    <div style={{top: '50%', left: '50%', transform: 'translate(-50%, -50%)', paddingLeft: "0px", paddingRight: "0px"}} className={classes.addressModal}>
+                                                        <div style={{borderBottom: "solid", borderBottomWidth: "thin"}}>
+                                                            <Typography variant="h6" gutterBottom style={{paddingLeft: "20px", color: "#2e86de", fontWeight: "bold"}}>
+                                                                대학원 검색
+                                                            </Typography>
+                                                        </div>
+                                                        <div style={{paddingLeft: "20px", paddingRight: "20px"}}>
+                                                            <header style={{marginTop: "20px"}}>
+
+                                                            </header>
+                                                            <main>
+                                                                <div style={{margin: "15px" }}>
+                                                                    <div style={{ backgroundColor: "#f5f6fa"}}>
+                                                                        <TextField style={{marginLeft: "20px",  marginBottom: "5px"}} name="graduate_select" id="graduate_select" label="대학원검색" error={false} helperText="찾으시는 학교명이 없는 경우, 기타로 등록하세요" />
+                                                                        <Button variant="contained" color="primary"   style={{marginTop: "15px", marginLeft: "10px"}} >
+                                                                            검색
+                                                                        </Button>
+                                                                    </div>
+                                                                </div>
+                                                            </main>
+                                                            <footer>
+
+                                                            </footer>
+                                                        </div>
+                                                    </div>
+
+                                                </Modal>
+                                            </td>
                                         </tr>
                                         <tr>
-                                            <th>졸업구분</th>
-                                            <td colSpan={3}></td>
+                                            <th style={{verticalAlign: "middle"}}>졸업구분</th>
+                                            <td>
+                                                <FormControl style={{marginTop: "8px", marginRight: "10px"}}>
+                                                    <Select
+                                                        id="graduateGraduatedType"
+                                                        name="graduateGraduatedType"
+                                                        value={this.state.graduateGraduatedType}
+                                                        onChange={input => {this.setState({[input.target.name] : [input.target.value]})}}
+                                                    >
+                                                        <MenuItem value={"0"}>선택</MenuItem>
+                                                        <MenuItem value={"1"}>졸업</MenuItem>
+                                                        <MenuItem value={"2"}>중퇴</MenuItem>
+                                                        <MenuItem value={"3"}>수료</MenuItem>
+                                                        <MenuItem value={"4"}>휴학중</MenuItem>
+                                                        <MenuItem value={"5"}>재학중</MenuItem>
+                                                        <MenuItem value={"6"}>졸업예정</MenuItem>
+
+                                                    </Select>
+
+                                                </FormControl>
+                                            </td>
                                         </tr>
                                         <tr>
-                                            <th>전공명</th>
-                                            <td colSpan={3}></td>
+                                            <th style={{verticalAlign: "middle"}}>전공명</th>
+                                            <td style={{paddingTop: "0px"}}>
+                                                <TextField id="graduate_major" name="graduate_major"  error={false} helperText="" label="전공명" disabled={true}
+                                                           onClick={() =>  {this.setState({isGraduateMajorModal : true})}}
+                                                />
+                                                <Button variant="contained" color="primary" size="small" name="graduate_major_search" id="graduate_major_search"
+                                                        onClick={() =>  {this.setState({isGraduateMajorModal : true})}}
+                                                        style={{marginTop: "15px", marginLeft: "10px"}} >
+                                                    검색
+                                                </Button>
+                                                <Modal
+                                                    open={this.state.isGraduateMajorModal}
+                                                    onClose={() => {this.setState({isGraduateMajorModal : false})}}
+                                                    aria-labelledby="simple-modal-title"
+                                                    aria-describedby="simple-modal-description"
+                                                >
+                                                    <div style={{top: '50%', left: '50%', transform: 'translate(-50%, -50%)', paddingLeft: "0px", paddingRight: "0px"}} className={classes.addressModal}>
+                                                        <div style={{borderBottom: "solid", borderBottomWidth: "thin"}}>
+                                                            <Typography variant="h6" gutterBottom style={{paddingLeft: "20px", color: "#2e86de", fontWeight: "bold"}}>
+                                                                전공명
+                                                            </Typography>
+                                                        </div>
+                                                        <div style={{paddingLeft: "20px", paddingRight: "20px"}}>
+                                                            <header style={{marginTop: "20px"}}>
+
+                                                            </header>
+                                                            <main>
+                                                                <div style={{margin: "15px" }}>
+                                                                    <div style={{ backgroundColor: "#f5f6fa"}}>
+                                                                        <TextField style={{marginLeft: "20px",  marginBottom: "5px"}} name="graduate_major" id="graduate_major" label="전공명" error={false} helperText="" />
+                                                                        <Button variant="contained" color="primary"   style={{marginTop: "15px", marginLeft: "10px"}} >
+                                                                            검색
+                                                                        </Button>
+                                                                    </div>
+                                                                </div>
+                                                            </main>
+                                                            <footer>
+
+                                                            </footer>
+                                                        </div>
+                                                    </div>
+
+                                                </Modal>
+                                            </td>
                                         </tr>
                                         <tr>
-                                            <th>세부전공명</th>
-                                            <td></td>
+                                            <th style={{verticalAlign: "middle"}}>세부전공명</th>
+                                            <td><TextField id="graduate_major_detail" name="graduate_major_detail" error={false} helperText="" /></td>
+                                        </tr>
+                                        <tr>
                                             <th>학점</th>
-                                            <td></td>
+                                            <td>
+                                                <TextField
+                                                    id = "graduatePerfectScore"
+                                                    name="graduatePerfectScore"
+                                                    value={this.state.graduatePerfectScore}
+                                                    onChange={this.validationGrades}
+                                                    autoFocus={this.state.autoFocusId === "graduatePerfectScore"}
+                                                    style={{ width: "40px"}}
+                                                />
+                                                <Typography variant="h6" gutterBottom style={{display: "inline",
+                                                    marginLeft: "2px", marginRight: "4px" }}>
+                                                    /
+                                                </Typography>
+                                                <TextField
+                                                    id = "graduateScore"
+                                                    name="graduateScore"
+                                                    value={this.state.graduateScore}
+                                                    onChange={this.validationGrades}
+
+                                                    autoFocus={this.state.autoFocusId === "graduateScore"}
+                                                    style={{width: "40px"}}
+                                                />
+                                            </td>
                                         </tr>
                                         <tr>
-                                            <th>기간</th>
-                                            <td colSpan={3}></td>
+                                            <th style={{verticalAlign: "middle"}}>기간</th>
+                                            <td>
+                                                <TextField
+                                                    style={{paddingTop: "5px"}}
+                                                    id="graduateStartDate"
+                                                    name="graduateStartDate"
+                                                    type="date"
+                                                    helperText="입학일"
+                                                    className={classes.textField}
+                                                    InputLabelProps={{
+                                                        shrink: true,
+                                                    }}
+                                                />
+                                                <span> _ </span>
+                                                <TextField
+                                                    style={{paddingTop: "5px", paddingLeft: "5px"}}
+                                                    id="graduateEndDate"
+                                                    name="graduateEndDate"
+                                                    type="date"
+                                                    helperText="졸업일"
+                                                    className={classes.textField}
+                                                    InputLabelProps={{
+                                                        shrink: true,
+                                                    }}
+                                                />
+                                            </td>
                                         </tr>
                                         <tr>
-                                            <th>논문명</th>
-                                            <td></td>
-                                            <th>지도교수</th>
-                                            <td></td>
+                                            <th style={{verticalAlign: "middle"}}>논문</th>
+                                            <td>
+                                                <TextField id="graduate_paper_name" name="graduate_paper_name" error={false} helperText="" label="논문명" style={{width:"350px", marginRight: "10px"}} />
+                                                <TextField id="graduate_paper_professor_name" name="graduate_paper_professor_name" error={false} helperText="" label="지도교수" style={{width:"100px"}} />
+                                            </td>
                                         </tr>
                                         <tr>
                                             <th>논문요약</th>
-                                            <td colSpan={3}></td>
+                                            <td>
+                                                <textarea id="graduate_paper_summary" name="graduate_paper_summary" style={{width: "95%", height: "150px"}} />
+                                                <div style={{ marginLeft: "84%"}}>
+                                                    <input id="graduate_paper_summary_textcount" name="graduate_paper_summary_textcount" style={{width:"50px", display: "inline"}}  />
+                                                    <label style={{display: "inline"}}> /800자</label>
+                                                </div>
+
+                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -526,6 +926,15 @@ class EducationHistory extends React.Component<EducationHistoryPageProps, Educat
                                     <Typography variant="body2" gutterBottom>
                                         *학점의 만점이 10점을 초과하는 경우, 10점 만점 기준으로 환산하여 입력해 주시기 바랍니다.
                                     </Typography>
+                                </div>
+                                <div style={{marginLeft: "80%", marginTop: "15px"}}>
+                                    <Button variant="contained" color="secondary" size="small" name="graduate_major_search" id="graduate_major_search" style={{marginRight: "5px"}}>
+                                        등록
+                                    </Button>
+
+                                    <Button variant="contained"  size="small" name="graduate_major_search" id="graduate_major_search">
+                                        취소
+                                    </Button>
                                 </div>
                             </div>
                         </div>

@@ -20,6 +20,7 @@ export default async function initExecute(req: IncomingMessage | undefined) {
     initApiList.menuList = await res.json();
     const pageMenuItems:PageMenuItem[] = getMenuSelect(req, initApiList);
     initApiList = setRedirectUrl(setTitle(initApiList, pageMenuItems), pageMenuItems);
+    console.log("redirect: ", initApiList.redirectUrl);
     return initApiList;
 }
 
@@ -52,8 +53,11 @@ function setRedirectUrl (initApiList:InitExecuteValiable, pageMenuItem:PageMenuI
     if (pageMenuItem.length > 0){
         const isLogin = pageMenuItem[0].isLogin
         if (isLogin){
+            console.log('isLogin');
             initApiList.redirectUrl = "/login"
         }
+    } else {
+        initApiList.redirectUrl = ""
     }
     return initApiList;
 }
