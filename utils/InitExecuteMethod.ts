@@ -16,11 +16,7 @@ export default async function initExecute(req: IncomingMessage | undefined) {
         /Android|BlackBerry|iPhone|iPad|iPod|Opera Mini|IEMobile|WPDesktop/i
     )
     initApiList.isDevice = isMobileView ? true : false;
-    const res = await fetch('http://localhost:3000/api/menu');
-    initApiList.menuList = await res.json();
-    const pageMenuItems:PageMenuItem[] = getMenuSelect(req, initApiList);
-    initApiList = setRedirectUrl(setTitle(initApiList, pageMenuItems), pageMenuItems);
-    console.log("redirect: ", initApiList.redirectUrl);
+    console.log(req?.headers);
     return initApiList;
 }
 

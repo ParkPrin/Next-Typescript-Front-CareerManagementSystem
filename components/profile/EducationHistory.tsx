@@ -1,9 +1,7 @@
 import React  from 'react'
 import {createStyles, withStyles, WithStyles} from "@material-ui/core/styles";
 import {Theme} from "@material-ui/core/styles/createMuiTheme";
-import initExecute from "../../utils/InitExecuteMethod";
 import {InitExecuteValiable} from "../../interfaces/initExecuteValiable";
-import {NextPageContext} from "next";
 import Typography from '@material-ui/core/Typography';
 import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
@@ -14,7 +12,6 @@ import Modal from "@material-ui/core/Modal";
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
-import {width} from "@material-ui/system";
 
 export interface EducationHistoryState {
     isHighSchoolModal : boolean

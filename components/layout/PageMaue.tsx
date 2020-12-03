@@ -120,6 +120,7 @@ export interface LayoutState {
     open : boolean,
     anchorEl : HTMLElement | null
     mobileMoreAnchorEl : HTMLElement | null
+    menuItems : PageMenuItem[]
 }
 
 
@@ -128,7 +129,36 @@ class PageMaue extends React.Component<LayoutProps, {}> {
     state:LayoutState = {
         open:false,
         anchorEl: null,
-        mobileMoreAnchorEl: null
+        mobileMoreAnchorEl: null,
+        menuItems : []
+    }
+
+    async componentDidMount() {
+        this.setMenuList();
+        this.getToken();
+    }
+
+    async setMenuList() {
+        await fetch('/api/menu')
+            .then(res => {
+                return res.json()
+            })
+            .then(res => {
+                console.log("return: ", res)
+                return this.setState({
+                    menuItems : res
+                })
+            })
+    }
+
+    async getToken() {
+        await fetch('/api/auth/setCookie')
+            .then(res => {
+                return res.json()
+            })
+            .then(res => {
+                console.log("return: ", res)
+            })
     }
 
     setOpen(input:boolean){
@@ -189,7 +219,7 @@ class PageMaue extends React.Component<LayoutProps, {}> {
             return <ListItem button component="a" {...props} />;
         }
         const {classes, children, initExecuteValiable} = this.props;
-        let menuList:PageMenuItem[] = initExecuteValiable.menuList;
+        let menuList:PageMenuItem[] = this.state.menuItems
         const from = initExecuteValiable.isSever;
         const isLogin = initExecuteValiable.isLogin;
         const renderMenu = (

@@ -26,7 +26,7 @@ class PageLayout extends React.Component<LayoutProps, PageLayoutState> {
             while (oldProgress < 100){
                 oldProgress = oldProgress + 10;
                 this.setState({
-                    progress: 110
+                    progress: oldProgress
                 })
             }
         }, 1000);
@@ -54,9 +54,9 @@ class PageLayout extends React.Component<LayoutProps, PageLayoutState> {
                                 <meta name="viewport" content="initial-scale=1.0, width=device-width" />
                             </Head>
                             <header>
-                                <section style={{marginLeft: "33%", marginRight: "30%", marginTop: "17%"}}>
-                                    <h3>페이지 로딩중</h3>
-                                    <CircularProgress style={{marginLeft: "40px"}} />
+                                <section style={{marginLeft: "38%", marginTop: "17%"}}>
+                                    <h1>페이지 로딩중</h1>
+                                    <CircularProgress style={{marginLeft: "45px", marginTop: "20px"}} />
                                 </section>
                             </header>
                         </div>
