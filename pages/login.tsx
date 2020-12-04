@@ -1,5 +1,5 @@
 import PageLayout  from '../layouts/PageLayout'
-import React  from 'react'
+import React, {FormEvent} from 'react'
 import CssBaseline from '@material-ui/core/CssBaseline';
 import {createStyles, withStyles, WithStyles} from "@material-ui/core/styles";
 import {Theme} from "@material-ui/core/styles/createMuiTheme";
@@ -9,6 +9,8 @@ import {InitExecuteValiable} from "../interfaces/initExecuteValiable";
 import { NextPageContext } from 'next'
 import TextField from "@material-ui/core/TextField";
 import Button from '@material-ui/core/Button';
+import {UserAndPerson} from "../interfaces/userAndPerson";
+import {Response} from "../interfaces/response";
 
 const useStyles = (theme: Theme) =>
     createStyles({
@@ -38,7 +40,36 @@ class IndexPage extends React.Component<IndexPageProps, {}> {
     }
 
     render() {
-        const {classes, initExecuteValiable} = this.props;
+        const {initExecuteValiable} = this.props;
+
+
+        const handleSubmit = async (form: FormEvent<HTMLFormElement>) => {
+            form.preventDefault();
+            const userId: string = form.target[0].value;
+            const password: string = form.target[1].value;
+            const userAndPersonDTO:UserAndPerson = { userId :userId, password: password}
+            const loginResult:Response = await fetch("/api/user/login", {
+                    method: 'POST',
+                    cache: 'default',
+                    headers: {
+                        'ConTent-Type': 'application/json'
+                    },
+                    credentials: 'omit',
+                    body: JSON.stringify(userAndPersonDTO)
+                })
+                    .then(res => {
+                        return res.json()
+                    })
+                    .then(res => {
+                        return res;
+                    });
+            if (loginResult.state === 200){
+                alert("로그인 성공");
+            } else {
+                alert("로그인 실패 - 원인 : "+ loginResult.responseValue);
+
+            }
+        }
 
         return (
 
@@ -56,26 +87,28 @@ class IndexPage extends React.Component<IndexPageProps, {}> {
                             <main style={{width: "500px", marginLeft: "27%", marginBottom: "20px", border:"1px solid #ecf0f1", borderWidth:"1px", borderRadius:"25px"}}>
                                 <div className="w3-row" style={{margin: "30px"}}>
                                     <div>
-                                        <div className="w3-col s8" >
-                                            <h1>Login</h1>
-                                            <section style={{marginTop: "10%"}}>
-                                                <div>
-                                                    <TextField id="loginId" label="아이디" error={false} helperText="" />
-                                                </div>
-                                                <div>
-                                                    <TextField id="loginId" label="비밀번호" error={false} helperText="" />
-                                                </div>
-                                            </section>
-                                        </div>
-                                        <div className="w3-col s4" >
-                                            <section>
-                                                <Button variant="contained" color="primary" href={"./join"} style={{marginTop: "30px", width: "150px"}}>회원가입</Button>
-                                                <Button variant="contained" color="primary" style={{marginTop: "10px", width: "150px"}}>로그인</Button>
-                                                <Button variant="contained" color="primary" style={{marginTop: "10px", width: "150px"}}>Google 로그인</Button>
-                                                <Button variant="contained" color="primary" style={{marginTop: "10px", width: "150px"}}>Facebook 로그인</Button>
-                                                <Button variant="contained" color="primary" style={{marginTop: "10px", width: "150px"}}>Naver 로그인</Button>
-                                            </section>
-                                        </div>
+                                        <form onSubmit={handleSubmit}>
+                                            <div className="w3-col s8" >
+                                                <h1>Login</h1>
+                                                <section style={{marginTop: "10%"}}>
+                                                    <div>
+                                                        <TextField id="userId" label="아이디" error={false} helperText="" />
+                                                    </div>
+                                                    <div>
+                                                        <TextField id="password" type="password" label="비밀번호" error={false} helperText="" />
+                                                    </div>
+                                                </section>
+                                            </div>
+                                            <div className="w3-col s4" >
+                                                <section>
+                                                    <Button variant="contained" color="primary" href={"./join"} style={{marginTop: "30px", width: "150px"}}>회원가입</Button>
+                                                    <Button type={"submit"} variant="contained" color="primary" style={{marginTop: "10px", width: "150px"}}>로그인</Button>
+                                                    <Button variant="contained" color="primary" style={{marginTop: "10px", width: "150px"}}>Google 로그인</Button>
+                                                    <Button variant="contained" color="primary" style={{marginTop: "10px", width: "150px"}}>Facebook 로그인</Button>
+                                                    <Button variant="contained" color="primary" style={{marginTop: "10px", width: "150px"}}>Naver 로그인</Button>
+                                                </section>
+                                            </div>
+                                        </form>
                                     </div>
 
 

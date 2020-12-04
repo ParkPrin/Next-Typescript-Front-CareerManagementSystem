@@ -134,30 +134,22 @@ class PageMaue extends React.Component<LayoutProps, {}> {
     }
 
     async componentDidMount() {
-        this.setMenuList();
-        this.getToken();
+        this.setApiResultData('/api/menu', 'menuItems')
+        //this.setApiResultData('/api/auth/setCookie', null)
     }
 
-    async setMenuList() {
-        await fetch('/api/menu')
+    async setApiResultData(url:string, stateValiableName:string | null){
+        await fetch(url)
             .then(res => {
                 return res.json()
             })
             .then(res => {
                 console.log("return: ", res)
-                return this.setState({
-                    menuItems : res
-                })
-            })
-    }
-
-    async getToken() {
-        await fetch('/api/auth/setCookie')
-            .then(res => {
-                return res.json()
-            })
-            .then(res => {
-                console.log("return: ", res)
+                if (stateValiableName !== null){
+                    return this.setState({
+                        [stateValiableName] : res
+                    })
+                }
             })
     }
 
