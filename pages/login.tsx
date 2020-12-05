@@ -39,6 +39,11 @@ class IndexPage extends React.Component<IndexPageProps, {}> {
         return {initExecuteValiable}
     }
 
+    componentDidMount() {
+        const isLogin = window.localStorage.getItem("isLogin");
+        if (isLogin) window.location.replace("/");
+    }
+
     render() {
         const {initExecuteValiable} = this.props;
 
@@ -64,7 +69,8 @@ class IndexPage extends React.Component<IndexPageProps, {}> {
                         return res;
                     });
             if (loginResult.state === 200){
-                alert("로그인 성공");
+                window.localStorage.setItem("isLogin", true);
+                window.location.replace("/");
             } else {
                 alert("로그인 실패 - 원인 : "+ loginResult.responseValue);
 

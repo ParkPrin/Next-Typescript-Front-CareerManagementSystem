@@ -121,6 +121,7 @@ export interface LayoutState {
     anchorEl : HTMLElement | null
     mobileMoreAnchorEl : HTMLElement | null
     menuItems : PageMenuItem[]
+    isLogin : boolean
 }
 
 
@@ -130,14 +131,18 @@ class PageMaue extends React.Component<LayoutProps, {}> {
         open:false,
         anchorEl: null,
         mobileMoreAnchorEl: null,
-        menuItems : []
+        menuItems : [],
+        isLogin : false
     }
 
     async componentDidMount() {
         this.setApiResultData('/api/menu', 'menuItems')
         //this.setApiResultData('/api/auth/setCookie', null)
-    }
 
+        this.setState({
+            isLogin : Boolean(window.localStorage.getItem("isLogin"))
+        })
+    }
     async setApiResultData(url:string, stateValiableName:string | null){
         await fetch(url)
             .then(res => {
@@ -199,6 +204,14 @@ class PageMaue extends React.Component<LayoutProps, {}> {
         this.handleMobileMenuClose();
     };
 
+    logout = () => {
+        this.handleMenuClose();
+        window.localStorage.removeItem("isLogin");
+        this.setState({
+            isLogin : false
+        })
+    }
+
     handleMobileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
         this.setMobileMoreAnchorEl(event.currentTarget);
     };
@@ -213,7 +226,7 @@ class PageMaue extends React.Component<LayoutProps, {}> {
         const {classes, children, initExecuteValiable} = this.props;
         let menuList:PageMenuItem[] = this.state.menuItems
         const from = initExecuteValiable.isSever;
-        const isLogin = initExecuteValiable.isLogin;
+        const isLogin = this.state.isLogin
         const renderMenu = (
             <Menu
                 anchorEl={this.state.anchorEl}
@@ -226,6 +239,7 @@ class PageMaue extends React.Component<LayoutProps, {}> {
             >
                 <MenuItem onClick={this.handleMenuClose}>Profile</MenuItem>
                 <MenuItem onClick={this.handleMenuClose}>My account</MenuItem>
+                <MenuItem onClick={this.logout}>Log out</MenuItem>
             </Menu>
         );
 
