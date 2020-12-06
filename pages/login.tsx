@@ -53,7 +53,7 @@ class IndexPage extends React.Component<IndexPageProps, {}> {
             const userId: string = form.target[0].value;
             const password: string = form.target[1].value;
             const userAndPersonDTO:UserAndPerson = { userId :userId, password: password}
-            const loginResult:Response = await fetch("/api/user/login", {
+            const loginResult:Response = await fetch("/api/user/login/v1", {
                     method: 'POST',
                     cache: 'default',
                     headers: {
