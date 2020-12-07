@@ -39,8 +39,16 @@ class IndexPage extends React.Component<IndexPageProps, {}> {
         return {initExecuteValiable}
     }
 
+    validationCheck(input:string, inputType:string) {
+        if (input.trim() === ""){
+            alert(inputType + "을(를) 입력하지 않았습니다. 다시 입력하세요")
+            return true;
+        } else return false;
+    }
+
     render() {
         const {classes, initExecuteValiable} = this.props;
+
         const handleSubmit = async (form: FormEvent<HTMLFormElement>) => {
             form.preventDefault();
             const nickname: string = form.target[0].value;
@@ -49,12 +57,19 @@ class IndexPage extends React.Component<IndexPageProps, {}> {
             const rePassword: string = form.target[3].value;
             const email: string = form.target[4].value;
 
+            if (this.validationCheck(nickname, "닉네임")) return;
+            if (this.validationCheck(userId, "유저아이디")) return;
+            if (this.validationCheck(password, "비밀번호")) return;
+            if (this.validationCheck(rePassword, "비밀번호 재입력")) return;
+            if (this.validationCheck(email, "이메일")) return;
 
             if (password !== rePassword) {
                 alert("비밀번호 불일치, 다시 확인해주세요")
+                return;
             }
             const userAndPersonDTO:UserAndPerson = { userId :userId, password: password, nickName: nickname, email: email}
-            const loginResult:Response = await fetch("/api/user/join/v1", {
+
+            const loginResult:Response = await fetch("/api/user/join", {
                 method: 'POST',
                 cache: 'default',
                 headers: {
@@ -67,6 +82,7 @@ class IndexPage extends React.Component<IndexPageProps, {}> {
                     return res.json()
                 })
                 .then(res => {
+                    console.log(res);
                     return res;
                 });
             if (loginResult.state === 200){
@@ -103,7 +119,7 @@ class IndexPage extends React.Component<IndexPageProps, {}> {
                                         <TextField id="password" name="password" type="password" label="비밀번호" error={false} helperText="" />
                                     </div>
                                     <div style={{marginBottom: "5px"}}>
-                                        <TextField id="rePassword" name="rePassword" label="비밀번호 재입력" error={false} helperText="" />
+                                        <TextField id="rePassword" name="rePassword" type="password" label="비밀번호 재입력" error={false} helperText="" />
                                     </div>
                                     <div style={{marginBottom: "5px"}}>
                                         <TextField id="email" name="email" label="이메일" error={false} helperText="" />

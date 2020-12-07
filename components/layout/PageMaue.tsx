@@ -210,6 +210,10 @@ class PageMaue extends React.Component<LayoutProps, {}> {
         this.setState({
             isLogin : false
         })
+        if (!this.state.isLogin){
+            window.location.reload();
+        }
+
     }
 
     handleMobileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {

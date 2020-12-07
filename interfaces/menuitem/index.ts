@@ -3,7 +3,7 @@ export type PageMenuItem = {
     name: string,
     iconName: string,
     url: string,
-    isLogin : boolean,
-    isAdmin : boolean
+    isLoginCheck : boolean,
+    isAdminCheck : boolean
 
 }
