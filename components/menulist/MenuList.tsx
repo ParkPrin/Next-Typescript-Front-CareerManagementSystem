@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import HomeIcon from "@material-ui/icons/Home";
 import AccountBoxIcon from "@material-ui/icons/AccountBox";
@@ -20,14 +20,13 @@ export default function Menulist() {
         //console.log("resp: ", resp.data)
         return resp.data;
     }
-    const data:PageMenuItem[] = callApiData ?
+    let data:PageMenuItem[] = callApiData ?
         useSWR('/api/menu', callApiData).data : [];
-    console.log('data: ', data)
 
     return(
         <div>
             <List>
-                {data != [] || data != undefined &&
+                {data != []  && data != undefined &&
                 <div>
                     {data.map((item:PageMenuItem, index:number) => (
                         <ListItemLink

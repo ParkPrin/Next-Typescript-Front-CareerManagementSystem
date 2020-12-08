@@ -8,14 +8,32 @@ import JoinPc from "../components/join/JoinPc";
 import JoinMobile from "../components/join/JoinMobile";
 
 
-export interface IndexPageProps{
+export interface JoinPageProps{
     initExecuteValiable: InitExecuteValiable
 }
 
-class IndexPage extends React.Component<IndexPageProps, {}> {
+interface JoinPageState {
+    initView : boolean
+}
+
+class JoinPage extends React.Component<JoinPageProps, JoinPageState> {
+    state = {
+        initView : false
+    }
+
+
     static async getInitialProps({ req }: NextPageContext) {
         const initExecuteValiable = await initExecute(req);
         return {initExecuteValiable}
+    }
+
+    componentDidMount() {
+        const isLogin = window.localStorage.getItem("isLogin");
+        if (isLogin){
+            window.location.href="/"
+        } else {
+            this.setState({initView:true})
+        }
     }
 
     render() {
@@ -23,25 +41,32 @@ class IndexPage extends React.Component<IndexPageProps, {}> {
 
 
         return (
+        <div>
+            { this.state.initView ?
+                <PageLayout title={initExecuteValiable.title} initExecuteValiable={initExecuteValiable}>
+                    {
+                        initExecuteValiable.isDevice ?
+                            <div>
+                                <JoinMobile></JoinMobile>
+                            </div>
+                            : <div>
+                                <header style={{marginTop:"15%"}}>
 
-        <PageLayout title={initExecuteValiable.title} initExecuteValiable={initExecuteValiable}>
-            {
-                initExecuteValiable.isDevice ?
-                    <div>
-                        <JoinMobile></JoinMobile>
-                    </div>
-                    : <div>
-                        <header style={{marginTop:"15%"}}>
+                                </header>
+                                <JoinPc></JoinPc>
+                            </div>
+                    }
 
-                        </header>
-                        <JoinPc></JoinPc>
-                    </div>
+                    <CssBaseline />
+                </PageLayout>
+                :
+                <div></div>
             }
 
-            <CssBaseline />
-        </PageLayout>
+        </div>
+
         )
     }
 }
 
-export default IndexPage;
+export default JoinPage;
