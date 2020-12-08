@@ -8,19 +8,11 @@ import Drawer from '@material-ui/core/Drawer';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
-import List from '@material-ui/core/List';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import HomeIcon from '@material-ui/icons/Home';
-import AccountBoxIcon from '@material-ui/icons/AccountBox';
-import FolderSharedIcon from '@material-ui/icons/FolderShared';
 
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -33,6 +25,7 @@ import {InitExecuteValiable} from "../../interfaces/initExecuteValiable";
 import {PageMenuItem} from "../../interfaces/menuitem";
 
 import Avatar from '@material-ui/core/Avatar';
+import MenuList from "../menulist/MenuList";
 
 const drawerWidth = 240;
 
@@ -136,26 +129,10 @@ class PageMaue extends React.Component<LayoutProps, {}> {
     }
 
     async componentDidMount() {
-        this.setApiResultData('/api/menu', 'menuItems')
-        //this.setApiResultData('/api/auth/setCookie', null)
 
         this.setState({
             isLogin : Boolean(window.localStorage.getItem("isLogin"))
         })
-    }
-    async setApiResultData(url:string, stateValiableName:string | null){
-        await fetch(url)
-            .then(res => {
-                return res.json()
-            })
-            .then(res => {
-                console.log("return: ", res)
-                if (stateValiableName !== null){
-                    return this.setState({
-                        [stateValiableName] : res
-                    })
-                }
-            })
     }
 
     setOpen(input:boolean){
@@ -224,11 +201,7 @@ class PageMaue extends React.Component<LayoutProps, {}> {
     render() {
         const mobileMenuId = 'primary-search-account-menu-mobile';
         const menuId = 'primary-search-account-menu';
-        const ListItemLink = (props:any) => {
-            return <ListItem button component="a" {...props} />;
-        }
         const {classes, children, initExecuteValiable} = this.props;
-        let menuList:PageMenuItem[] = this.state.menuItems
         const from = initExecuteValiable.isSever;
         const isLogin = this.state.isLogin
         const renderMenu = (
@@ -381,26 +354,7 @@ class PageMaue extends React.Component<LayoutProps, {}> {
                 </IconButton>
               </div>
               <Divider />
-              <List>
-                  {menuList != [] &&
-                  <div>
-                      {menuList.map((item, index) => (
-                          <ListItemLink
-                              key={index}
-                              href={item.url}
-                          >
-                              <ListItemIcon>
-                                  {item.iconName === "Home" ? <HomeIcon/> :
-                                      item.iconName === "Profile" ? <AccountBoxIcon/> :
-                                          item.iconName === "Share" ? <FolderSharedIcon/> : <InboxIcon/>}
-
-                              </ListItemIcon>
-                              <ListItemText primary={item.name}/>
-                          </ListItemLink>
-                      ))}
-                  </div>
-                  }
-              </List>
+              <MenuList></MenuList>
             </Drawer>
 
             <div style={{width: "1200px"}} >
