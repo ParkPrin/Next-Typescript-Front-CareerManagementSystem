@@ -5,5 +5,4 @@ export type PageMenuItem = {
     url: string,
     isLoginCheck : boolean,
     isAdminCheck : boolean
-
 }

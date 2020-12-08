@@ -26,7 +26,6 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
 import Select from '@material-ui/core/Select';
-import LinearProgress from '@material-ui/core/LinearProgress';
 
 const options = [
     '수정',
@@ -574,7 +573,7 @@ class Index extends React.Component<ProfileProps, ProfileState> {
                                     </main>
                                 </div>
 
-                                }
+
 
                             </div>
                             <CssBaseline />

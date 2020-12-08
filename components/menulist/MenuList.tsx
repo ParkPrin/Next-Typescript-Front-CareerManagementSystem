@@ -10,6 +10,7 @@ import ListItem from "@material-ui/core/ListItem";
 import useSWR from "swr";
 import {PageMenuItem} from "../../interfaces/menuitem";
 import axios from "axios";
+import {Response} from "../../interfaces/response";
 export default function Menulist() {
     const ListItemLink = (props:any) => {
         return <ListItem button component="a" {...props} />;
@@ -17,11 +18,11 @@ export default function Menulist() {
 
     const callApiData = async (url:string) => {
         const resp = await axios.get(url);
-        //console.log("resp: ", resp.data)
         return resp.data;
     }
-    let data:PageMenuItem[] = callApiData ?
-        useSWR('/api/menu', callApiData).data : [];
+    let response:Response = useSWR('/api/menu', callApiData) === undefined ? undefined : useSWR('/api/menu', callApiData).data;
+    const data:PageMenuItem[] = response === undefined ? [] : response.responseValue;
+
 
     return(
         <div>

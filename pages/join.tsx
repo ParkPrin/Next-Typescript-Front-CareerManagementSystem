@@ -30,7 +30,7 @@ class JoinPage extends React.Component<JoinPageProps, JoinPageState> {
     componentDidMount() {
         const isLogin = window.localStorage.getItem("isLogin");
         if (isLogin){
-            window.location.href="/"
+            window.location.href="/login"
         } else {
             this.setState({initView:true})
         }
