@@ -405,21 +405,42 @@ export default function LanguageAndCertificatePc(){
                       <thead></thead>
                       <tbody>
                           <tr>
-                              <th>명칭</th>
-                              <td></td>
-                              <th>기관(단체)명</th>
-                              <td></td>
+                              <th style={{verticalAlign: "middle"}}>명칭</th>
+                              <td><TextField style={{marginLeft: "20px",  marginBottom: "5px"}} id="awardedName" name="awardedName" helperText="15자 이내" error={false} /></td>
+                              <th style={{verticalAlign: "middle"}}>기관(단체)명</th>
+                              <td><TextField style={{marginLeft: "20px",  marginBottom: "5px"}} id="awardInstitutionsName" name="awardInstitutionsName" helperText="15자 이내" error={false} /></td>
                           </tr>
                           <tr>
-                              <th>내용</th>
-                              <td colSpan={3}></td>
+                              <th style={{verticalAlign: "middle"}}>내용</th>
+                              <td colSpan={3}><TextField style={{marginLeft: "20px",  marginBottom: "5px", width: "500px"}} id="awardedContent" name="awardedContent" helperText="30자 이내"  error={false} /></td>
                           </tr>
                           <tr>
-                              <th>일자</th>
-                              <td colSpan={3}></td>
+                              <th style={{verticalAlign: "middle"}}>일자</th>
+                              <td colSpan={3}>
+                                  <TextField
+                                      style={{paddingTop: "5px"}}
+                                      id="awardedDate"
+                                      name="awardedDate"
+                                      type="date"
+                                      helperText="예시 YYYY-MM-DD"
+                                      className={classes.textField}
+                                      InputLabelProps={{
+                                          shrink: true,
+                                      }}
+                                  />
+                              </td>
                           </tr>
                       </tbody>
                   </table>
+                  <div style={{marginLeft: "80%", marginTop: "15px"}}>
+                      <Button variant="contained" color="secondary" size="small" name="awardedSave" id="awardedSave" style={{marginRight: "5px"}}>
+                          등록
+                      </Button>
+
+                      <Button variant="contained"  size="small" name="awardedCancle" id="awardedCancle">
+                          취소
+                      </Button>
+                  </div>
               </div>
           </div>
 
@@ -451,21 +472,54 @@ export default function LanguageAndCertificatePc(){
                       <thead></thead>
                       <tbody>
                           <tr>
-                              <th>활동명</th>
-                              <td></td>
-                              <th>기관(단체)명</th>
-                              <td></td>
+                              <th style={{verticalAlign: "middle"}}>활동명</th>
+                              <td><TextField style={{marginLeft: "20px",  marginBottom: "5px"}} id="activityName" name="activityName" helperText="15자 이내" error={false} /></td>
+                              <th style={{verticalAlign: "middle"}}>기관(단체)명</th>
+                              <td><TextField style={{marginLeft: "20px",  marginBottom: "5px"}} id="activityInstitutionsName" name="activityInstitutionsName" helperText="15자 이내" error={false} /></td>
                           </tr>
                           <tr>
-                              <th>기간</th>
-                              <td colSpan={3}></td>
+                              <th style={{verticalAlign: "middle"}}>기간</th>
+                              <td colSpan={3}>
+                                  <TextField
+                                      style={{paddingTop: "5px"}}
+                                      id="activityStartDate"
+                                      name="activityStartDate"
+                                      type="date"
+                                      helperText="예시 YYYY-MM-DD"
+                                      className={classes.textField}
+                                      InputLabelProps={{
+                                          shrink: true,
+                                      }}
+                                  />
+                                  <div style={{display:"inline"}}>_</div>
+                                  <TextField
+                                      style={{paddingTop: "5px"}}
+                                      id="activityEndDate"
+                                      name="activityEndDate"
+                                      type="date"
+                                      helperText="예시 YYYY-MM-DD"
+                                      className={classes.textField}
+                                      InputLabelProps={{
+                                          shrink: true,
+                                      }}
+                                  />
+                              </td>
                           </tr>
                           <tr>
-                              <th>내용</th>
-                              <td colSpan={3}></td>
+                              <th style={{verticalAlign: "middle"}}>내용</th>
+                              <td colSpan={3}><TextField style={{marginLeft: "20px",  marginBottom: "5px", width: "500px"}} id="activityContent" name="activityContent" helperText="30자 이내"  error={false} /></td>
                           </tr>
                       </tbody>
                   </table>
+                  <div style={{marginLeft: "80%", marginTop: "15px"}}>
+                      <Button variant="contained" color="secondary" size="small" name="activitySave" id="activitySave" style={{marginRight: "5px"}}>
+                          등록
+                      </Button>
+
+                      <Button variant="contained"  size="small" name="activityCancle" id="activityCancle">
+                          취소
+                      </Button>
+                  </div>
               </div>
           </div>
       </div>
