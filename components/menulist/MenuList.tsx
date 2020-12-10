@@ -20,7 +20,11 @@ export default function Menulist() {
         const resp = await axios.get(url);
         return resp.data;
     }
-    let response:Response = useSWR('/api/menu', callApiData) === undefined ? undefined : useSWR('/api/menu', callApiData).data;
+    const userId:string | null = window.localStorage.getItem("userId");
+    console.log(userId);
+    const url : string = '/api/menu?userId='+ userId;
+    const defalutEesponse = useSWR(url, callApiData);
+    let response:Response = defalutEesponse === undefined ? undefined : defalutEesponse.data;
     const data:PageMenuItem[] = response === undefined ? [] : response.responseValue;
 
 

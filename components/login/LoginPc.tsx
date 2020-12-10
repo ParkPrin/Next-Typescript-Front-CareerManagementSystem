@@ -52,6 +52,7 @@ export default function LoginPc() {
         const data:Response = await callApiData("/api/user/login");
         if (data.state === 200){
             window.localStorage.setItem("isLogin", "true");
+            window.localStorage.setItem("userId", userId);
             router.push("/");
         } else {
             alert("로그인 실패 - 원인 : "+ data.responseValue);

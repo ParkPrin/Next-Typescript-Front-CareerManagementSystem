@@ -184,6 +184,7 @@ class PageMaue extends React.Component<LayoutProps, {}> {
     logout = () => {
         this.handleMenuClose();
         window.localStorage.removeItem("isLogin");
+        window.localStorage.removeItem("userId");
         this.setState({
             isLogin : false
         })
