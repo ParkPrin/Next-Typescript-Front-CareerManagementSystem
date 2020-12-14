@@ -12,9 +12,9 @@ import Typography from '@material-ui/core/Typography';
 import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
-import BasicPersonalInformation from "../../components/profile/BasicPersonalInformation";
-import EducationHistory from "../../components/profile/EducationHistory";
-import LanguageAndCertificatePc from "../../components/profile/LanguageAndCertificatePc";
+import BasicPersonalInformation from "../../components/career/BasicPersonalInformation";
+import EducationHistory from "../../components/career/EducationHistory";
+import LanguageAndCertificatePc from "../../components/career/LanguageAndCertificatePc";
 
 
 export interface WrtieState {
@@ -106,6 +106,7 @@ class Index extends React.Component<IndexPageProps, WrtieState> {
         const {classes, initExecuteValiable} = this.props;
 
         const changeValue = (event: React.ChangeEvent<{}>, newValue: number) => {
+            console.log(event)
             this.setState({
                 value : newValue
             })
@@ -173,6 +174,8 @@ class Index extends React.Component<IndexPageProps, WrtieState> {
                                             <TabPanel value={this.state.value} index={2}>
                                                 <LanguageAndCertificatePc />
                                             </TabPanel>
+
+
                                             <TabPanel value={this.state.value} index={3}>
                                                 <div className="w3-container" style={{marginTop: "30px"}}>
                                                     <h3>경력</h3>
