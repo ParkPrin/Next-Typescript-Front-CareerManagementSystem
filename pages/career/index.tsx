@@ -26,6 +26,7 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
 import Select from '@material-ui/core/Select';
+import CareerRegisterModal from "../../components/career/CareerRegisterModal";
 
 const options = [
     '수정',
@@ -41,6 +42,7 @@ export interface ProfileState {
     profileEl : string
     isView : boolean
     progress : number
+    isCareerRegisterModalOpen : boolean
 }
 
 const useStyles = (theme: Theme) =>
@@ -92,7 +94,8 @@ class Index extends React.Component<ProfileProps, ProfileState> {
         anchorEl: null,
         profileEl: "",
         isView : false,
-        progress: 0
+        progress: 0,
+        isCareerRegisterModalOpen : false
     }
 
     setAnchorEl(input:HTMLElement | null){
@@ -105,6 +108,16 @@ class Index extends React.Component<ProfileProps, ProfileState> {
         this.setState({
             profileEl : input
         })
+    }
+
+    setIsCareerRegisterModalOpen(isCareerRegisterModalOpen:boolean){
+        this.setState({
+            isCareerRegisterModalOpen : isCareerRegisterModalOpen
+        })
+    }
+
+    closeIsCareerRegisterModalOpen = () => {
+        this.setIsCareerRegisterModalOpen(false);
     }
 
     handleClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -176,12 +189,13 @@ class Index extends React.Component<ProfileProps, ProfileState> {
                                                             <MenuItem value={30}>제목</MenuItem>
                                                         </Select>
                                                     </FormControl>
-                                                    <IconButton  href={"./profile/write"}  style={{float:"right"}} >
+                                                    <IconButton onClick={() => this.setState({isCareerRegisterModalOpen : true})}  style={{float:"right"}} >
                                                         <Fab size="small" color="secondary" aria-label="edit" >
                                                             <AddIcon />
                                                         </Fab>
                                                     </IconButton>
-
+                                                    <CareerRegisterModal isCareerRegisterModalOpen={this.state.isCareerRegisterModalOpen}
+                                                                         closeIsCareerRegisterModalOpen={this.closeIsCareerRegisterModalOpen} />
                                                 </div>
                                                 {initExecuteValiable.isDevice ?
                                                     <div><Card className={classes.cardRoot} >
