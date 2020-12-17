@@ -13,7 +13,7 @@ import axios from "axios";
 import {Response} from "../../interfaces/response";
 export default function Menulist() {
     const ListItemLink = (props:any) => {
-        return <ListItem button component="a" {...props} />;
+        return <ListItem component="a" {...props} />;
     }
 
     const callApiData = async (url:string) => {

@@ -159,8 +159,7 @@ class Index extends React.Component<IndexPageProps, {}> {
                                                             <th rowSpan={3} style={{verticalAlign : "middle", width: "130px" }}>성명*</th>
                                                             <td style={{paddingLeft : "15px"}}>한글*</td>
                                                             <td rowSpan={3} style={{width: "120px", height: "150px"}}>
-                                                                <div style={{marginTop: "50px", marginLeft: "30px"}}><button>사진업로드</button></div>
-
+                                                                <div style={{marginTop: "50px", marginLeft: "30px"}}></div>
                                                             </td>
                                                         </tr>
                                                         <tr>
