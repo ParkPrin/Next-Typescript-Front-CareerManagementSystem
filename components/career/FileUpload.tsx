@@ -49,10 +49,10 @@ export default function FileUpload(props:FileUploadProps){
                                     <div key={index} className="image-item">
                                         <div className="image-item__btn-wrapper">
                                             <IconButton onClick={() => onImageUpdate(index)}>
-                                                <Icon>update</Icon>
+                                                <Icon color="primary">update_circle</Icon>
                                             </IconButton>
                                             <IconButton onClick={() => onImageRemove(index)}>
-                                                <Icon>remove</Icon>
+                                                <Icon color="secondary">remove_circle</Icon>
                                             </IconButton>
                                         </div>
                                         <img src={image.dataURL} alt="" width="100" />
@@ -61,9 +61,9 @@ export default function FileUpload(props:FileUploadProps){
                             </div>
                             :
                             <div style={{display : "flex"}}>
-                                <p style={{marginLeft : "20px", marginTop: "20px", verticalAlign : "middle"}}>이력사진등록</p>
+                                <p style={{marginLeft : "20px", marginTop: "20px", verticalAlign : "middle", fontSize: "14px"}}>이력사진등록</p>
                                 <IconButton onClick={onImageUpload}>
-                                    <ImageSearchIcon />
+                                    <Icon color="primary">image_search</Icon>
                                 </IconButton>
                             </div>
                         }

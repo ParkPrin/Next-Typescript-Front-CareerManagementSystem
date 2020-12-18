@@ -1,4 +1,4 @@
-import React from "react";
+import React, {FormEvent} from "react";
 import Typography from "@material-ui/core/Typography";
 import Modal from "@material-ui/core/Modal";
 import {createStyles, makeStyles, Theme} from "@material-ui/core/styles";
@@ -7,6 +7,8 @@ import Button from "@material-ui/core/Button";
 import FileUpload from "./FileUpload";
 import { ImageListType } from "react-images-uploading"
 import ImageSearchIcon from '@material-ui/icons/ImageSearch';
+import {Response} from "../../interfaces/response";
+import axios from "axios";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -29,7 +31,68 @@ interface CareerRegisterModalProps {
 
 export default function CareerRegisterModal(props:CareerRegisterModalProps){
     const classes = useStyles();
+    const [resumeName, setResumeName] = React.useState<string>("");
     const [imageList, setImageList] = React.useState<ImageListType>([]);
+    const [resumeSummary, setResumeSummary] = React.useState<string>("");
+    const [areaFocus, setAreaFocus] = React.useState<boolean>(false);
+    const [resumeYears, setResumeYears] = React.useState<string>("");
+    const [resumeSalary, setResumeSalary] = React.useState<string>("");
+    const handleSubmit = async (form: FormEvent<HTMLFormElement>) => {
+        form.preventDefault();
+        validationCheck();
+        console.log(resumeName);
+        console.log(imageList[0].dataURL);
+        console.log(imageList[0].file.name);
+        console.log(imageList[0].file.type);
+        console.log(imageList);
+        console.log(resumeSummary);
+        console.log(resumeYears);
+        console.log(resumeSalary);
+        const data:Response = await callApiData("/api/resume");
+        if (data.state === 200){
+
+        } else {
+            alert("로그인 실패 - 원인 : "+ data.responseValue);
+
+        }
+        /*
+         imageName : _req.body.resumeImageName,
+            imageType : _req.body.resumeImageType,
+            data : _req.body.resumeImageData,
+            id: number,
+    userId : string
+    image : Image
+    imageFile : File
+    resumeName: string,
+    resumeSummary: string,
+    career: string,
+    resumeSalary: string,
+         */
+
+
+    }
+
+    const callApiData:(url: string) => Promise<any> = async (url:string) => {
+        const resp = await axios.post(url, {
+            userId : window.localStorage.getItem("userId"),
+            imageName : imageList[0].file.name,
+            imageType : imageList[0].file.type,
+            data : imageList[0].dataURL,
+            resumeName : resumeName,
+            resumeSummary : resumeSummary,
+            career : resumeYears,
+            resumeSalary : resumeSalary
+        });
+        return resp.data;
+    }
+
+    const validationCheck = () => {
+        if (resumeName === "") alert("이력서 제목을 입력하세요.")
+        if (resumeSummary === "") alert("이력서 요약을 입력하세요.")
+        if (resumeYears === "") alert("경력을 입력하세요.")
+        if (resumeSalary === "") alert("연봉을 입력하세요.")
+    }
+
     return (
         <div>
             <Modal
@@ -51,14 +114,16 @@ export default function CareerRegisterModal(props:CareerRegisterModalProps){
                         <main>
                             <div style={{margin: "15px" }}>
                                 <div>
-                                    <form>
-                                        <div className="w3-container" style={{margin: "8px"}}>
+                                    <form onSubmit={handleSubmit}>
+                                        <div className="w3-container" style={{margin: "8px"}} onClick={input => {
+                                            if (input.target.id !== "resumeSummary"){setAreaFocus(false)}}
+                                        }>
                                             <table className="w3-table w3-bordered">
                                                 <thead></thead>
                                                 <tbody>
                                                 <tr>
                                                     <td>
-                                                        <TextField style={{marginLeft: "20px",  marginBottom: "5px", width: "90%"}} id="resumeName" name="resumeName" label="이력서 제목" error={false} />
+                                                        <TextField style={{marginLeft: "20px",  marginBottom: "5px", width: "90%"}} id="resumeName" name="resumeName" value={resumeName} onChange={input => {setResumeName(input.target.value)}} label="이력서 제목" error={false} />
                                                     </td>
                                                 </tr>
                                                 <tr>
@@ -68,20 +133,21 @@ export default function CareerRegisterModal(props:CareerRegisterModalProps){
                                                 </tr>
                                                 <tr>
                                                     <td>
-                                                        <h6 style={{marginLeft : "20px"}}>이력상세</h6>
-                                                        <textarea id="resumeSummary" name="resumeSummary" style={{width: "95%", height: "150px"}} />
+                                                        {!areaFocus && <p style={{marginLeft : "15px", fontSize : "15px", color: "#757575"}}>이력상세</p> }
+                                                        {areaFocus && <p style={{marginLeft : "15px", fontSize : "7px"}}>이력상세</p> }
+                                                        <textarea onFocus={() => setAreaFocus(true)} id="resumeSummary" name="resumeSummary" value={resumeSummary} onChange={input => {setResumeSummary(input.target.value)}} style={{width: "95%", height: "150px"}} />
                                                     </td>
                                                 </tr>
                                                 <tr>
                                                     <td>
-                                                        <TextField style={{marginLeft: "20px",  marginBottom: "5px"}} id="resumeYears" name="resumeYears" label="경력년수" error={false} />
-                                                        <TextField style={{marginLeft: "20px",  marginBottom: "5px"}} id="resumeSalary" name="resumeSalary" label="연봉정보" error={false} />
+                                                        <TextField style={{marginLeft: "20px",  marginBottom: "5px"}} id="resumeYears" name="resumeYears" label="경력년수" value={resumeYears} onChange={input => {setResumeYears(input.target.value)}} error={false} />
+                                                        <TextField style={{marginLeft: "20px",  marginBottom: "5px"}} id="resumeSalary" name="resumeSalary" label="연봉정보" value={resumeSalary} onChange={input => {setResumeSalary(input.target.value)}} error={false} />
                                                     </td>
                                                 </tr>
                                                 </tbody>
                                             </table>
                                             <div style={{marginLeft: "70%", marginTop: "15px"}}>
-                                                <Button variant="contained" color="secondary" size="small" name="foreignTestSave" id="foreignTestSave" style={{marginRight: "5px"}}>
+                                                <Button type={"submit"} variant="contained" color="secondary" size="small" name="foreignTestSave" id="foreignTestSave" style={{marginRight: "5px"}}>
                                                     등록
                                                 </Button>
 

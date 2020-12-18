@@ -27,6 +27,7 @@ import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
 import Select from '@material-ui/core/Select';
 import CareerRegisterModal from "../../components/career/CareerRegisterModal";
+import {Icon} from "@material-ui/core";
 
 const options = [
     '수정',
@@ -190,9 +191,7 @@ class Index extends React.Component<ProfileProps, ProfileState> {
                                                         </Select>
                                                     </FormControl>
                                                     <IconButton onClick={() => this.setState({isCareerRegisterModalOpen : true})}  style={{float:"right"}} >
-                                                        <Fab size="small" color="secondary" aria-label="edit" >
-                                                            <AddIcon />
-                                                        </Fab>
+                                                        <Icon color="secondary" style={{ fontSize : 30}}>add_circle</Icon>
                                                     </IconButton>
                                                     <CareerRegisterModal isCareerRegisterModalOpen={this.state.isCareerRegisterModalOpen}
                                                                          closeIsCareerRegisterModalOpen={this.closeIsCareerRegisterModalOpen} />
