@@ -6,7 +6,6 @@ import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import FileUpload from "./FileUpload";
 import { ImageListType } from "react-images-uploading"
-import ImageSearchIcon from '@material-ui/icons/ImageSearch';
 import {Response} from "../../interfaces/response";
 import axios from "axios";
 
@@ -50,7 +49,8 @@ export default function CareerRegisterModal(props:CareerRegisterModalProps){
         console.log(resumeSalary);
         const data:Response = await callApiData("/api/resume");
         if (data.state === 200){
-
+            variableSetClear();
+            props.closeIsCareerRegisterModalOpen();
         } else {
             alert("로그인 실패 - 원인 : "+ data.responseValue);
 
@@ -70,6 +70,15 @@ export default function CareerRegisterModal(props:CareerRegisterModalProps){
          */
 
 
+    }
+
+    const variableSetClear = () => {
+        setResumeName("");
+        setImageList([]);
+        setResumeSummary("");
+        setAreaFocus(false);
+        setResumeYears("");
+        setResumeSalary("");
     }
 
     const callApiData:(url: string) => Promise<any> = async (url:string) => {
