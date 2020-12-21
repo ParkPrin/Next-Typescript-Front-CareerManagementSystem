@@ -1,7 +1,6 @@
 import React from 'react';
 import List from "@material-ui/core/List";
 import useSWR from "swr";
-import {PageMenuItem} from "../../interfaces/menuitem";
 import axios from "axios";
 import {Response} from "../../interfaces/response";
 import CardActionArea from "@material-ui/core/CardActionArea";
@@ -16,16 +15,11 @@ import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import Card from "@material-ui/core/Card";
 import { createStyles, makeStyles } from '@material-ui/core/styles';
-import ListItemIcon from "@material-ui/core/ListItemIcon";
-import HomeIcon from "@material-ui/icons/Home";
-import AccountBoxIcon from "@material-ui/icons/AccountBox";
-import FolderSharedIcon from "@material-ui/icons/FolderShared";
-import InboxIcon from "@material-ui/icons/MoveToInbox";
-import ListItemText from "@material-ui/core/ListItemText";
+import {ResumeItem} from "../../interfaces/resume";
 const useStyles = makeStyles(() =>
     createStyles({
         cardRoot: {
-            maxWidth: 310,
+            maxWidth: 510,
         },
     }),
 );
@@ -53,8 +47,6 @@ export default function ResumeList() {
 
     const callApiData = async (url:string) => {
         const resp = await axios.get(url);
-        console.log("---------aaaaaaa-------------")
-        console.log(resp.data)
         return resp.data;
     }
     const userId:string | null = window.localStorage.getItem("userId");
@@ -62,33 +54,38 @@ export default function ResumeList() {
     const url : string = '/api/resume/list?userId='+ userId;
     const defalutEesponse = useSWR(url, callApiData);
     let response:Response = defalutEesponse === undefined ? undefined : defalutEesponse.data;
-    const data:any[] = response === undefined ? [] : response.responseValue;
+    const data:ResumeItem[] = response === undefined ? [] : response.responseValue;
 
 
     return(
         <div>
-            <List>
+            <List style={{width : "100%"}}>
                 {data != []  && data != undefined &&
-                <div>
-                    {data.map((item:any, index:number) => (
-                        <div>
-                            <Card className={classes.cardRoot} >
+                <div style={{display:"-webkit-box"}}>
+                    {data.map((item:ResumeItem, index:number) => (
+                            <Card className={classes.cardRoot} key={index} style={{margin : "20px"}} >
                                 <CardActionArea>
                                     <CardHeader
                                         title={item.resumeName}
-                                        subheader={item.dateCreated}
+                                        subheader={""}
                                     />
-                                    <img src={item.image.data} alt="" width="100" />
+                                    <CardMedia
+                                        component="img"
+                                        alt="Contemplative Reptile"
+                                        height="200px"
+                                        image={item.data}
+                                        title="Contemplative Reptile"
+                                        style={{position: "relative", zIndex:0}}
+                                    />
                                     <CardContent>
                                         <Typography variant="body2" color="textSecondary" component="p">
-                                            경력 5년차
+                                            {item.career}
                                         </Typography>
                                         <Typography variant="body2" color="textSecondary" component="p">
-                                            연봉: 5000
+                                            {item.resumeSalary}
                                         </Typography>
                                         <Typography variant="body2" color="textSecondary" component="p">
-                                            Lizards are a widespread group of squamate reptiles, with over 6,000 species, ranging
-                                            across all continents except Antarctica
+                                            {item.resumeSummary}
                                         </Typography>
                                     </CardContent>
                                 </CardActionArea>
@@ -126,7 +123,7 @@ export default function ResumeList() {
                                     </div>
                                 </CardActions>
                             </Card>
-                        </div>
+
                     ))}
                 </div>
 
