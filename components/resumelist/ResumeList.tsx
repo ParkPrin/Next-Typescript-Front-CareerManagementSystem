@@ -23,13 +23,16 @@ const useStyles = makeStyles(() =>
         },
     }),
 );
+interface optionObject {
+    optionKey : string
+    optionLabel : string
+}
 
-
-const options = [
-    '수정',
-    '공유',
-    '삭제',
-    '복사'
+const options: optionObject[] = [
+    {optionKey: "modified", optionLabel: "수정"},
+    {optionKey: "share", optionLabel: "공유"},
+    {optionKey: "delete", optionLabel: "삭제"},
+    {optionKey: "copy", optionLabel: "복사"}
 ];
 
 const ITEM_HEIGHT = 48;
@@ -41,16 +44,31 @@ export default function ResumeList() {
         setAnchorEl(event.currentTarget);
     };
 
+    const optionExecute = (event: React.MouseEvent<HTMLElement>) => {
+        console.log(event.target?.id);
+        console.log(event.target?.accessKey);
+        switch (event.target.accessKey){
+            case "modified":
+                return;
+            case "share":
+                return;
+            case "delete":
+                return;
+            case "copy":
+                return;
+        }
+    };
+
     const handleClose = () => {
         setAnchorEl(null);
     };
 
     const callApiData = async (url:string) => {
         const resp = await axios.get(url);
+        console.log(resp.data);
         return resp.data;
     }
     const userId:string | null = window.localStorage.getItem("userId");
-    console.log(userId);
     const url : string = '/api/resume/list?userId='+ userId;
     const defalutEesponse = useSWR(url, callApiData);
     let response:Response = defalutEesponse === undefined ? undefined : defalutEesponse.data;
@@ -115,8 +133,8 @@ export default function ResumeList() {
                                             }}
                                         >
                                             {options.map((option) => (
-                                                <MenuItem key={option} onClick={handleClose}>
-                                                    {option}
+                                                <MenuItem accessKey={option.optionKey} key={option.optionKey} onClick={optionExecute}>
+                                                    {option.optionLabel}
                                                 </MenuItem>
                                             ))}
                                         </Menu>
