@@ -1,5 +1,5 @@
 import PageLayout  from '../../layouts/PageLayout'
-import React  from 'react'
+import React, {createRef} from 'react'
 import CssBaseline from '@material-ui/core/CssBaseline';
 import {createStyles, withStyles, WithStyles} from "@material-ui/core/styles";
 import {Theme} from "@material-ui/core/styles/createMuiTheme";
@@ -90,6 +90,8 @@ export interface ProfileProps extends WithStyles<typeof useStyles>{
 
 class Index extends React.Component<ProfileProps, ProfileState> {
 
+
+
     state:ProfileState = {
         anchorEl: null,
         profileEl: "",
@@ -97,7 +99,7 @@ class Index extends React.Component<ProfileProps, ProfileState> {
         progress: 0,
         isCareerRegisterModalOpen : false
     }
-
+    private resumeList = createRef();
     setAnchorEl(input:HTMLElement | null){
         this.setState({
             anchorEl : input
@@ -118,6 +120,7 @@ class Index extends React.Component<ProfileProps, ProfileState> {
 
     closeIsCareerRegisterModalOpen = () => {
         this.setIsCareerRegisterModalOpen(false);
+        window.location.reload();
     }
 
     handleClick = (event: React.MouseEvent<HTMLElement>) => {

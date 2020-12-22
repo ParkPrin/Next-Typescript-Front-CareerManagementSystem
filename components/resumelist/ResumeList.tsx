@@ -28,31 +28,38 @@ interface optionObject {
     optionLabel : string
 }
 
-const options: optionObject[] = [
-    {optionKey: "modified", optionLabel: "수정"},
-    {optionKey: "share", optionLabel: "공유"},
-    {optionKey: "delete", optionLabel: "삭제"},
-    {optionKey: "copy", optionLabel: "복사"}
-];
-
 const ITEM_HEIGHT = 48;
 export default function ResumeList() {
+
+
     const classes = useStyles();
+    const options: optionObject[] = [
+        {optionKey: "modified", optionLabel: "수정"},
+        {optionKey: "share", optionLabel: "공유"},
+        {optionKey: "delete", optionLabel: "삭제"},
+        {optionKey: "copy", optionLabel: "복사"}
+    ];
     const [anchorEl, setAnchorEl] = React.useState<HTMLElement | null>(null);
+    const [resumeObj, setResumeObj] = React.useState<ResumeItem | null>(null);
 
     const handleClick = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorEl(event.currentTarget);
     };
 
     const optionExecute = (event: React.MouseEvent<HTMLElement>) => {
-        console.log(event.target?.id);
-        console.log(event.target?.accessKey);
         switch (event.target.accessKey){
             case "modified":
                 return;
             case "share":
                 return;
             case "delete":
+
+                if (resumeObj !== null){
+                    const result = confirm("'" +resumeObj.resumeName + "' 이력을 삭제 하시겠습니까? ");
+                    if (!result) return;
+                    deleteApiData('/api/resume/delete?resumeId='+ resumeObj.id)
+                }
+
                 return;
             case "copy":
                 return;
@@ -63,17 +70,28 @@ export default function ResumeList() {
         setAnchorEl(null);
     };
 
-    const callApiData = async (url:string) => {
+    const redirectList = async () => {
+        const userId:string | null = window.localStorage.getItem("userId");
+        const url : string = '/api/resume/list?userId='+ userId;
+        getApiData(url);
+    }
+
+    const getApiData = async (url:string) => {
         const resp = await axios.get(url);
-        console.log(resp.data);
         return resp.data;
     }
+
+    const deleteApiData = async (url:string) => {
+        const resp = await axios.delete(url);
+        return resp.data;
+    }
+
+
     const userId:string | null = window.localStorage.getItem("userId");
     const url : string = '/api/resume/list?userId='+ userId;
-    const defalutEesponse = useSWR(url, callApiData);
+    const defalutEesponse = useSWR(url, getApiData);
     let response:Response = defalutEesponse === undefined ? undefined : defalutEesponse.data;
-    const data:ResumeItem[] = response === undefined ? [] : response.responseValue;
-
+    let data:ResumeItem[] = response === undefined ? [] : response.responseValue;
 
     return(
         <div>
@@ -114,7 +132,10 @@ export default function ResumeList() {
                                             aria-label="more"
                                             aria-controls="long-menu"
                                             aria-haspopup="true"
-                                            onClick={handleClick}
+                                            onClick={(event)=> {
+                                                setResumeObj(item);
+                                                handleClick(event);
+                                            }}
                                             style={{float:"right", position:"relative"}}
                                         >
                                             <MoreVertIcon />
