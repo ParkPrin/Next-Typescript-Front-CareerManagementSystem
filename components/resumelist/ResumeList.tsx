@@ -86,6 +86,17 @@ export default function ResumeList() {
         return resp.data;
     }
 
+    const ResumeSummary = (props:any) => {
+        const inputTextArrays:string[] = props.children.split("\n");
+        return (<div>
+            {inputTextArrays.map((inputText:string, index:number) => (
+                <p><Typography key={index} variant="body2" color="textSecondary" component="div">
+                    {inputText}
+                </Typography></p>
+            ))}
+        </div>)
+    }
+
 
     const userId:string | null = window.localStorage.getItem("userId");
     const url : string = '/api/resume/list?userId='+ userId;
@@ -120,9 +131,9 @@ export default function ResumeList() {
                                         <Typography variant="body2" color="textSecondary" component="p">
                                             {item.resumeSalary}
                                         </Typography>
-                                        <Typography variant="body2" color="textSecondary" component="p">
+                                        <ResumeSummary >
                                             {item.resumeSummary}
-                                        </Typography>
+                                        </ResumeSummary>
                                     </CardContent>
                                 </CardActionArea>
 

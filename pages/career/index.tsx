@@ -99,7 +99,6 @@ class Index extends React.Component<ProfileProps, ProfileState> {
         progress: 0,
         isCareerRegisterModalOpen : false
     }
-    private resumeList = createRef();
     setAnchorEl(input:HTMLElement | null){
         this.setState({
             anchorEl : input
