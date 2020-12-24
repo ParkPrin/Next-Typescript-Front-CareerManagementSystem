@@ -2,6 +2,7 @@ import React from 'react';
 import List from "@material-ui/core/List";
 import useSWR from "swr";
 import axios from "axios";
+import { useRouter } from 'next/router'
 import {Response} from "../../interfaces/response";
 import CardActionArea from "@material-ui/core/CardActionArea";
 import CardHeader from "@material-ui/core/CardHeader";
@@ -30,7 +31,7 @@ interface optionObject {
 
 const ITEM_HEIGHT = 48;
 export default function ResumeList() {
-
+    const router = useRouter()
 
     const classes = useStyles();
     const options: optionObject[] = [
@@ -81,6 +82,10 @@ export default function ResumeList() {
         return resp.data;
     }
 
+    const goToResume = () => {
+        router.push("/career/write")
+    }
+
     const deleteApiData = async (url:string) => {
         const resp = await axios.delete(url);
         return resp.data;
@@ -110,7 +115,7 @@ export default function ResumeList() {
                 {data != []  && data != undefined &&
                 <div style={{display:"-webkit-box"}}>
                     {data.map((item:ResumeItem, index:number) => (
-                            <Card className={classes.cardRoot} key={index} style={{margin : "20px"}} >
+                            <Card className={classes.cardRoot} onClick={goToResume} key={index} style={{margin : "20px"}} >
                                 <CardActionArea>
                                     <CardHeader
                                         title={item.resumeName}
