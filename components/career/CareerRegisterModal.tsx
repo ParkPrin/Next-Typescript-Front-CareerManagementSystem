@@ -47,7 +47,7 @@ export default function CareerRegisterModal(props:CareerRegisterModalProps){
         console.log(resumeSummary);
         console.log(resumeYears);
         console.log(resumeSalary);
-        const data:Response = await callApiData("/api/resume");
+        const data:Response = await callApiData("/api/resume/register");
         if (data.state === 200){
             variableSetClear();
             props.closeIsCareerRegisterModalOpen();

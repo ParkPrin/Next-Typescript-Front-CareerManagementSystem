@@ -7,7 +7,7 @@ const handler = (_req: NextApiRequest, _res: NextApiResponse) => {
     if (_req.method === 'GET'){
 
         try {
-            axios.get("http://localhost:8080/resume/api/v1/" + userId.toString()).then(res =>
+            axios.get("http://localhost:8080/resume/api/list/v1/" + userId.toString()).then(res =>
             {
                 return res.data
             }).then(res =>

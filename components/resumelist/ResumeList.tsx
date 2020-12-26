@@ -115,8 +115,8 @@ export default function ResumeList() {
                 {data != []  && data != undefined &&
                 <div style={{display:"-webkit-box"}}>
                     {data.map((item:ResumeItem, index:number) => (
-                            <Card className={classes.cardRoot} onClick={goToResume} key={index} style={{margin : "20px"}} >
-                                <CardActionArea>
+                            <Card className={classes.cardRoot} key={index} style={{margin : "20px"}} >
+                                <CardActionArea onClick={goToResume}>
                                     <CardHeader
                                         title={item.resumeName}
                                         subheader={""}

@@ -10,10 +10,4 @@ export type ResumeItem = {
     resumeSummary: string
     career: string
     resumeSalary: string
-    option : OptionObject[]
-}
-
-interface OptionObject {
-    optionKey : string
-    optionLabel : string
 }
