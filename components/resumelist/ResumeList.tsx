@@ -17,6 +17,7 @@ import MenuItem from "@material-ui/core/MenuItem";
 import Card from "@material-ui/core/Card";
 import { createStyles, makeStyles } from '@material-ui/core/styles';
 import {ResumeItem} from "../../interfaces/resume";
+import CareerRegisterModal from "../career/CareerRegisterModal";
 const useStyles = makeStyles(() =>
     createStyles({
         cardRoot: {
@@ -42,14 +43,20 @@ export default function ResumeList() {
     ];
     const [anchorEl, setAnchorEl] = React.useState<HTMLElement | null>(null);
     const [resumeObj, setResumeObj] = React.useState<ResumeItem | null>(null);
-
+    const [isCareerRegisterModalOpen, setIsCareerRegisterModalOpen] = React.useState<boolean>(false);
     const handleClick = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorEl(event.currentTarget);
     };
 
-    const optionExecute = (event: React.MouseEvent<HTMLElement>) => {
+    const optionExecute = async (event: React.MouseEvent<HTMLElement>) => {
         switch (event.target.accessKey){
             case "modified":
+                if (resumeObj !== null){
+                    const detailData:any = await detailApiData('/api/resume?resumeId='+ resumeObj.id);
+                    console.log(detailData.responseValue);
+                }
+
+
                 return;
             case "share":
                 return;
@@ -91,13 +98,18 @@ export default function ResumeList() {
         return resp.data;
     }
 
+    const detailApiData = async (url:string) => {
+        const resp = await axios.get(url);
+        return resp.data;
+    }
+
     const ResumeSummary = (props:any) => {
         const inputTextArrays:string[] = props.children.split("\n");
         return (<div>
             {inputTextArrays.map((inputText:string, index:number) => (
-                <p><Typography key={index} variant="body2" color="textSecondary" component="div">
-                    {inputText}
-                </Typography></p>
+                <Typography key={index} variant="body2" color="textSecondary" component="div">
+                    <p >{inputText}</p>
+                </Typography>
             ))}
         </div>)
     }
@@ -111,6 +123,8 @@ export default function ResumeList() {
 
     return(
         <div>
+            <CareerRegisterModal isCareerRegisterModalOpen={isCareerRegisterModalOpen}
+                                 closeIsCareerRegisterModalOpen={() => {setIsCareerRegisterModalOpen(false)}} />
             <List style={{width : "100%"}}>
                 {data != []  && data != undefined &&
                 <div style={{display:"-webkit-box"}}>

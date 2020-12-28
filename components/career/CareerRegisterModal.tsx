@@ -55,21 +55,6 @@ export default function CareerRegisterModal(props:CareerRegisterModalProps){
             alert("로그인 실패 - 원인 : "+ data.responseValue);
 
         }
-        /*
-         imageName : _req.body.resumeImageName,
-            imageType : _req.body.resumeImageType,
-            data : _req.body.resumeImageData,
-            id: number,
-    userId : string
-    image : Image
-    imageFile : File
-    resumeName: string,
-    resumeSummary: string,
-    career: string,
-    resumeSalary: string,
-         */
-
-
     }
 
     const variableSetClear = () => {
