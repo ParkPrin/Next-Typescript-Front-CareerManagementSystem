@@ -52,8 +52,8 @@ export default function ResumeList() {
         switch (event.target.accessKey){
             case "modified":
                 if (resumeObj !== null){
-                    const detailData:any = await detailApiData('/api/resume?resumeId='+ resumeObj.id);
-                    console.log(detailData.responseValue);
+                    console.log('--------------------resumeObj------------');
+                    console.log(resumeObj)
                 }
 
 

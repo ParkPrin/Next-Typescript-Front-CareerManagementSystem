@@ -195,7 +195,8 @@ class Index extends React.Component<ProfileProps, ProfileState> {
                                                         <Icon color="secondary" style={{ fontSize : 30}}>add_circle</Icon>
                                                     </IconButton>
                                                     <CareerRegisterModal isCareerRegisterModalOpen={this.state.isCareerRegisterModalOpen}
-                                                                         closeIsCareerRegisterModalOpen={this.closeIsCareerRegisterModalOpen} />
+                                                                         closeIsCareerRegisterModalOpen={this.closeIsCareerRegisterModalOpen}
+                                                                         resumeObj={null}/>
                                                 </div>
                                                 {initExecuteValiable.isDevice ?
                                                     <div>

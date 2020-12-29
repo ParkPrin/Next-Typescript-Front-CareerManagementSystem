@@ -1,4 +1,4 @@
-import React, {FormEvent} from "react";
+import React, {FormEvent, useEffect} from "react";
 import Typography from "@material-ui/core/Typography";
 import Modal from "@material-ui/core/Modal";
 import {createStyles, makeStyles, Theme} from "@material-ui/core/styles";
@@ -8,6 +8,7 @@ import FileUpload from "./FileUpload";
 import { ImageListType } from "react-images-uploading"
 import {Response} from "../../interfaces/response";
 import axios from "axios";
+import {ResumeItem} from "../../interfaces/resume";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -26,9 +27,20 @@ const useStyles = makeStyles((theme: Theme) =>
 interface CareerRegisterModalProps {
     isCareerRegisterModalOpen : boolean
     closeIsCareerRegisterModalOpen() : void
+    resumeObj : ResumeItem | null
 }
 
 export default function CareerRegisterModal(props:CareerRegisterModalProps){
+
+    useEffect(() => {
+       if (props){
+           console.log(props)
+           //setResumeName(props.resumeObj.resumeName);
+           //setResumeSummary(props.resumeObj.resumeSummary);
+           //setResumeYears(props.resumeObj.career);
+           //setResumeSalary(props.resumeObj.resumeSalary);
+       }
+    });
     const classes = useStyles();
     const [resumeName, setResumeName] = React.useState<string>("");
     const [imageList, setImageList] = React.useState<ImageListType>([]);
