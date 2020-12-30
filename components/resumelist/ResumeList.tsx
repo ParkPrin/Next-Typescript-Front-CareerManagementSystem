@@ -52,8 +52,7 @@ export default function ResumeList() {
         switch (event.target.accessKey){
             case "modified":
                 if (resumeObj !== null){
-                    console.log('--------------------resumeObj------------');
-                    console.log(resumeObj)
+                    setIsCareerRegisterModalOpen(true);
                 }
 
 
@@ -124,7 +123,8 @@ export default function ResumeList() {
     return(
         <div>
             <CareerRegisterModal isCareerRegisterModalOpen={isCareerRegisterModalOpen}
-                                 closeIsCareerRegisterModalOpen={() => {setIsCareerRegisterModalOpen(false)}} />
+                                 closeIsCareerRegisterModalOpen={() => {setIsCareerRegisterModalOpen(false)}}
+                                 resumeObj={resumeObj}  />
             <List style={{width : "100%"}}>
                 {data != []  && data != undefined &&
                 <div style={{display:"-webkit-box"}}>

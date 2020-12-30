@@ -33,12 +33,14 @@ interface CareerRegisterModalProps {
 export default function CareerRegisterModal(props:CareerRegisterModalProps){
 
     useEffect(() => {
-       if (props){
-           console.log(props)
-           //setResumeName(props.resumeObj.resumeName);
-           //setResumeSummary(props.resumeObj.resumeSummary);
-           //setResumeYears(props.resumeObj.career);
-           //setResumeSalary(props.resumeObj.resumeSalary);
+       if (props.resumeObj){
+           console.log("--------------")
+           console.log(props.resumeObj)
+           console.log("--------------")
+           setResumeName(props.resumeObj.resumeName);
+           setResumeSummary(props.resumeObj.resumeSummary);
+           setResumeYears(props.resumeObj.career);
+           setResumeSalary(props.resumeObj.resumeSalary);
        }
     });
     const classes = useStyles();
