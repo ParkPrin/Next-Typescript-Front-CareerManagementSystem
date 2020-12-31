@@ -41,11 +41,13 @@ export default function CareerRegisterModal(props:CareerRegisterModalProps){
            setResumeSummary(props.resumeObj.resumeSummary);
            setResumeYears(props.resumeObj.career);
            setResumeSalary(props.resumeObj.resumeSalary);
+           setData(props.resumeObj.data);
        }
     });
     const classes = useStyles();
     const [resumeName, setResumeName] = React.useState<string>("");
     const [imageList, setImageList] = React.useState<ImageListType>([]);
+    const [data, setData] = React.useState<string | null>(null);
     const [resumeSummary, setResumeSummary] = React.useState<string>("");
     const [areaFocus, setAreaFocus] = React.useState<boolean>(false);
     const [resumeYears, setResumeYears] = React.useState<string>("");
@@ -101,6 +103,12 @@ export default function CareerRegisterModal(props:CareerRegisterModalProps){
         if (resumeSalary === "") alert("연봉을 입력하세요.")
     }
 
+    const removeImage = () => {
+        console.log("----------aaaaaa------------")
+        setData(null);
+        console.log(data)
+    }
+
     return (
         <div>
             <Modal
@@ -136,8 +144,10 @@ export default function CareerRegisterModal(props:CareerRegisterModalProps){
                                                 </tr>
                                                 <tr>
                                                     <td>
-                                                        <FileUpload setImageList={imageList => setImageList(imageList)}/>
+                                                        <FileUpload setImageList={imageList => setImageList(imageList)} data={data}/>
                                                     </td>
+
+
                                                 </tr>
                                                 <tr>
                                                     <td>

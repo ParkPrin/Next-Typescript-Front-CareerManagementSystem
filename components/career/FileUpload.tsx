@@ -8,6 +8,7 @@ import Icon from "@material-ui/core/Icon";
 
 interface FileUploadProps {
     setImageList(imageList:ImageListType) : void
+    data : string
 }
 
 export default function FileUpload(props:FileUploadProps){
@@ -41,6 +42,7 @@ export default function FileUpload(props:FileUploadProps){
                       dragProps
                   }) => (
                     // write your building UI
+
                     <div className="upload__image-wrapper">
                         {images.length > 0
                             ?
@@ -60,12 +62,17 @@ export default function FileUpload(props:FileUploadProps){
                                 ))}
                             </div>
                             :
-                            <div style={{display : "flex"}}>
-                                <p style={{marginLeft : "20px", marginTop: "20px", verticalAlign : "middle", fontSize: "14px"}}>이력사진등록</p>
-                                <IconButton onClick={onImageUpload}>
-                                    <Icon color="primary">image_search</Icon>
-                                </IconButton>
+                            <div>
+                                { props.data && <img src={props.data} alt="" width="100" /> }
+                                <div style={{display : "flex"}}>
+
+                                    <p style={{marginLeft : "20px", marginTop: "20px", verticalAlign : "middle", fontSize: "14px"}}>이력사진등록</p>
+                                    <IconButton onClick={onImageUpload}>
+                                        <Icon color="primary">image_search</Icon>
+                                    </IconButton>
+                                </div>
                             </div>
+
                         }
                     </div>
                 )}
