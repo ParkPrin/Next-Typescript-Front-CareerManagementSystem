@@ -33,7 +33,6 @@ interface optionObject {
 const ITEM_HEIGHT = 48;
 export default function ResumeList() {
     const router = useRouter()
-    let defalutResponse:any = null
 
     const classes = useStyles();
     const options: optionObject[] = [
@@ -48,6 +47,20 @@ export default function ResumeList() {
     const handleClick = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorEl(event.currentTarget);
     };
+    const getApiData = async (url:string) => {
+        const resp = await axios.get(url);
+        return resp.data;
+    }
+    const userId:string | null = window.localStorage.getItem("userId");
+    const url : string = '/api/resume/list?userId='+ userId;
+    const { data, mutate } = useSWR(url, getApiData, {loadingTimeout : 2000});
+    let response:Response = data === undefined ? undefined : data;
+    let resultData:ResumeItem[] = response === undefined ? [] : response.responseValue;
+
+
+    useEffect(() => {
+        mutate().then(r => {console.log(r)});
+    });
 
     const optionExecute = async (event: React.MouseEvent<HTMLElement>) => {
         switch (event.target.accessKey){
@@ -55,8 +68,6 @@ export default function ResumeList() {
                 if (resumeObj !== null){
                     setIsCareerRegisterModalOpen(true);
                 }
-
-
                 return;
             case "share":
                 return;
@@ -65,7 +76,8 @@ export default function ResumeList() {
                 if (resumeObj !== null){
                     const result = confirm("'" +resumeObj.resumeName + "' 이력을 삭제 하시겠습니까? ");
                     if (!result) return;
-                    deleteApiData('/api/resume/delete?resumeId='+ resumeObj.id)
+                    await deleteApiData('/api/resume/delete?resumeId='+ resumeObj.id)
+                    handleClose()
                 }
 
                 return;
@@ -82,11 +94,6 @@ export default function ResumeList() {
         const userId:string | null = window.localStorage.getItem("userId");
         const url : string = '/api/resume/list?userId='+ userId;
         getApiData(url);
-    }
-
-    const getApiData = async (url:string) => {
-        const resp = await axios.get(url);
-        return resp.data;
     }
 
     const goToResume = () => {
@@ -115,18 +122,7 @@ export default function ResumeList() {
     }
 
 
-    const userId:string | null = window.localStorage.getItem("userId");
-    const url : string = '/api/resume/list?userId='+ userId;
-    const { data } = useSWR(url, getApiData);
-    console.log(data)
-    let response:Response = data === undefined ? undefined : data.data;
-    let resultData:ResumeItem[] = response === undefined ? [] : response.responseValue;
 
-
-    useEffect(() => {
-        console.log("----test-----")
-
-    }, [defalutResponse]);
     return(
         <div>
             <CareerRegisterModal isCareerRegisterModalOpen={isCareerRegisterModalOpen}
