@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import List from "@material-ui/core/List";
 import useSWR from "swr";
 import axios from "axios";
@@ -33,6 +33,7 @@ interface optionObject {
 const ITEM_HEIGHT = 48;
 export default function ResumeList() {
     const router = useRouter()
+    let defalutResponse:any = null
 
     const classes = useStyles();
     const options: optionObject[] = [
@@ -116,19 +117,25 @@ export default function ResumeList() {
 
     const userId:string | null = window.localStorage.getItem("userId");
     const url : string = '/api/resume/list?userId='+ userId;
-    const defalutEesponse = useSWR(url, getApiData);
-    let response:Response = defalutEesponse === undefined ? undefined : defalutEesponse.data;
-    let data:ResumeItem[] = response === undefined ? [] : response.responseValue;
+    const { data } = useSWR(url, getApiData);
+    console.log(data)
+    let response:Response = data === undefined ? undefined : data.data;
+    let resultData:ResumeItem[] = response === undefined ? [] : response.responseValue;
 
+
+    useEffect(() => {
+        console.log("----test-----")
+
+    }, [defalutResponse]);
     return(
         <div>
             <CareerRegisterModal isCareerRegisterModalOpen={isCareerRegisterModalOpen}
                                  closeIsCareerRegisterModalOpen={() => {setIsCareerRegisterModalOpen(false)}}
                                  resumeObj={resumeObj}  />
             <List style={{width : "100%"}}>
-                {data != []  && data != undefined &&
+                {resultData != []  && resultData != undefined &&
                 <div style={{display:"-webkit-box"}}>
-                    {data.map((item:ResumeItem, index:number) => (
+                    {resultData.map((item:ResumeItem, index:number) => (
                             <Card className={classes.cardRoot} key={index} style={{margin : "20px"}} >
                                 <CardActionArea onClick={goToResume}>
                                     <CardHeader
