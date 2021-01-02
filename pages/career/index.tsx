@@ -146,7 +146,6 @@ class Index extends React.Component<ProfileProps, ProfileState> {
 
 
     componentDidMount() {
-        console.log("test1111")
         const props = this.props;
         if (props.initExecuteValiable.redirectUrl !== ""){
             window.location.replace(this.props.initExecuteValiable.redirectUrl)

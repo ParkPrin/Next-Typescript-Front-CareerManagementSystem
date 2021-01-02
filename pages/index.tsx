@@ -37,7 +37,6 @@ export interface IndexPageProps extends WithStyles<typeof useStyles> {
 
 class IndexPage extends React.Component<IndexPageProps, {}> {
     static async getInitialProps({ req }: NextPageContext) {
-        console.log(req?.headers.cookie)
         const initExecuteValiable = await initExecute(req);
         return {initExecuteValiable}
     }

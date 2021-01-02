@@ -21,7 +21,6 @@ export default function Menulist() {
         return resp.data;
     }
     const userId:string | null = window.localStorage.getItem("userId");
-    console.log(userId);
     const url : string = '/api/menu?userId='+ userId;
     const defalutEesponse = useSWR(url, callApiData);
     let response:Response = defalutEesponse === undefined ? undefined : defalutEesponse.data;

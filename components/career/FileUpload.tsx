@@ -1,9 +1,6 @@
 import React from "react";
 import ImageUploading, { ImageListType } from "react-images-uploading"
-import ImageSearchIcon from '@material-ui/icons/ImageSearch';
-import Fab from "@material-ui/core/Fab";
 import IconButton from "@material-ui/core/IconButton";
-import UpdateIcon from '@material-ui/icons/Update';
 import Icon from "@material-ui/core/Icon";
 
 interface FileUploadProps {
@@ -22,7 +19,6 @@ export default function FileUpload(props:FileUploadProps){
     ) => {
         // data for submit
         props.setImageList(imageList);
-        console.log(imageList, addUpdateIndex);
         setImages(imageList as never[]);
     };
     return (

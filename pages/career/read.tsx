@@ -94,7 +94,6 @@ class Index extends React.Component<IndexPageProps, {}> {
         const {classes, initExecuteValiable} = this.props;
 
         const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
-            console.log(event)
             this.setValue(newValue);
         };
         const TabPanel = (props: TabPanelProps) => {

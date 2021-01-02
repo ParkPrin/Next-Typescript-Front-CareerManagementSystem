@@ -34,9 +34,6 @@ export default function CareerRegisterModal(props:CareerRegisterModalProps){
 
     useEffect(() => {
        if (props.resumeObj){
-           console.log("--------------")
-           console.log(props.resumeObj)
-           console.log("--------------")
            setResumeName(props.resumeObj.resumeName);
            setResumeSummary(props.resumeObj.resumeSummary);
            setResumeYears(props.resumeObj.career);
@@ -55,14 +52,6 @@ export default function CareerRegisterModal(props:CareerRegisterModalProps){
     const handleSubmit = async (form: FormEvent<HTMLFormElement>) => {
         form.preventDefault();
         validationCheck();
-        console.log(resumeName);
-        console.log(imageList[0].dataURL);
-        console.log(imageList[0].file.name);
-        console.log(imageList[0].file.type);
-        console.log(imageList);
-        console.log(resumeSummary);
-        console.log(resumeYears);
-        console.log(resumeSalary);
         const data:Response = await callApiData("/api/resume/register");
         if (data.state === 200){
             variableSetClear();
@@ -101,12 +90,6 @@ export default function CareerRegisterModal(props:CareerRegisterModalProps){
         if (resumeSummary === "") alert("이력서 요약을 입력하세요.")
         if (resumeYears === "") alert("경력을 입력하세요.")
         if (resumeSalary === "") alert("연봉을 입력하세요.")
-    }
-
-    const removeImage = () => {
-        console.log("----------aaaaaa------------")
-        setData(null);
-        console.log(data)
     }
 
     return (
