@@ -82,6 +82,12 @@ export default function ResumeList() {
 
                 return;
             case "copy":
+                if (resumeObj !== null){
+                    const result = confirm("'" +resumeObj.resumeName + "' 이력을 복사 하시겠습니까? ");
+                    if (!result) return;
+                    await copyApiData('/api/resume/copy?resumeId='+ resumeObj.id)
+                    handleClose()
+                }
                 return;
         }
     };
@@ -89,12 +95,6 @@ export default function ResumeList() {
     const handleClose = () => {
         setAnchorEl(null);
     };
-
-    const redirectList = async () => {
-        const userId:string | null = window.localStorage.getItem("userId");
-        const url : string = '/api/resume/list?userId='+ userId;
-        getApiData(url);
-    }
 
     const goToResume = () => {
         router.push("/career/write")
@@ -105,7 +105,7 @@ export default function ResumeList() {
         return resp.data;
     }
 
-    const detailApiData = async (url:string) => {
+    const copyApiData = async (url:string) => {
         const resp = await axios.get(url);
         return resp.data;
     }
